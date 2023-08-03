@@ -7,6 +7,8 @@ import ExamNavigationCard from "./ExamNavigationCard";
 import { ITime } from "@/utils/timeUtils";
 import { useTimer } from "@/hooks/useTimer";
 import Question from "./Question";
+import { useQuiz } from "@/hooks/useQuiz";
+import { useEffect } from "react";
 
 const styles:SxProps = {
   minHeight: "100vh",
@@ -29,6 +31,12 @@ export default function Page() {
 
   const initialTime:ITime = {hours: 0,minutes: 5, seconds: 0};
   const time = useTimer(initialTime);
+  const {initializeQuestions} = useQuiz();
+
+  useEffect(() => {
+    initializeQuestions();
+  }, [])
+  
 
   return (
     <Box sx={styles}>

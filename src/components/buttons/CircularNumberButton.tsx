@@ -1,5 +1,7 @@
+import { useQuiz } from "@/hooks/useQuiz";
 import { INumberButtonSize, INumberButtonType } from "@/interfaces/buttonInterfaces";
 import { Box, Button, IconButton, SxProps } from "@mui/material";
+import { MouseEventHandler } from "react";
 
 const styles = {
   margin: "10px",
@@ -62,11 +64,12 @@ const styles = {
   },
 }
 
-export default function CircularNumberButton({size, type}:{size:INumberButtonSize, type:INumberButtonType}) {
+export default function CircularNumberButton({size, type, number, onClick}:{size:INumberButtonSize, type:INumberButtonType, number:number, onClick?:MouseEventHandler}) {
+
   return (
     <Box sx={styles}>
-      <IconButton className={`${size} ${type} center`}>
-        <p className="text">5</p>
+      <IconButton onClick={onClick} className={`${size} ${type} center`}>
+        <p className="text">{number}</p>
       </IconButton>
     </Box>
   )

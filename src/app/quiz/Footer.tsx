@@ -1,3 +1,4 @@
+import { useQuiz } from '@/hooks/useQuiz';
 import {Box, Button, Card, SxProps} from '@mui/material';
 
 const styles:SxProps = {
@@ -48,21 +49,26 @@ const styles:SxProps = {
 }
 
 export default function Footer(){
+
+  const {attemptQuestion,reviewQuestion,goToNextQuestion, isLastQuestion, isMarked, handleSubmit} = useQuiz();
+
   return (
     <Card sx={styles}>
       <Box className="container container1">
-        <Button className='removeResponse' variant='outlined'>
+        <Button onClick={() => attemptQuestion(null)} className='removeResponse' variant='outlined'>
           <p className="buttonText">Remove Response</p>
         </Button>
-        <Button className='markForReview' variant='outlined'>
-          <p className="buttonText">Mark for Review</p>
+        <Button onClick={() => reviewQuestion(!isMarked)} className='markForReview' variant='outlined'>
+          <p className="buttonText">
+            {isMarked ? "Unmark for Review" : "Mark for Review"}
+          </p>
         </Button>
-        <Button className='saveAndNext' variant='outlined'>
+        <Button disabled={isLastQuestion} onClick={goToNextQuestion} className='saveAndNext' variant='outlined'>
           <p className="buttonText">Save & Next</p>
         </Button>
       </Box>
       <Box className="container container2 center">
-        <Button className='submit' variant='outlined'>
+        <Button onClick={handleSubmit} className='submit' variant='outlined'>
           <p className="buttonText">Submit</p>
         </Button>
       </Box>

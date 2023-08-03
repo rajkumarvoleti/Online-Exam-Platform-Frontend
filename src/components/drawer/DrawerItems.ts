@@ -53,28 +53,28 @@ export const drawerItems:IDrawerListItem[] = [
     Index: "5",
     href: "/questionBank"
   },
-  {
-    Icon: ManageIcon,
-    Text: "Manage",
-    Index: "6",
-    href: "/manage"
-  },
-  {
-    Icon: ReportsIcon,
-    Text: "Reports",
-    Index: "7",
-    href: "/reports"
-  },
-  {
-    Icon: MasterDataIcon,
-    Text: "Master Data",
-    Index: "8",
-    href: "/masterData"
-  },
-  {
-    Icon: ReferIcon,
-    Text: "Refer",
-    Index: "9",
-    href: "/refer"
-  },
+  // {
+  //   Icon: ManageIcon,
+  //   Text: "Manage",
+  //   Index: "6",
+  //   href: "/manage"
+  // },
+  // {
+  //   Icon: ReportsIcon,
+  //   Text: "Reports",
+  //   Index: "7",
+  //   href: "/reports"
+  // },
+  // {
+  //   Icon: MasterDataIcon,
+  //   Text: "Master Data",
+  //   Index: "8",
+  //   href: "/masterData"
+  // },
+  // {
+  //   Icon: ReferIcon,
+  //   Text: "Refer",
+  //   Index: "9",
+  //   href: "/refer"
+  // },
 ]

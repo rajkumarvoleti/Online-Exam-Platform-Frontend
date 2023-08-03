@@ -1,6 +1,4 @@
 import { Box, Button, Card, Chip, Divider, SxProps } from "@mui/material";
-import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
-import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 import LanguageIcon from "@/components/icons/LanguageIcon";
 
 const styles:SxProps = {

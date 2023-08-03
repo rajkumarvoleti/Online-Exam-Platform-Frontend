@@ -37,7 +37,6 @@ export default function Header() {
         <FilterButton/>
         <OptionsMenu/>
       </Box>
-
     </Card>
   )
 }

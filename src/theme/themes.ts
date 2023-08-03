@@ -13,5 +13,11 @@ export const lightTheme = createTheme({
     primary: {
       main: "#4946D2"
     },
+    secondary: {
+      main: "#C783FF"
+    },
+    success: {
+      main: "#C2E830",
+    },
   },
 });

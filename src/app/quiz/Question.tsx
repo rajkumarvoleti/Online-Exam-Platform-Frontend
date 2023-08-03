@@ -1,5 +1,7 @@
 import { Box, Button, RadioGroup, FormControlLabel, Radio, SxProps } from "@mui/material";
 import ReportProblemOutlinedIcon from '@mui/icons-material/ReportProblemOutlined';
+import { useQuiz } from "@/hooks/useQuiz";
+import { useState, useEffect, SyntheticEvent } from "react";
 
 const styles: SxProps = {
   padding: "30px 50px",
@@ -44,22 +46,55 @@ const styles: SxProps = {
 }
 
 export default function Question() {
+
+  const {numberOfQuestions, activeQuestion, visitQuestion, attemptQuestion} = useQuiz();
+  const [selectedOption, setSelectedOption] = useState("");
+
+  useEffect(() => {
+    visitQuestion();
+  }, [activeQuestion?.id])
+
+  const handleClick = (e:any) => {
+    const value = e.target.value;
+    if(!value)
+    return;
+    if(value === selectedOption){
+      attemptQuestion(null);
+      setSelectedOption("");
+    }
+    else{
+      attemptQuestion(value);
+      setSelectedOption(value);
+    }
+  }
+
+  if(!activeQuestion)
+    return <></>;
+
   return (
     <Box sx={styles}>
       <Box className="container1">
-        <p className="questionNumber">Question 10<span>/20</span></p>
+        <p className="questionNumber">Question {activeQuestion?.id}<span>/{numberOfQuestions}</span></p>
         <Button className="reportButton center">
           <ReportProblemOutlinedIcon className="icon" />
           <p className="buttonText">Report</p>
         </Button>
       </Box>
       <Box className="container2">
-        <h3 className="question">What does RPA stands for?</h3>
+        <h3 className="question">{activeQuestion.question}</h3>
         <RadioGroup>
-          <FormControlLabel className="label active" value="option 1" control= {<Radio/>} label="Option 1" />
-          <FormControlLabel className="label" value="option 2" control= {<Radio/>} label="Option 1" />
-          <FormControlLabel className="label" value="option 3" control= {<Radio/>} label="Option 1" />
-          <FormControlLabel className="label" value="option 4" control= {<Radio/>} label="Option 1" />
+          {activeQuestion.options.map((option,i) => {
+            return (
+              <FormControlLabel 
+                checked={selectedOption === option && activeQuestion.attempted}
+                onClick={handleClick}
+                className={selectedOption === option && activeQuestion.attempted ? "label active": "label"}
+                key={i}
+                value={option}
+                control= {<Radio/>}
+                label={option} />
+            );
+          })}
         </RadioGroup>
       </Box>
     </Box>

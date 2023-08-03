@@ -2,6 +2,7 @@ import CircularNumberButton from "@/components/buttons/CircularNumberButton";
 import { Accordion, AccordionDetails, AccordionSummary, Box, SxProps } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { SyntheticEvent, useState } from "react";
+import { useQuiz } from "@/hooks/useQuiz";
 
 const styles:SxProps = {
   display: "flex",
@@ -32,9 +33,15 @@ const styles:SxProps = {
 export default function QuestionNumbersBox() {
 
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
-
+  const {numberOfQuestions,getQuestionTypeFromId} = useQuiz();
+  const {openQuestion} = useQuiz();
   const onChange = (e:SyntheticEvent,expanded:boolean) => {
     setIsExpanded(expanded);
+  }
+
+
+  const handleClick = (id:number) => {
+    openQuestion(id-1);
   }
 
   return (
@@ -50,8 +57,14 @@ export default function QuestionNumbersBox() {
         {isExpanded ? <p className="tab">Minimize Tab</p> : <p className="tab">Maximize Tab</p>}
       </AccordionSummary>
       <AccordionDetails className="details">
-        {[...Array(20)].map((x, i) =>
-          <CircularNumberButton size="medium" type="notVisited"  key={i} />
+        {[...Array(numberOfQuestions)].map((x, i) =>
+          <CircularNumberButton
+            number={i+1}
+            size="medium"
+            type={getQuestionTypeFromId(i)}
+            onClick={() => handleClick(i+1)}
+            key={i} 
+          />
           )}
       </AccordionDetails>
     </Accordion>

@@ -2,6 +2,7 @@ import { Box, Button, Card, Chip, Divider, SxProps } from "@mui/material";
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 import LanguageIcon from "@/components/icons/LanguageIcon";
+import { useRouter } from "next/navigation";
 
 const styles:SxProps = {
   margin: "10px",
@@ -55,6 +56,13 @@ const styles:SxProps = {
 }
 
 export default function ExamCard() {
+
+  const router = useRouter();
+
+  const startExam = () => {
+    router.push("/quiz");
+  }
+
   return (
     <Card sx={styles}>
       <Chip className="chip" label="Free" variant="outlined" color="success"/>
@@ -78,7 +86,9 @@ export default function ExamCard() {
           </Box>
         </Box>
         <Box className="buttonBox">
-          <Button variant="outlined" size="small"><p className="buttonText">Start Now</p></Button>
+          <Button onClick={startExam} variant="outlined" size="small">
+            <p className="buttonText">Start Now</p>
+          </Button>
         </Box>
       </Box>
       <Box className="languages">

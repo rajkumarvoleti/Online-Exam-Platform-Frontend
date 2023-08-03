@@ -11,6 +11,7 @@ import Account from "../Account";
 const styles:SxProps = {
   height: "100vh",
   width:"300px",
+  flexShrink: "0",
   position: "sticky",
   top: 0,
   ".logo":{

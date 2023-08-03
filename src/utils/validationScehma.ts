@@ -1,5 +1,5 @@
 import { ISignupOptions } from '@/interfaces/authInterfaces';
-import { ILoginForm, IUpdatePasswordForm, IUserDetailsForm } from '@/interfaces/formikInterfaces';
+import { ILoginForm, ITestDetailsForm, IUpdatePasswordForm, IUserDetailsForm } from '@/interfaces/formikInterfaces';
 import * as yup from 'yup';
 import 'yup-phone';
 
@@ -20,6 +20,8 @@ const checkboxValidation = yup.boolean().oneOf([true],'Please check the check bo
 
 const currentPasswordValidation = yup.string().required("Current Password is required");
 
+const stringRequiredValidation = yup.string().required("This Field is required");
+
 export const loginValidatonSchema: yup.ObjectSchema<ILoginForm> = yup.object({
   email:emailValidation,
   password:passwordValidation
@@ -38,4 +40,11 @@ export const updatePasswordValidationSchema: yup.ObjectSchema<IUpdatePasswordFor
   currentPassword:currentPasswordValidation,
   newPassword: passwordValidation,
   confirmNewPassword: confirmPasswordValidation2,
+})
+
+export const testDetailsValidationSchems: yup.ObjectSchema<ITestDetailsForm> = yup.object({
+  categoryName: stringRequiredValidation,
+  questionBankName: stringRequiredValidation,
+  testDescription: stringRequiredValidation,
+  testType: stringRequiredValidation,
 })

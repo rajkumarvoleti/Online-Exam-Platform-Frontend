@@ -12,10 +12,10 @@ const styles:SxProps = {
   }
 }
 
-export default function SearchBarComp() {
+export default function SearchBarComp({width, height, className}: {width?:string, height?:string, className?:string}) {
   return (
-    <Box sx={styles}>
-      <SearchBar className="search" />
+    <Box sx={styles} className={className}>
+      <SearchBar width={width} height={height} className="search" />
     </Box>
   )
 }

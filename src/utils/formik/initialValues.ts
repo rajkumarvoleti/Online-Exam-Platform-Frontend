@@ -1,4 +1,4 @@
-import { ILoginForm, ISignupForm, IUpdatePasswordForm, IUserDetailsForm } from "@/interfaces/formikInterfaces";
+import { ILoginForm, ISignupForm, ITestDetailsForm, IUpdatePasswordForm, IUserDetailsForm } from "@/interfaces/formikInterfaces";
 import { IUser } from "@/interfaces/userInterfaces";
 
 export const loginInitialValues:ILoginForm = {
@@ -40,4 +40,11 @@ export const updatePasswordInitialValues:IUpdatePasswordForm = {
   currentPassword: "",
   newPassword: "",
   confirmNewPassword: "",
+}
+
+export const testDetailsInitialValues:ITestDetailsForm = {
+  categoryName: "",
+  questionBankName: "",
+  testDescription: "",
+  testType: "",
 }

@@ -32,3 +32,10 @@ export interface IUpdatePasswordForm {
   newPassword: string
   confirmNewPassword: string
 }
+
+export interface ITestDetailsForm {
+  categoryName: string
+  testType: string
+  questionBankName: string
+  testDescription: string
+}
