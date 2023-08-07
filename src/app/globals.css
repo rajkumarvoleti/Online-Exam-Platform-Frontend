@@ -16,19 +16,27 @@ body {
   overflow-x: hidden;
 }
 
-html,body,div {
+html,
+body,
+div {
   -webkit-box-sizing: border-box !important;
   -moz-box-sizing: border-box !important;
   -ms-box-sizing: border-box !important;
   box-sizing: border-box !important;
 }
 
-*, 
-*:before, *:after {
+*,
+*:before,
+*:after {
   -webkit-box-sizing: border-box !important;
   -moz-box-sizing: border-box !important;
   -ms-box-sizing: border-box !important;
   box-sizing: border-box !important;
+}
+
+.wordEditor {
+  height: 1500px;
+  border: 2px solid red;
 }
 
 .center {
@@ -42,14 +50,14 @@ html,body,div {
   border-radius: 8px;
   border-color: #938A90;
   background: #FFF;
-  margin:10px 0;
+  margin: 10px 0;
 }
 
 .label {
   color: #000;
   font-size: 16px;
-  font-weight:500;
-  margin:5px;
+  font-weight: 500;
+  margin: 5px;
 }
 
 h3 {
@@ -63,7 +71,7 @@ h3 {
 h4 {
   color: #051390;
   font-size: 24px;
-  font-weight: 600;  
+  font-weight: 600;
   margin: 10px 0;
 }
 

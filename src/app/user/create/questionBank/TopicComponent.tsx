@@ -1,57 +1,51 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box } from "@mui/material";
-import RoboImage from '@/assets/common/roboImage.png';
-import Image from "next/image";
+import { Box, IconButton, SxProps } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { ITopic } from "@/interfaces/examInterfaces";
 import { useState } from "react";
+import ModalComponent from "@/components/ModalComponent";
+import DeleteTopicModal from "./DeleteTopicModal";
+import EditTopicModal from "./EditTopicModal";
 
-const styles = {
-  padding: "5px",
-  ".summary":{
-    display: "flex",
-    alignItems: "center",
-    "> *":{
-      margin: "10px"
-    },
-    ".details":{
-      pl: "10px",
-    }
-  },
-  ".chapter":{
-    color: "#2200A5",
-    fontSize: "16px",
-    lineHeight: "24.542px",
-    cursor: "pointer",
-  },
-  ".chapter.active":{
-    color: "#C2E830",
-  }
+const styles: SxProps = {
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center !important",
 }
 
-export default function TopicComponent() {
+export default function TopicComponent({ topic }: { topic: ITopic }) {
 
-  const [chapter, setChapter] = useState<number>(0);
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
+  const [openEditModal, setOpenEditModal] = useState<boolean>(false);
 
-  const handleChapterChange = (i:number) => {
-    setChapter(i);
-  }
+  const handleOpenDeleteModal = () => setOpenDeleteModal(true);
+  const handleCloseDeleteModal = () => setOpenDeleteModal(false);
+
+  const handleOpenEditModal = () => setOpenEditModal(true);
+  const handleCloseEditModal = () => setOpenEditModal(false);
+
+  if (!topic.id)
+    return <></>;
 
   return (
-    <Accordion disableGutters elevation={0} sx={styles}>
-      <AccordionSummary className="summary">
-        <Image src={RoboImage.src} alt="roboImage" width={RoboImage.width} height={RoboImage.height} />
-        <Box className="details">
-          <h5>RPA TOPIC - 1</h5>
-          <h6>Chapters - 3</h6>
-        </Box>
-      </AccordionSummary>
-      <AccordionDetails>
-        {[...Array(3)].map((value,i) => 
-          <p 
-            className={chapter === i ? "chapter active": "chapter"}
-            key={i}
-            onClick={() => handleChapterChange(i)}>
-            Chapter {i+1}
-          </p>)}
-      </AccordionDetails>
-    </Accordion>
+    <Box sx={styles}>
+      <p className="chapter">
+        {topic.name}
+      </p>
+      <Box>
+        <IconButton onClick={handleOpenEditModal} size="small">
+          <EditIcon color="primary" />
+        </IconButton>
+        <IconButton onClick={handleOpenDeleteModal} size="small">
+          <DeleteForeverIcon color="error" />
+        </IconButton>
+      </Box>
+      <ModalComponent open={openDeleteModal} >
+        <DeleteTopicModal id={topic.id} handleClose={handleCloseDeleteModal} />
+      </ModalComponent>
+      <ModalComponent open={openEditModal} >
+        <EditTopicModal currTopic={topic} handleClose={handleCloseEditModal} />
+      </ModalComponent>
+    </Box>
   )
 }

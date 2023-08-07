@@ -1,11 +1,13 @@
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
-import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { Box, Button } from "@mui/material";
 import SearchBarComp from '@/components/SearchBarComp';
+import ModalComponent from '@/components/ModalComponent';
+import { useState } from "react";
+import CreateSubjectModal from './CreateSubjectModal';
 
 const styles = {
-  display:"flex",
+  display: "flex",
   flexWrap: "wrap",
   alignItems: "center",
   justifyContent: "space-between",
@@ -17,14 +19,14 @@ const styles = {
     fontWeight: "600",
     lineHeight: "24.542px",
   },
-  ".smallBtn":{
-    border:"2px solid red",
+  ".smallBtn": {
+    border: "2px solid red",
     width: "30px",
   },
-  ".buttons":{
+  ".buttons": {
     gap: "10px",
   },
-  ".icon":{
+  ".icon": {
     fill: "#C783FF",
   },
   ".newButton": {
@@ -38,17 +40,26 @@ const styles = {
 }
 
 export default function SideBarHeader() {
+
+  const [openSubjectModal, setOpenSubjectModal] = useState<boolean>(false);
+
+  const handleOpenSubjectModal = () => setOpenSubjectModal(true);
+  const handleCloseSubjectModal = () => setOpenSubjectModal(false);
+
   return (
     <Box sx={styles}>
       <h4>TOPIC</h4>
       <Box className="buttons center">
-        <Button className='newButton' variant='outlined'>
+        <Button onClick={handleOpenSubjectModal} className='newButton' variant='outlined'>
           + New
-          </Button>
+        </Button>
         <FilterAltOutlinedIcon className='icon' />
         <FileDownloadOutlinedIcon className='icon' />
       </Box>
       <SearchBarComp className='searchBar' width='250px' />
+      <ModalComponent open={openSubjectModal}>
+        <CreateSubjectModal handleClose={handleCloseSubjectModal} />
+      </ModalComponent>
     </Box>
   )
 }

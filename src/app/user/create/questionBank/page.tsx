@@ -3,30 +3,32 @@
 import { Box, SxProps } from "@mui/material"
 import SideBar from "./SideBar"
 import Header from "./Header"
-import WordComponent from "@/components/WordComponent"
-import AnswerComponent from "./AnswerComponent"
+// import WordComponent from "@/components/WordComponent"
+// import AnswerComponent from "./AnswerComponent"
 import Footer from "./Footer"
 import { IQuestionType } from "@/interfaces/questionInterfaces"
 import { useState } from "react"
+import useManageQuestion from "@/hooks/exam/useManageQuestion"
 
-const styles:SxProps = {
+const styles: SxProps = {
   display: "flex",
-  ">*":{
+  ">*": {
     // margin: "10px",
   },
 }
 
-export default function Page(){
+export default function Page() {
 
-  const [type, setType] = useState<IQuestionType>("trueOrFalse")
+  const [type, setType] = useState<IQuestionType>("trueOrFalse");
+  const { handleQuestion } = useManageQuestion();
 
   return (
     <Box sx={styles}>
       <SideBar />
       <Box className="main">
         <Header type={type} setType={setType} />
-        <WordComponent />
-        <AnswerComponent type={type} />
+        {/* <WordComponent handleData={handleQuestion} /> */}
+        {/* <AnswerComponent type={type} /> */}
         <Footer />
       </Box>
     </Box>
