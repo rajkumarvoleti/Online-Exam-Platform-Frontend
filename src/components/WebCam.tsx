@@ -6,7 +6,7 @@ import { Box, SxProps } from '@mui/material';
 
 const styles:SxProps = {
   position: "absolute",
-  right: 100,
+  left: 100,
   bottom: 100,
 }
 

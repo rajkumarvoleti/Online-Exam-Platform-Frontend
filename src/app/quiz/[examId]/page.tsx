@@ -7,7 +7,6 @@ import ExamPaused from '../ExamPaused'
 import Exam from '../Exam'
 import Alerts from '../Alerts'
 import WebCamComponent from '@/components/WebCam'
-import { useSearchParams } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
 import { getExamRequest } from '@/api/exam'
 
