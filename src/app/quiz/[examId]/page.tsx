@@ -61,7 +61,7 @@ export default function Page({params}:{params:{examId:string}}) {
       {/* <pre>{JSON.stringify({ fullScreen, tabFocus }, null, 2)}</pre> */}
 
       <div className="test-container">{getContent()}</div>
-      {/* <WebCamComponent /> */}
+      <WebCamComponent />
       <Alerts fullScreen={fullScreen} tabFocus={tabFocus} />
     </>
   )
