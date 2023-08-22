@@ -12,10 +12,16 @@ const styles:SxProps = {
   }
 }
 
-export default function SearchBarComp({width, height, className}: {width?:string, height?:string, className?:string}) {
+export default function SearchBarComp({width, height, className, setQuery}: {width?:string, height?:string, className?:string, setQuery?:(query:string) => void}) {
+
+  const handleSearch = (value:string) => {
+    if(setQuery)
+      setQuery(value);
+  }
+
   return (
     <Box sx={styles} className={className}>
-      <SearchBar width={width} height={height} className="search" />
+      <SearchBar onSearch={() => {}} onChange={handleSearch} width={width} height={height} className="search" />
     </Box>
   )
 }

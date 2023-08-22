@@ -1,4 +1,4 @@
-import { internalLoginRequest, signupRequest } from "@/api/auth"
+import { signupRequest } from "@/api/auth"
 import { useToast } from "../useToast";
 import { ISignupForm } from "@/interfaces/formikInterfaces";
 import { useRouter } from "next-nprogress-bar";

@@ -1,14 +1,11 @@
-import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil"
-import questionsData from '@/utils/questions.json';
-import { IMCQQuestion, IQuestionStatus } from "@/interfaces/questionInterfaces";
+import { IQuestion, IQuestionStatus } from "@/interfaces/questionInterfaces";
 import { atom } from "recoil";
 import { recoilPersist } from 'recoil-persist'
 import { INumberButtonType } from "@/interfaces/buttonInterfaces";
+import { IQuizQuestion } from "@/interfaces/quizInterfaces";
 
-const { persistAtom } = recoilPersist()
-
-const questionsAtom = atom<IMCQQuestion[]>({
+const questionsAtom = atom<IQuestion[]>({
   key: "questions",
   default: [],
   // effects_UNSTABLE: [persistAtom]
@@ -24,15 +21,17 @@ export const useQuiz = () => {
   const [questions, setQuestions] = useRecoilState(questionsAtom);
   const [activeId, setActiveId] = useRecoilState(questionIdAtom);
 
-  const initializeQuestions = () => {
+  const initializeQuestions = (questions:IQuizQuestion[]) => {
     console.log("initializing");
-    setQuestions([]);
-    questionsData.forEach(questionData => {
+    setQuestions(prev => []);
+    questions.forEach((questionData, i) => {
       setQuestions(questions => [...questions,{
-        id: questionData.id,
-        question: questionData.question,
-        options: questionData.options,
-        answer: questionData.answer,
+        questionId:questionData.id,
+        id: i+1,
+        type: questionData.type,
+        question: questionData.description,
+        options: questionData.options.map(option => option.description),
+        answer: "",
         attempted: false,
         marked: false,
         visited: false,
@@ -42,7 +41,6 @@ export const useQuiz = () => {
   }
 
   const openQuestion = (id:number) => {
-    console.log(id);
     setActiveId(id);
   }
 
@@ -51,7 +49,7 @@ export const useQuiz = () => {
   }
 
   const handleResponse = (value:string | null) => {
-    const updatedQuestion:IMCQQuestion = {...questions[activeId], response: value, attempted: value ? true : false};
+    const updatedQuestion:IQuestion = {...questions[activeId], response: value, attempted: value ? true : false};
     setQuestions(questions => [
       ...questions.slice(0,activeId),
       updatedQuestion,
@@ -60,7 +58,7 @@ export const useQuiz = () => {
   }
 
   const handleQuestionStatus = ({key, value}:{key:IQuestionStatus, value: boolean}) => {
-    const updatedQuestion:IMCQQuestion = {...questions[activeId]};
+    const updatedQuestion:IQuestion = {...questions[activeId]};
     updatedQuestion[key] = value;
     setQuestions(questions => [
       ...questions.slice(0,activeId),

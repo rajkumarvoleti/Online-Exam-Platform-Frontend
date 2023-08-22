@@ -2,7 +2,7 @@ import { Box, InputLabel, OutlinedInput, SxProps } from "@mui/material";
 import InputStartAdorment from "./InputStartAdorment";
 import { IInputProps } from "@/interfaces/inputInterfaces";
 
-  const styles: SxProps = {
+const styles: SxProps = {
   mt:"0",
   ".error": {
     color: "red",

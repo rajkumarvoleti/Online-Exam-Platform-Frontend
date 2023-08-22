@@ -3,8 +3,8 @@ import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import { IAutoCompleteOption, IInputProps } from '@/interfaces/inputInterfaces';
-import { SxProps, Chip } from '@mui/material';
+import { IInputProps } from '@/interfaces/inputInterfaces';
+import { SxProps } from '@mui/material';
 import { useFormikContext } from 'formik';
 
 const styles: SxProps = {
@@ -62,7 +62,7 @@ export default function AutoCompleteInput(props:IInputProps) {
         
         />
         )}
-        />
+    />
     </Box>
   );
 }

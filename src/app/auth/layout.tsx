@@ -1,9 +1,9 @@
 "use client"
 
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 import Image from "next/image";
-import HeaderLogo from '../../assets/user/layout-header-logo.png';
-import UserImage from '../../assets/user/layout-user.png';
+import HeaderLogo from '@/assets/user/layout-header-logo.png';
+import UserImage from '@/assets/user/layout-user.png';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { MsalProvider } from "@azure/msal-react";
 import { Configuration, PublicClientApplication } from "@azure/msal-browser";

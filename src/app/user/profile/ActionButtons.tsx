@@ -1,6 +1,4 @@
-import useUser from '@/hooks/useUser';
-import { getUserDetails } from '@/utils/formik/initialValues';
-import { Box, Button, SxProps, formControlClasses} from '@mui/material';
+import { Box, Button, SxProps} from '@mui/material';
 import { useFormikContext } from 'formik';
 
 const styles:SxProps = {

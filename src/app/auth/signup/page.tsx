@@ -1,6 +1,7 @@
 "use client"
 
-import { Box, Button } from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import { Formik, Form } from 'formik';
 import { signupInitialValues } from "@/utils/formik/initialValues";
 import { signupValidationSchema } from "@/utils/validationScehma";
@@ -9,7 +10,6 @@ import EmailIcon from "@/assets/formik/email-icon.svg";
 import PasswordIcon from "@/assets/formik/password-icon.svg";
 import ExternalSigninDiv from "@/components/auth/ExternalSigninDiv";
 import { useSignup } from "@/hooks/auth/useSignup";
-import { ISignupForm } from "@/interfaces/formikInterfaces";
 import Link from "next/link";
 
 const styles = {

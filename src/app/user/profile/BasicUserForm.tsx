@@ -1,6 +1,6 @@
 import { SimpleInput } from "@/components/formik/Input";
 import useUser from "@/hooks/useUser";
-import { Box, InputLabel, OutlinedInput, SxProps } from "@mui/material";
+import { Box, SxProps } from "@mui/material";
 
 const styles:SxProps = {
   display: "flex",

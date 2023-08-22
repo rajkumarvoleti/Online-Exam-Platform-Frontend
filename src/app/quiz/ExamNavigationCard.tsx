@@ -1,10 +1,13 @@
-import { Box, Card, SxProps } from "@mui/material";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+
 import Image from "next/image";
 import UserImage from '@/assets/user/userImage.png';
 import useUser from "@/hooks/useUser";
 import { ITime, getTwoDigit } from "@/utils/timeUtils";
 import QuestionResponseInfo from "./QuestionResponseInfo";
 import QuestionNumbersBox from "./QuestionNumbersBox";
+import { SxProps } from "@mui/material";
 
 const styles:SxProps = {
   width: "400px",
@@ -58,7 +61,7 @@ export default function ExamNavigationCard ({time}:{time:ITime}) {
         <Box className="userInfo">
           <Image src={UserImage.src} width={"60"} height={"60"} alt="user" />
           <Box className="details">
-            <h3>{`${user?.firstName} ${user?.lastName}`}</h3>
+            <h3>{`${user?.firstName || ""} ${user?.lastName || ""}`}</h3>
             <Box className="timeRemaining">
               <p className="p">Time Remaining: </p> 
               <p className="p time">{getTwoDigit(time.hours)}:{getTwoDigit(time.minutes)}:{getTwoDigit(time.seconds)}</p>

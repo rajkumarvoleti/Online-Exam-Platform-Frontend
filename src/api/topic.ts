@@ -10,7 +10,7 @@ export const updateTopicRequest = ({ topicData, id }: { topicData: ITopic, id: n
 }
 
 export const getAllTopicsRequest = ({ subjectId }: { subjectId: number }) => {
-  return request({ url: '/topic/getAll', method: 'get', data: {} });
+  return request({ url: '/topic/getAll', method: 'get', params: {subjectId} });
 }
 
 export const deleteTopicRequest = (id: number) => {

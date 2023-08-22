@@ -1,4 +1,4 @@
-import { Box, InputAdornment } from "@mui/material";
+import { InputAdornment } from "@mui/material";
 import Image from "next/image";
 import {INextImage} from '../../interfaces/imageInterfaces';
 

@@ -1,4 +1,4 @@
-import { Button, IconButton } from "@mui/material";
+import { Button } from "@mui/material";
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 
 export default function FilterButton({hideText, variant, className}:{hideText?:boolean, variant?:"text" | "outlined" | "contained", className?:string}) {

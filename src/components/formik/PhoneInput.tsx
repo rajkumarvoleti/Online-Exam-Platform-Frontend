@@ -1,4 +1,4 @@
-import { Box, InputLabel, OutlinedInput } from "@mui/material";
+import { Box, InputLabel } from "@mui/material";
 import { IInputProps } from "@/interfaces/inputInterfaces";
 import { MuiTelInput } from 'mui-tel-input';
 import { useFormikContext } from "formik";

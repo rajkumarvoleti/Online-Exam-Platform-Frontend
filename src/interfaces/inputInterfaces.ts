@@ -1,4 +1,3 @@
-import { HTMLInputTypeAttribute } from "react";
 import { INextImage } from "./imageInterfaces";
 import { ChangeEventHandler, FocusEventHandler, MouseEventHandler, ReactNode, RefObject } from "react";
 

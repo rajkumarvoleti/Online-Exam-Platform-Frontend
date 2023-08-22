@@ -1,4 +1,3 @@
-import {CountryCode} from 'countries-and-timezones';
 
 export interface ICountry {
   id: string,

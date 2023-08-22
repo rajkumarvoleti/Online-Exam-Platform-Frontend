@@ -3,6 +3,7 @@ import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 import LanguageIcon from "@/components/icons/LanguageIcon";
 import { useRouter } from "next/navigation";
+import { IExam } from "@/interfaces/examInterfaces";
 
 const styles:SxProps = {
   margin: "10px",
@@ -55,34 +56,34 @@ const styles:SxProps = {
   },
 }
 
-export default function ExamCard() {
+export default function ExamCard({exam}:{exam:IExam}) {
 
   const router = useRouter();
 
   const startExam = () => {
-    router.push("/quiz");
+    router.push(`/quiz/${exam.id}`);
   }
 
   return (
     <Card sx={styles}>
       <Chip className="chip" label="Free" variant="outlined" color="success"/>
       <Box className="title">
-        <p className="heading">Robot Management: </p>
-        <p className="blue">Mock Test</p>
+        <p className="heading">{exam.name}</p>
+        <p className="blue">{exam.description}</p>
       </Box>
       <Box className="container">
         <Box className="details">
           <Box className="description">
             <DescriptionOutlinedIcon className="icon" />
-            <p>50 Questions</p>
+            <p>{exam.totalQuestions} Questions</p>
             <Divider className="divider" orientation="vertical" />
-            <p>30 Minutes</p>
+            <p>{exam.totalTime} Minutes</p>
             <Divider className="divider" orientation="vertical" />
-            <p>50 marks</p>
+            <p>{exam.totalMarks} marks</p>
           </Box>
           <Box className="time">
             <AccessTimeOutlinedIcon className="icon" />
-            <p>14 Jul,9:00 to 15 jul,10:00</p>
+            <p>{exam.testAvailabilityStart.toString().slice(0,10)} to {exam.testAvailabilityEnd.toString().slice(0,10)}</p>
           </Box>
         </Box>
         <Box className="buttonBox">

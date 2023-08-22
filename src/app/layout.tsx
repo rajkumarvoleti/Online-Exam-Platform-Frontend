@@ -34,8 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               height="4px"
               color="#051390"
               options={{ showSpinner: false }}
-              shallowRouting
-              />
+            />
           </body>
         </QueryClientProvider>
         </RecoilRoot>

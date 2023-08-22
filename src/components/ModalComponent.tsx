@@ -1,4 +1,4 @@
-import { Box, Button, SxProps, InputLabel, Modal, OutlinedInput } from "@mui/material";
+import { Box, SxProps, Modal } from "@mui/material";
 
 const styles: SxProps = {
   ".modalContainer": {

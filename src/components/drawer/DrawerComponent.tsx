@@ -1,8 +1,8 @@
 "use client"
 
-import {  Box, Card, Drawer, SxProps } from "@mui/material";
+import {  Box, Card, SxProps } from "@mui/material";
 import Image from "next/image";
-import Logo from '../../assets/user/layout-header-logo.png';
+import Logo from '@/assets/user/layout-header-logo.png';
 import DrawerList from "./DrawerList";
 import { drawerItems } from "./DrawerItems";
 import Account from "../Account";

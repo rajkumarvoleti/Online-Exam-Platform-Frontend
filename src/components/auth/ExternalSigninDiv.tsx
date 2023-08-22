@@ -1,7 +1,4 @@
 import { Box } from "@mui/material";
-import ExternalLoginButton from "../buttons/ExternalLoginButton";
-import FaceBookIcon from '@/assets/formik/facebook-icon.svg';
-import TwitterIcon from '@/assets/formik/twitter-icon.svg';
 import GoogleLoginButton from "./GoogleLoginButton";
 import MicrosoftLoginButton from "./MicrosoftLoginButton";
 

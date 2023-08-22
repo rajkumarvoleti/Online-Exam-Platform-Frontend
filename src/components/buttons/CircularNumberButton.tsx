@@ -1,6 +1,5 @@
-import { useQuiz } from "@/hooks/useQuiz";
 import { INumberButtonSize, INumberButtonType } from "@/interfaces/buttonInterfaces";
-import { Box, Button, IconButton, SxProps } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import { MouseEventHandler } from "react";
 
 const styles = {

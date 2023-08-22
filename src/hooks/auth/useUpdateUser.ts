@@ -6,7 +6,6 @@ import { IUserDetailsForm } from "@/interfaces/formikInterfaces";
 import { IUser } from "@/interfaces/userInterfaces";
 import { useMutation } from "@tanstack/react-query";
 import { updatePasswordRequest, updateUserRequest } from "@/api/auth";
-import UserDetailsForm from "@/app/user/profile/UserDetailsForm";
 import useUser from "../useUser";
 
 const useUpdateUserMutation = ({request, options}:{request:(data:IUser) => Promise<any>, options:any}) => {

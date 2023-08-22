@@ -1,7 +1,9 @@
 import { Box, Button, RadioGroup, FormControlLabel, Radio, SxProps } from "@mui/material";
 import ReportProblemOutlinedIcon from '@mui/icons-material/ReportProblemOutlined';
 import { useQuiz } from "@/hooks/useQuiz";
-import { useState, useEffect, SyntheticEvent } from "react";
+import { useEffect } from "react";
+import MCQAnswer from "./MCQAnswer";
+import SubjectiveAnswer from "./SubjectiveAnswer";
 
 const styles: SxProps = {
   padding: "30px 50px",
@@ -47,26 +49,13 @@ const styles: SxProps = {
 
 export default function Question() {
 
-  const {numberOfQuestions, activeQuestion, visitQuestion, attemptQuestion} = useQuiz();
-  const [selectedOption, setSelectedOption] = useState("");
+  const {numberOfQuestions, activeQuestion, visitQuestion} = useQuiz();
 
   useEffect(() => {
     visitQuestion();
   }, [activeQuestion?.id])
 
-  const handleClick = (e:any) => {
-    const value = e.target.value;
-    if(!value)
-    return;
-    if(value === selectedOption){
-      attemptQuestion(null);
-      setSelectedOption("");
-    }
-    else{
-      attemptQuestion(value);
-      setSelectedOption(value);
-    }
-  }
+
 
   if(!activeQuestion)
     return <></>;
@@ -83,18 +72,11 @@ export default function Question() {
       <Box className="container2">
         <h3 className="question">{activeQuestion.question}</h3>
         <RadioGroup>
-          {activeQuestion.options.map((option,i) => {
-            return (
-              <FormControlLabel 
-                checked={selectedOption === option && activeQuestion.attempted}
-                onClick={handleClick}
-                className={selectedOption === option && activeQuestion.attempted ? "label active": "label"}
-                key={i}
-                value={option}
-                control= {<Radio/>}
-                label={option} />
-            );
-          })}
+          {activeQuestion.type === "multipleChoice" && <MCQAnswer options={activeQuestion.options} />}
+          {activeQuestion.type === "trueOrFalse" && <MCQAnswer options={['True', 'False']} />}
+          {activeQuestion.type === "fillInTheBlanks" && <SubjectiveAnswer />}
+          {activeQuestion.type === "subjective" && <SubjectiveAnswer />}
+          {/* <SubjectiveAnswer /> */}
         </RadioGroup>
       </Box>
     </Box>

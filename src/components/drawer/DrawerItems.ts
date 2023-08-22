@@ -1,12 +1,8 @@
-import UserProfileIcon from '../../assets/drawer/userProfile.png';
-import DashboardIcon from '../../assets/drawer/dashboard.png';
-import CreateIcon from '../../assets/drawer/create.png';
-import TestIcon from '../../assets/drawer/test.png';
-import QuestionBankIcon from '../../assets/drawer/questionBank.png';
-import ManageIcon from '../../assets/drawer/manage.png';
-import ReportsIcon from '../../assets/drawer/reports.png';
-import MasterDataIcon from '../../assets/drawer/masterData.png';
-import ReferIcon from '../../assets/drawer/refer.png';
+import UserProfileIcon from '@/assets/drawer/userProfile.png';
+import DashboardIcon from '@/assets/drawer/dashboard.png';
+import CreateIcon from '@/assets/drawer/create.png';
+import TestIcon from '@/assets/drawer/test.png';
+import QuestionBankIcon from '@/assets/drawer/questionBank.png';
 import { IDrawerListItem } from "@/interfaces/componentInterfaces";
 
 export const drawerItems:IDrawerListItem[] = [

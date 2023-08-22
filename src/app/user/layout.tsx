@@ -1,7 +1,6 @@
 "use client"
 
 import PageHeader from "@/components/PageHeader";
-import LogoutButton from "@/components/auth/LogoutButton";
 import DrawerComponent from "@/components/drawer/DrawerComponent";
 import { useDrawer } from "@/hooks/useDrawer";
 import { useToast } from "@/hooks/useToast";

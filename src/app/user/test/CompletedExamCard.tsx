@@ -1,4 +1,4 @@
-import { Box, Button, Card, Chip, Divider, SxProps } from "@mui/material";
+import { Box, Button, Card, SxProps } from "@mui/material";
 import LanguageIcon from "@/components/icons/LanguageIcon";
 
 const styles:SxProps = {

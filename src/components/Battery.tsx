@@ -1,5 +1,4 @@
 import { IBattery, useBatter } from '@/hooks/useBattery';
-import React, { useEffect, useState } from 'react';
 
 export default function BatteryStatus() {
 

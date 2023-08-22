@@ -1,7 +1,7 @@
 import { drawerItems } from "@/components/drawer/DrawerItems";
 import { IDrawerListItem } from "@/interfaces/componentInterfaces";
 import { ICountry, ITimeZone } from "@/interfaces/otherInterfaces";
-import ct,{CountryCode, Country} from 'countries-and-timezones';
+import ct from 'countries-and-timezones';
 
 const flattenItems = (items:IDrawerListItem[]): IDrawerListItem[] => {
   items.forEach(item => {
@@ -18,7 +18,7 @@ export function findDrawerItem(path: string) {
   const activeItem = flattenItems(drawerItems).find(item => {
     if(item.Items)
       return false;
-    return item.href === path;
+    return item.href === path.slice(0,item.href?.length);
   })
   return activeItem || drawerItems[0];
 }

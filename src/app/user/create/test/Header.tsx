@@ -1,10 +1,8 @@
-import { Box, Card, Step, StepConnector, StepConnectorProps, StepIconProps, StepLabel, Stepper, SxProps } from "@mui/material";
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import { Box, Card, Step, StepConnector, StepIconProps, StepLabel, Stepper, SxProps } from "@mui/material";
 import TestIcon from "@/assets/icons/TestIcon";
 import SettingsIcon from "@/assets/icons/SettingsIcon";
 import PublishQuestionIcon from "@/assets/icons/PublishQuestionIcon";
 import AddQuestionIcon from "@/assets/icons/AddQuestionIcon";
-import { ReactComponentElement } from "react";
 
 const styles:SxProps = {
   padding: "20px 40px",

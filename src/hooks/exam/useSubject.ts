@@ -1,9 +1,8 @@
-import { MutateOptions, QueryOptions, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { MutateOptions, useMutation, useQueryClient } from "@tanstack/react-query";
 import useUser from "../useUser"
 import { useToast } from "../useToast";
 import { ISubject } from "@/interfaces/examInterfaces";
-import { createSubjectRequest, deleteSubjectRequest, getAllSubjectsRequest, updateSubjectRequest } from "@/api/subject";
-import { useState, useEffect } from "react";
+import { createSubjectRequest, deleteSubjectRequest, updateSubjectRequest } from "@/api/subject";
 
 const useSubjectMutation = ({ request, options }: { request: ({ subjectData, userId }: { subjectData: ISubject, userId: number }) => Promise<any>, options: any }) => {
   return useMutation(
@@ -38,7 +37,11 @@ export const useSubject = () => {
         errorToast({ msg: data.error });
       else {
         successToast({ msg: "Subject Created Successfully" });
-        queryClient.invalidateQueries(["subjects"], { exact: true })
+        queryClient.setQueryData(["subjects"],(oldData:any) =>{
+          console.log(oldData);
+          return {...oldData, subjects: [...oldData.subjects, data.subject]};
+        });
+        queryClient.invalidateQueries(["subjects"], { exact: true });
       }
     },
     onError: (error: any, variables: any) => {
@@ -66,6 +69,7 @@ export const useSubject = () => {
         errorToast({ msg: data.error });
       else {
         successToast({ msg: "Subject Deleted Successfully" });
+        console.log(data);
         queryClient.invalidateQueries(["subjects"], { exact: true });
       }
     },

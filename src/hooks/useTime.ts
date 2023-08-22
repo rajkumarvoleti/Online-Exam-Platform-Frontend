@@ -1,4 +1,4 @@
-import { ITime, getTimeFromSeconds } from '@/utils/timeUtils';
+import { ITime } from '@/utils/timeUtils';
 import { useEffect, useState } from 'react';
 
 const useTime = (): ITime => {

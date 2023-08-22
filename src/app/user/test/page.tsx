@@ -4,6 +4,9 @@ import Header from './Header';
 import {useState} from 'react';
 import ExamCard from './ExamCard';
 import CompletedExamCard from './CompletedExamCard';
+import { useQuery } from '@tanstack/react-query';
+import { getAllExamsRequest } from '@/api/exam';
+import { IExam } from '@/interfaces/examInterfaces';
 
 const styles:SxProps = {
   ".tabs":{
@@ -33,8 +36,17 @@ const styles:SxProps = {
 export default function Page(){
 
   const [tabValue, setTabValue] = useState<number>(0);
+  const {data, error, isLoading} = useQuery(["exams"],async () => await getAllExamsRequest())
 
   const tabs = ["Start Now","Completed" ,"Coming Soon"]
+
+  if(error)
+    return <p>error</p>
+  
+  if(isLoading)
+    return <p>loading...</p>
+  
+  console.log(data);
 
   return (
     <Box sx={styles}>
@@ -48,22 +60,21 @@ export default function Page(){
       </Card>
       <Box className="center">
         {tabValue === 0 && <Box className="cards">
-          <ExamCard/>
-          <ExamCard/>
-          <ExamCard/>
-          <ExamCard/>
+          {data.exams.map((exam:IExam) => (
+            <ExamCard exam={exam} key={exam.id}/>
+          ))}
         </Box>}
         {tabValue === 1 && <Box className="cards">
           <CompletedExamCard />
+          {/* <CompletedExamCard />
           <CompletedExamCard />
-          <CompletedExamCard />
-          <CompletedExamCard />
+          <CompletedExamCard /> */}
         </Box>}
         {tabValue === 2 && <Box className="cards">
+          {/* <ExamCard/>
           <ExamCard/>
           <ExamCard/>
-          <ExamCard/>
-          <ExamCard/>
+          <ExamCard/> */}
         </Box>}
       </Box>
     </Box>

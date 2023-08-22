@@ -1,4 +1,4 @@
-import { Box, Button, Card, SxProps } from "@mui/material";
+import { Button, Card, SxProps } from "@mui/material";
 
 const styles:SxProps = {
   display: "flex",

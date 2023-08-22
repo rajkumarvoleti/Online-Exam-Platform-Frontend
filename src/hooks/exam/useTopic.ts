@@ -1,9 +1,8 @@
-import { MutateOptions, QueryOptions, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { MutateOptions, useMutation, useQueryClient } from "@tanstack/react-query";
 import useUser from "../useUser"
 import { useToast } from "../useToast";
 import { ITopic } from "@/interfaces/examInterfaces";
-import { createTopicRequest, deleteTopicRequest, getAllTopicsRequest, updateTopicRequest } from "@/api/topic";
-import { useState, useEffect } from "react";
+import { createTopicRequest, deleteTopicRequest, updateTopicRequest } from "@/api/topic";
 
 const useTopicMutation = ({ request, options }: { request: ({ topicData, userId }: { topicData: ITopic, userId: number }) => Promise<any>, options: any }) => {
   return useMutation(
@@ -38,7 +37,8 @@ export const useTopic = () => {
         errorToast({ msg: data.error });
       else {
         successToast({ msg: "Topic Created Successfully" });
-        queryClient.invalidateQueries(["subjects"], { exact: true })
+        queryClient.invalidateQueries(["topics",variables.topicData.subjectId],{exact: true})
+        queryClient.invalidateQueries(["subjects"], {exact: true});
       }
     },
     onError: (error: any, variables: any) => {
@@ -52,7 +52,8 @@ export const useTopic = () => {
         errorToast({ msg: data.error });
       else {
         successToast({ msg: "Topic Updated Successfully" });
-        queryClient.invalidateQueries(["subjects"], { exact: true })
+        console.log(variables.topicData.subjectId);
+        queryClient.invalidateQueries(["topics"])
       }
     },
     onError: (error: any, variables: any) => {
@@ -65,8 +66,10 @@ export const useTopic = () => {
       if (data.error)
         errorToast({ msg: data.error });
       else {
+        console.log(data);
         successToast({ msg: "Topic Deleted Successfully" });
-        queryClient.invalidateQueries(["subjects"], { exact: true });
+        queryClient.invalidateQueries(["topics", data.topic.subjectId]);
+        queryClient.invalidateQueries(["subjects"], {exact: true});
       }
     },
     onError: (error: any, variables: any) => {

@@ -38,7 +38,7 @@ export const useLogin = () => {
       else{
         successToast({msg:"Logged in successfully !"});
         setSession({isAuthenticated:true, user:data.user});
-        router.push("/user");
+        router.push("/user/dashboard");
       }
     },
     onError: (error:any,variables:any) => {

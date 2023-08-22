@@ -4,7 +4,6 @@ import Input from "./Input";
 import PhoneInput from "./PhoneInput";
 import CheckboxInput from "./CheckboxInput";
 import AutoCompleteInput from "./AutoCompleteInput";
-import { ICountry } from "@/interfaces/otherInterfaces";
 
 export function FormikInput(props: IInputProps) {
   const formikContext = useFormikContext();

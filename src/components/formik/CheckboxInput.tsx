@@ -1,4 +1,4 @@
-import { Box, Checkbox, FormControlLabel, InputLabel, OutlinedInput } from "@mui/material";
+import { Box, Checkbox } from "@mui/material";
 import { IInputProps } from "@/interfaces/inputInterfaces";
 import Link from "next/link";
 
