@@ -22,7 +22,7 @@ export default function Page() {
   return (
     <Box sx={styles}>
       <h4>Please Select a subject</h4>
-      <Button onClick={handleCreateMany}>Create a lot of questions</Button>
+      {/* <Button onClick={handleCreateMany}>Create a lot of questions</Button> */}
     </Box>
   )
 }
