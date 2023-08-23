@@ -1,6 +1,6 @@
 import { useQuiz } from "@/hooks/useQuiz";
 import { Box, Input, SxProps } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const styles:SxProps = {
   display: "flex",
@@ -15,8 +15,14 @@ const styles:SxProps = {
 
 export default function SubjectiveAnswer() {
 
-  const {attemptQuestion} = useQuiz();
+  const {attemptQuestion, activeQuestion} = useQuiz();
   const [selectedOption, setSelectedOption] = useState("");
+
+  useEffect(() => {
+    const response = activeQuestion.response;
+    if(response)
+      setSelectedOption(response);
+  }, [activeQuestion])
 
 
   const handleChange = (e:any) => {
@@ -37,7 +43,7 @@ export default function SubjectiveAnswer() {
   return (
     <Box sx={styles}>
       <h4>Ans{") "}</h4>
-      <Input onChange={handleChange} />
+      <Input value={selectedOption} onChange={handleChange} />
     </Box>
   )
 }

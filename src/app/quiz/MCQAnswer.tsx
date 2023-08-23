@@ -1,12 +1,18 @@
 import { useQuiz } from "@/hooks/useQuiz";
 import { FormControlLabel, Radio } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function MCQAnswer({options}:{options:string[]}) {
 
-  const {activeQuestion, attemptQuestion} = useQuiz();
+  const {activeQuestion, attemptQuestion,} = useQuiz();
   const [selectedOption, setSelectedOption] = useState("");
 
+  useEffect(() => {
+    const response = activeQuestion.response;
+    if(response)
+      setSelectedOption(response);
+  }, [activeQuestion])
+  
 
   const handleClick = (e:any) => {
     const value = e.target.value;
