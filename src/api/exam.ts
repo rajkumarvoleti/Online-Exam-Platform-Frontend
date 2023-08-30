@@ -1,3 +1,4 @@
+import { IResultQuery } from "@/interfaces/quizInterfaces";
 import { request } from ".";
 
 export const getAllExamsRequest = () => {
@@ -6,4 +7,8 @@ export const getAllExamsRequest = () => {
 
 export const getExamRequest = (id:number) => {
   return request({ url: '/exam/get', method: 'get', params: {examId:id} });
+}
+
+export const getResultRequest = (data:IResultQuery[]) => {
+  return request({ url: '/exam/getResult', method: 'get', params: {data} });
 }

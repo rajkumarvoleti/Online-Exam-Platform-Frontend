@@ -13,18 +13,18 @@ const styles:SxProps = {
   flexDirection: "column",
   justifyContent: "space-between",
   ".form":{
+    width: "100%",
     padding: "20px",
-    display: "grid",
-    gridTemplateColumns: "repeat(3, 1fr)",
-    gridGap: "10px",
-  },
-  ".form > *:last-child":{
-    gridColumn: "span 2",
+    display: "flex",
+    flexWrap:"wrap",
+    "> *":{
+      margin: "0 10px",
+    },
     ".input":{
-      height: "200px",
-      alignItems: "start",
-    }
-  }
+      width: "240px",
+      height: "40px",
+    },
+  },
 }
 
 const options:IAutoCompleteOption[] = [
@@ -56,24 +56,18 @@ export default function TestDetailsForm() {
               name="categoryName"
               label="Category Name"
               placeholder=""
-              type="autocomplete"
-              options={options}
               value={values.categoryName}
             />
             <FormikInput
               name="testType"
               label="Test Type"
               placeholder=""
-              type="autocomplete"
-              options={options}
               value={values.testType}
             />
             <FormikInput
               name="questionBankName"
               label="Question Bank Name"
               placeholder=""
-              type="autocomplete"
-              options={options}
               value={values.questionBankName}
             />
             <FormikInput

@@ -20,6 +20,7 @@ const styles:SxProps = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {  
 
   const session = useRecoilValue(sessionAtom);
+  
   const {activeItem} = useDrawer();
   const {infoToast} = useToast();
   const router = useRouter();

@@ -7,9 +7,10 @@ import ExamNavigationCard from "./ExamNavigationCard";
 import { ITime } from "@/utils/timeUtils";
 import { useTimer } from "@/hooks/useTimer";
 import Question from "./Question";
-import { useQuiz } from "@/hooks/useQuiz";
+import { quizAtom, useQuiz } from "@/hooks/useQuiz";
 import { useEffect } from "react";
 import { IQuiz, IQuizQuestion, IQuizSubject } from "@/interfaces/quizInterfaces";
+import { useRecoilValue } from "recoil";
 
 const styles:SxProps = {
   minHeight: "100vh",
@@ -30,19 +31,14 @@ const styles:SxProps = {
 
 export default function Exam({exam}:{exam:IQuiz}) {
 
-  const initialTime:ITime = {hours: 0,minutes: exam.totalTime, seconds: 0};
+  const {time:initialTime} = useRecoilValue(quizAtom);
   const time = useTimer(initialTime);
-  const {initializeQuestions} = useQuiz();
+  const { updateTime} = useQuiz();
 
   useEffect(() => {
-    if(!exam)
-      return;
-    var questions:IQuizQuestion[] = [];
-    exam.subjects.forEach((subject:IQuizSubject) => {
-      questions = [...questions,...subject.questions];
-    });
-    initializeQuestions(questions);
-  }, [])  
+    updateTime(time);
+  }, [time])
+  
 
   if(!exam)
     return;
@@ -57,7 +53,7 @@ export default function Exam({exam}:{exam:IQuiz}) {
         <Question />
         <ExamNavigationCard time={time} />
       </Box>
-      <Footer />
+      <Footer examId={exam.id} />
     </Box>
   )
 }

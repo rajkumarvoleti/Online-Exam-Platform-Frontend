@@ -1,8 +1,9 @@
 import { Box, Card, SxProps } from "@mui/material";
 
 const styles:SxProps = {
-  width: "335px",
+  width: "180px",
   height: "100%",
+  flexShrink: "0",
   cursor: "pointer",
   ".option":{
     width: "100%",

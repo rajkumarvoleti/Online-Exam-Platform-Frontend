@@ -4,6 +4,7 @@ import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 import LanguageIcon from "@/components/icons/LanguageIcon";
 import { useRouter } from "next/navigation";
 import { IExam } from "@/interfaces/examInterfaces";
+import { useQuiz } from "@/hooks/useQuiz";
 
 const styles:SxProps = {
   margin: "10px",
@@ -59,9 +60,11 @@ const styles:SxProps = {
 export default function ExamCard({exam}:{exam:IExam}) {
 
   const router = useRouter();
+  const {resetExam} = useQuiz();
 
   const startExam = () => {
-    router.push(`/quiz/${exam.id}`);
+    resetExam();
+    router.push(`/quiz/intro/${exam.id}`);
   }
 
   return (

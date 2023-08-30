@@ -11,13 +11,13 @@ import PublishTestComponent from "./PublishTestComponent";
 
 const styles:SxProps = {
   ".main":{
-    width: "100%",
+    width:"100%",
     display: "flex",
     height: "74vh",
   },
   ".forms":{
     width: "100%",
-    overflowY: "scroll",
+    height:"100%",
     minHeight: "73vh",
   }
 }

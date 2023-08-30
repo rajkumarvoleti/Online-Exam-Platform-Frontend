@@ -7,10 +7,9 @@ import DrawerList from "./DrawerList";
 import { drawerItems } from "./DrawerItems";
 import Account from "../Account";
 
-
 const styles:SxProps = {
   height: "100vh",
-  width:"300px",
+  width:"240px",
   flexShrink: "0",
   position: "sticky",
   top: 0,
@@ -28,7 +27,7 @@ export default function DrawerComponent() {
       sx={styles}
       className="drawer" 
     >
-      <Image className="logo" src={Logo.src} height={Logo.height} width={Logo.width} alt="logo"/>
+      <Image className="logo" src={Logo.src} height={Logo.height/1.2} width={Logo.width/1.2} alt="logo"/>
       <Box className="list">
         <DrawerList items={drawerItems}/>
       </Box>

@@ -1,14 +1,19 @@
 import { useRecoilState } from "recoil"
 import { IQuestion, IQuestionStatus } from "@/interfaces/questionInterfaces";
 import { atom } from "recoil";
-import { recoilPersist } from 'recoil-persist'
 import { INumberButtonType } from "@/interfaces/buttonInterfaces";
-import { IQuizQuestion } from "@/interfaces/quizInterfaces";
+import { IQuizData, IQuizQuestion, IResultQuery } from "@/interfaces/quizInterfaces";
+import { ITime, getTimeFromSeconds } from "@/utils/timeUtils";
+import { recoilPersist } from 'recoil-persist'
+import { useQuery } from "react-query";
+import { useRouter } from "next/navigation";
+
+const { persistAtom } = recoilPersist()
 
 const questionsAtom = atom<IQuestion[]>({
   key: "questions",
   default: [],
-  // effects_UNSTABLE: [persistAtom]
+  effects_UNSTABLE: [persistAtom]
 });
 
 const questionIdAtom = atom<number>({
@@ -17,14 +22,49 @@ const questionIdAtom = atom<number>({
   // effects_UNSTABLE: [persistAtom]
 });
 
+export const quizAtom = atom<IQuizData>({
+  key: "quizData",
+  default: {
+    time: getTimeFromSeconds(0),
+    started: false,
+    ended: false,
+  },
+  effects_UNSTABLE: [persistAtom]
+});
+
 export const useQuiz = () => {
   const [questions, setQuestions] = useRecoilState(questionsAtom);
   const [activeId, setActiveId] = useRecoilState(questionIdAtom);
+  const [quizData, setQuizData] = useRecoilState(quizAtom);
+  const router = useRouter();
 
-  const initializeQuestions = (questions:IQuizQuestion[]) => {
-    console.log("initializing");
+  const startExam = (time:number) => {
+    console.log(quizData);
+    if(quizData.started)
+      return;
+    setQuizData(prev => ({...prev,started: true, time: {hours: 0, minutes: time, seconds: 0}}));
+  }
+
+  const updateTime = (time:ITime) => {
+    setQuizData(prev => ({...prev,time: time}));
+  }
+
+  const endExam = () => {
+    setQuizData(prev => ({...prev,ended: true}));
+  }
+
+  const resetExam = () => {
+    console.log("resetting");
     setQuestions(prev => []);
-    questions.forEach((questionData, i) => {
+    setQuizData(prev => ({ended: false, started: false, time: {hours:0,minutes:0,seconds:0}}))
+  }
+
+  const initializeQuestions = (questionsData:IQuizQuestion[]) => {
+    console.log(questions.length);
+    if(questions.length !== 0)
+      return;
+    console.log("initializing");
+    questionsData.forEach((questionData, i) => {
       setQuestions(questions => [...questions,{
         questionId:questionData.id,
         id: i+1,
@@ -142,10 +182,17 @@ export const useQuiz = () => {
   }
 
   const handleSubmit = () => {
+    setQuizData(prev => ({...prev, ended: true}));
     console.log(questions);
   }
 
+  const getResponses = () => {
+    const responses:IResultQuery[] = questions.map((question) => ({id:question.questionId, response:question.response || ""}));
+    return responses;
+  }
+
   return {
+    getResponses,
     activeQuestionNumber: activeId,
     numberOfQuestions: questions.length,
     activeQuestion: getActiveQuestion(),
@@ -165,6 +212,10 @@ export const useQuiz = () => {
     getQuestionTypeFromId,
     handleSubmit,
     isMarked: questions[activeId]?.marked || false,
-    isLastQuestion: activeId === questions.length - 1 
+    isLastQuestion: activeId === questions.length - 1,
+    startExam,
+    endExam,
+    resetExam,
+    updateTime
   }
 }

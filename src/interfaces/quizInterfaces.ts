@@ -1,5 +1,11 @@
+import { ITime } from "@/utils/timeUtils";
 import { IQuestionType } from "./questionInterfaces";
 
+export interface IQuizData {
+  time: ITime,
+  started: boolean,
+  ended: boolean,
+}
 export interface IQuizOption {
   description: string,
 }
@@ -26,4 +32,9 @@ export interface IQuiz {
   totalQuestions: number,
   totalTime: number,
   subjects: IQuizSubject[],
+}
+
+export interface IResultQuery {
+  id:number,
+  response: string,
 }
