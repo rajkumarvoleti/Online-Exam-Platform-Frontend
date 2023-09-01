@@ -1,53 +1,62 @@
 import {Box, Divider, SxProps} from '@mui/material';
 import Image from 'next/image';
 import PublishIcon from '@/assets/publish test/publish.svg';
-import ListArrowIcon from '@/assets/common/listArrow.svg';
+import DotIcon from '@/assets/icons/DotIcon.png';
+import HandIcon from '@/assets/icons/HandIcon.png';
 
 const styles:SxProps = {
-  padding: "0 30px",
   ".header":{
     display: "flex",
-    gap: "20px",
+    gap: "10px",
     alignItems: "center",
     backgroundColor: "#FAFBFB",
-    padding: "10px 30px",
+    padding: "10px 40px",
     h4: {
-      color: "#2200A5",
-      fontSize: "25px",
-      fontWeight: "400",
+      fontSize: "20px",
+      fontWeight: "500",
+      color: "#454545",
       ":last-child":{
         marginLeft: "auto",
-      },
+      }
     },
   },
-  ".divider":{
-    mr: "60px"
-  },
   ".publishMain":{
-    display: "flex",
-    alignItems: "start",
+    padding: "10px 40px",
     ".container": {
-      flex: 5,
+      mb: "40px",
       h5: {
         color: "#000",
         fontSize: "25px",
         fontWeight: "400",
       },
       ul :{
-        pl: "0",
+        pl: "10px",
       },
       li: {
-        color: "#5B5B5B",
-        fontSize: "20px",
-        fontWeight: "400",
+        display: "flex",
+        gap: "40px",
+        alignItems: "center",
+        fontSize: "16px",
         listStyle: "none",
-        background:`url(${ListArrowIcon.src}) left center no-repeat`,
+        background:`url(${DotIcon.src}) left center no-repeat`,
         pl: "40px",
+        lineHeight: "2.5",
       },
-      span: {
+      "span, p": {
         color: "#000",
-        fontSize: "20px",
-        fontWeight: "400",
+        fontSize: "16px",
+      }
+    },
+    ".container1":{
+      "li p":{
+        width: "220px",
+        m: 0,
+        p: 0,
+      }
+    },
+    ".container2":{
+      li:{
+        background:`url(${HandIcon.src}) left center no-repeat`,
       }
     }
   }
@@ -62,21 +71,17 @@ export default function PublishTestComponent() {
         <h4>Test Status: Unpublished</h4>
       </Box>
       <Box className="publishMain">
-        <Box className="container">
+        <Box className="container container1">
           <h5>Instructions :-</h5>
           <ul>
-            <li>Total Number Of Questions : <span>50</span></li>
-            <li>Time Duration : <span>3 Hours and 30 Minutes</span></li>
-            <li>Result Declaration : <span>After 2 weeks</span></li>
-            <li>Re-Attempt Allow : <span>Yes</span></li>
-            <li>Question Appearence :<span>50</span></li>
-            <li>Total Number Of Questions : <span>Single</span></li>
-            <li>Negative Marks :<span>NA</span></li>
-            <li>Pass Percentage :<span>36</span></li>
+            <li><p>Total Number Of Questions </p>:<span>50</span></li>
+            <li><p>Time Duration </p>:<span>3 Hours and 30 Minutes</span></li>
+            <li><p>Result Declaration </p>:<span>After 2 weeks</span></li>
+            <li><p>Negative Marks</p>:<span>NA</span></li>
+            <li><p>Pass Percentage</p>:<span>36</span></li>
           </ul>
         </Box>
-        <Divider className='divider' flexItem orientation='vertical' variant='middle' />
-        <Box className="container">
+        <Box className="container container2">
           <h5>Note :-</h5>
           <ul>
             <li>Test must contains atleast one question or more.</li>

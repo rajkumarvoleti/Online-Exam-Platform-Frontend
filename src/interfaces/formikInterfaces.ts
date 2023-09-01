@@ -1,4 +1,4 @@
-import { ICountry, ITimeZone } from "./otherInterfaces"
+import { ICountry, IQuestionBank, ISelectedQuestionBank, ITimeZone } from "./otherInterfaces"
 
 export interface ILoginForm {
   email: string,
@@ -26,7 +26,6 @@ export interface IUserDetailsForm {
   tagline: string
   bio: string
 }
-
 export interface IUpdatePasswordForm {
   currentPassword: string
   newPassword: string
@@ -34,8 +33,29 @@ export interface IUpdatePasswordForm {
 }
 
 export interface ITestDetailsForm {
-  categoryName: string
-  testType: string
-  questionBankName: string
+  testId: string
   testDescription: string
+  totalQuestions: number
+  questionBanks: ISelectedQuestionBank[],
+}
+
+export interface ITestEvaluationForm {
+  totalQuestions: number,
+  totalMarks: number,
+  passPercentage: number,
+  negativeMarks: number,
+}
+
+export interface IPromoCode {
+  id: number,
+  code: string,
+  offer: number
+}
+
+export type IPricingType = "private" | "open" 
+
+export interface ITestPricingForm {
+  testType: IPricingType,
+  price: number,
+  promoCodes: IPromoCode[]
 }

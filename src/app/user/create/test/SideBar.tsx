@@ -19,7 +19,7 @@ const styles:SxProps = {
 const activeStyles = {
 }
 
-const options = ["Test Details", "Test Settings", "Add Questions", "Publish Test"];
+const options = ["Test Details", "Test Settings", "Pricing", "Test Status"];
 
 export default function SideBar({index, setIndex}:{index:number, setIndex:(i:number) => void}) {
 
@@ -32,7 +32,6 @@ export default function SideBar({index, setIndex}:{index:number, setIndex:(i:num
           key={i}
           className={`option center ${index === i && "active" }`}
           onClick={() => handleClick(i)}
-
           >
           <p className="details">{option}</p>
         </Box>

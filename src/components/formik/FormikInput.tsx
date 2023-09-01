@@ -4,6 +4,7 @@ import Input from "./Input";
 import PhoneInput from "./PhoneInput";
 import CheckboxInput from "./CheckboxInput";
 import AutoCompleteInput from "./AutoCompleteInput";
+import MultiSelectInput from "./MultiSelectInput";
 
 export function FormikInput(props: IInputProps) {
   const formikContext = useFormikContext();
@@ -31,6 +32,25 @@ export function FormikInput(props: IInputProps) {
     const value = fieldMeta.value as IAutoCompleteOption;
     return (
       <AutoCompleteInput
+        {...props}
+        autoCompleteOption={props.autoCompleteOption}
+        onChange={props.onChange ?? formikContext.handleChange}
+        onBlur={props.onBlur ?? formikContext.handleBlur}
+        label={props.label}
+        placeholder={props.placeholder}
+        error={
+          fieldMeta && fieldMeta.error && fieldMeta.touched
+            ? fieldMeta.error
+            : undefined
+        }
+      />
+    )
+  }
+
+  if(props.type === "multiSelect"){
+    const value = fieldMeta.value as IAutoCompleteOption;
+    return (
+      <MultiSelectInput
         {...props}
         autoCompleteOption={props.autoCompleteOption}
         onChange={props.onChange ?? formikContext.handleChange}

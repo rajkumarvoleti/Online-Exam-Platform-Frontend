@@ -59,3 +59,8 @@ export function getTimeZones(id:string) {
   })
   return timezones;
 }
+
+export const generateArray = (start: number, end: number, step: number): number[] => {
+  const length = Math.floor((end - start) / step) + 1;
+  return Array.from({ length }, (_, index) => start + index * step);
+};

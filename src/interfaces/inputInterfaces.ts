@@ -13,9 +13,9 @@ export interface IInputProps {
   className?: string;
   label?: string;
   placeholder?: string;
-  type?: "text" | "password" | "number" | "phoneNumber" | "checkbox" | "autocomplete";
+  type?: "text" | "password" | "number" | "phoneNumber" | "checkbox" | "autocomplete" | "multiSelect";
   name: string;
-  value?: string | number | boolean;
+  value?: string | number | boolean | string[];
   autoCompleteOption?:  IAutoCompleteOption;
   desc?: string;
   options?: IAutoCompleteOption[];
@@ -30,4 +30,6 @@ export interface IInputProps {
   hideErrorMessage?: boolean;
   autoCompleteOff?: boolean;
   InputImage?: INextImage,
+  push?: (id: number) => void;
+  remove?: (id: number) => void;
 };

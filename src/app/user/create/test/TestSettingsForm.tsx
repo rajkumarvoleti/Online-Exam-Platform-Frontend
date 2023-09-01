@@ -47,10 +47,6 @@ export default function TestSettingsForm() {
       <TestEvaluationComponent />
       <Divider className='divider' />
       <ResultDeclarationSettingsComponent />
-      <Divider className='divider' />
-      <PrivateSettingsComponent />
-      <Divider className='divider' />
-      <OtherSettingsComponent />
     </Box>
   )
 }
