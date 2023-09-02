@@ -33,7 +33,7 @@ export interface IUpdatePasswordForm {
 }
 
 export interface ITestDetailsForm {
-  testId: string
+  testName: string
   testDescription: string
   totalQuestions: number
   questionBanks: ISelectedQuestionBank[],
@@ -44,6 +44,19 @@ export interface ITestEvaluationForm {
   totalMarks: number,
   passPercentage: number,
   negativeMarks: number,
+}
+
+export interface ITestSettingsForm extends ITestEvaluationForm {
+  testDateAvailability: "specific" | "always",
+  testTimeAvailability: "specific" | "always",
+  testDurationAvailability: "specific" | "always",
+  testStartDate: string,
+  testEndDate:string,
+  testStartTime: string,
+  testEndTime: string,
+  testDuration: number,
+  resultFormat: string,
+  testDeclaration: string,
 }
 
 export interface IPromoCode {
@@ -58,4 +71,10 @@ export interface ITestPricingForm {
   testType: IPricingType,
   price: number,
   promoCodes: IPromoCode[]
+}
+
+export interface ICreateTestData {
+  testDetails:ITestDetailsForm,
+  testSettings:ITestSettingsForm,
+  pricing:ITestPricingForm,
 }

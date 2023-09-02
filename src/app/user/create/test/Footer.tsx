@@ -1,4 +1,5 @@
-import { Button, Card, SxProps } from "@mui/material";
+import { Box, Button, Card, SxProps } from "@mui/material";
+import { ReactNode } from "react";
 
 const styles:SxProps = {
   display: "flex",
@@ -8,6 +9,7 @@ const styles:SxProps = {
   padding: "20px",
   gap: "10px",
   width: "100%",
+  mt: "50px !important",
   "button":{
     width: "150px",
     color: "#969696",
@@ -17,12 +19,10 @@ const styles:SxProps = {
   }
 }
 
-export default function Footer() {
+export default function Footer({children}:{children:ReactNode}) {
   return (
-    <Card sx={styles}>
-      <Button color="success" variant="outlined">Cancel</Button>
-      <Button color="success" variant="outlined">Reset</Button>
-      <Button color="success" variant="outlined">Next</Button>
-    </Card>
+    <Box sx={styles}>
+      {children}
+    </Box>
   )
 }

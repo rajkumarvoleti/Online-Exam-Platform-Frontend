@@ -1,6 +1,6 @@
-import { Box, SelectChangeEvent, SxProps } from "@mui/material";
+import { Box, Button, SelectChangeEvent, SxProps } from "@mui/material";
 import Footer from "./Footer";
-import { FieldArray, Form, Formik } from "formik";
+import { FieldArray, Form, Formik, useFormikContext } from "formik";
 import { testDetailsInitialValues } from "@/utils/formik/initialValues";
 import { testDetailsValidationSchema } from "@/utils/validationScehma";
 import { FormikInput } from "@/components/formik/FormikInput";
@@ -10,6 +10,9 @@ import { getAllQuestionBanksRequest } from "@/api/subject";
 import { IQuestionBank, ISelectedQuestionBank } from "@/interfaces/otherInterfaces";
 import TestDetailsTable from "./TestDetailsTable";
 import CircleIcon from '@mui/icons-material/Circle';
+import useCreateTest from "@/hooks/useCreateTest";
+import { ITestDetailsForm } from "@/interfaces/formikInterfaces";
+import { useEffect } from "react";
 
 const styles:SxProps = {
   width: "100%",
@@ -72,9 +75,23 @@ const styles:SxProps = {
   },
 }
 
-export default function TestDetailsForm() {
+function FormikForm() {
 
   const { data, isLoading, error } = useQuery(["questionBanks"], getAllQuestionBanksRequest);
+  const {handleDetailsForm, publishAttempted, validateForms, handleNext} = useCreateTest();
+  const {values, resetForm, submitForm, isValid} = useFormikContext<ITestDetailsForm>();
+
+  useEffect(() => {
+    handleDetailsForm(values);
+  }, [values])
+
+  useEffect(() => {
+    async function submit() {
+      await submitForm();
+    }
+    if(publishAttempted) submit();
+  }, [publishAttempted])
+  
 
   if(isLoading)
     return <p>loading ...</p>
@@ -83,89 +100,102 @@ export default function TestDetailsForm() {
     return <p>Something went wrong</p>
 
   const questionBanks:IQuestionBank[] = data.questionBanks;
-
   const options:IAutoCompleteOption[] = questionBanks?.map(bank => ({id: JSON.stringify(bank.id), label: bank.name}));
+  
+  return (
+    <Form id="detailsForm" className="form">
+      <FormikInput
+        name="testName"
+        label="Test Name"
+        placeholder="name"
+        value={values.testName}
+      />
+      <FormikInput
+        name="testDescription"
+        label="Test Description"
+        placeholder="RPA"
+        value={values.testDescription}
+      />
+      <FormikInput
+        name="totalQuestions"
+        label="Total Questions In Test"
+        type="number"
+        placeholder="30"
+        disabled
+        value={values.totalQuestions}
+      />
+      <FieldArray name="questionBanks">
+      {({ push, remove }:{push: (obj: ISelectedQuestionBank) => void, remove: (index: number) => void}) => (
+        <>
+        <FormikInput
+          push={(id:number) => {
+            const newBank = questionBanks.find(bank => bank.id === id);
+            if(!newBank) return;
+            const newSelectedBank:ISelectedQuestionBank = {...newBank, selectedEasyQuestionsCount: 0, selectedHardQuestionsCount: 0, selectedMediumQuestionsCount: 0, selectedTotalQuestions: 0};
+            push(newSelectedBank);
+          }}
+          remove={(id:number) => {
+            const bank = values.questionBanks.find(bank => bank.id === id);
+            if(!bank) return;
+            const index = values.questionBanks.indexOf(bank);
+            remove(index);
+          }}
+          name="questionBankNames"
+          label="Select Question Bank"
+          type="multiSelect"
+          options={options}
+          placeholder=""
+          value={values.questionBanks.map(bank => JSON.stringify(bank.id))}
+          />
+          <TestDetailsTable/>
+        </>
+        )}
+        </FieldArray>
+        <Box className="details">
+          <Box className="complexityDetails">
+            <CircleIcon className="icon easy" />
+            <p className="text easy">Easy</p>
+          </Box>
+          <Box className="complexityDetails">
+            <CircleIcon className="icon medium" />
+            <p className="text medium">Medium</p>
+          </Box>
+          <Box className="complexityDetails">
+            <CircleIcon className="icon hard" />
+            <p className="text hard">Hard</p>
+          </Box>
+          <p className="text">Questions Available For Each Selected Question Bank</p>
+        </Box>
+        <Box className="details">
+          <p className="text"><span>Note :</span> Enter Atleast One Question in Each Selected Question Bank</p>
+        </Box>
+        <Footer>
+          <Button color="success" variant="outlined">Back</Button>
+          <Button onClick={() => {
+            resetForm();
+            handleDetailsForm(testDetailsInitialValues);
+            }} color="success" variant="outlined">Reset</Button>
+          <Button onClick={() => isValid && handleNext()} type="submit" color="success" variant="outlined">Next</Button>
+        </Footer>
+    </Form>
+  )
+} 
+
+export default function TestDetailsForm() {
+
+  const { testData} = useCreateTest();
 
   return (
     <Box sx={styles}>
       <Formik
-        initialValues={testDetailsInitialValues}
-        validationSchema={testDetailsValidationSchema(questionBanks)}
-        
-        onSubmit={(values) => console.log(values)}
+        initialValues={testData.testDetails}
+        validationSchema={testDetailsValidationSchema}
+        onSubmit={() => {}}
       >
-        {({values}) => (
-          <Form className="form">
-            <FormikInput
-              name="testId"
-              label="Test ID"
-              placeholder="12346"
-              value={values.testId}
-            />
-            <FormikInput
-              name="testDescription"
-              label="Test Description"
-              placeholder="RPA"
-              value={values.testDescription}
-            />
-            <FormikInput
-              name="totalQuestions"
-              label="Total Questions In Test"
-              type="number"
-              placeholder="30"
-              disabled
-              value={values.totalQuestions = values.questionBanks.map(bank => bank.selectedTotalQuestions).filter(val => typeof val === "number" && val > 0).reduce((prev,curr) => prev + curr, 0)}
-            />
-            <FieldArray name="questionBanks">
-            {({ push, remove }:{push: (obj: ISelectedQuestionBank) => void, remove: (index: number) => void}) => (
-              <>
-              <FormikInput
-                push={(id:number) => {
-                  const newBank = questionBanks.find(bank => bank.id === id);
-                  if(!newBank) return;
-                  const newSelectedBank:ISelectedQuestionBank = {...newBank, selectedEasyQuestionsCount: 0, selectedHardQuestionsCount: 0, selectedMediumQuestionsCount: 0, selectedTotalQuestions: 0};
-                  push(newSelectedBank);
-                }}
-                remove={(id:number) => {
-                  const bank = values.questionBanks.find(bank => bank.id === id);
-                  if(!bank) return;
-                  const index = values.questionBanks.indexOf(bank);
-                  remove(index);
-                }}
-                name="questionBankNames"
-                label="Select Question Bank"
-                type="multiSelect"
-                options={options}
-                placeholder=""
-                value={values.questionBanks.map(bank => JSON.stringify(bank.id))}
-                />
-                <h4 className="tableHeading">Define Test Level</h4>
-              <TestDetailsTable/>
-              </>
-              )}
-              </FieldArray>
-              <Box className="details">
-                <Box className="complexityDetails">
-                  <CircleIcon className="icon easy" />
-                  <p className="text easy">Easy</p>
-                </Box>
-                <Box className="complexityDetails">
-                  <CircleIcon className="icon medium" />
-                  <p className="text medium">Medium</p>
-                </Box>
-                <Box className="complexityDetails">
-                  <CircleIcon className="icon hard" />
-                  <p className="text hard">Hard</p>
-                </Box>
-                <p className="text">Questions Available For Each Selected Question Bank</p>
-              </Box>
-              <Box className="details">
-                <p className="text"><span>Note :</span> Enter Atleast One Question in Each Selected Question Bank</p>
-              </Box>
-          </Form>
+        {({}) => (
+          <FormikForm />
         )}
       </Formik>
-      <Footer />
     </Box>
   )
 }

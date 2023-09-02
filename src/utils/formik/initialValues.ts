@@ -1,4 +1,4 @@
-import { ILoginForm, ISignupForm, ITestDetailsForm, ITestEvaluationForm, ITestPricingForm, IUpdatePasswordForm, IUserDetailsForm } from "@/interfaces/formikInterfaces";
+import { ILoginForm, ISignupForm, ITestDetailsForm, ITestEvaluationForm, ITestPricingForm, ITestSettingsForm, IUpdatePasswordForm, IUserDetailsForm } from "@/interfaces/formikInterfaces";
 import { IUser } from "@/interfaces/userInterfaces";
 
 export const loginInitialValues:ILoginForm = {
@@ -43,22 +43,32 @@ export const updatePasswordInitialValues:IUpdatePasswordForm = {
 }
 
 export const testDetailsInitialValues:ITestDetailsForm = {
-  testId: "",
+  testName: "",
   testDescription: "",
   totalQuestions: 0,
   questionBanks: [],
 
 }
 
-export const testEvaluationInitialValues:ITestEvaluationForm = {
-  totalMarks: 0,
-  totalQuestions: 0,
-  negativeMarks: 0,
-  passPercentage: 0
-}
-
 export const testPricingInitialValues:ITestPricingForm = {
   price: 0,
   testType: "private",
   promoCodes: [],
+}
+
+export const testSettingsInitialValues:ITestSettingsForm = {
+  testDateAvailability: "specific",
+  testTimeAvailability: "specific",
+  testDurationAvailability: "specific",
+  testStartDate: "",
+  testEndDate: "",
+  testStartTime: "",
+  testEndTime: "",
+  testDuration: 0,
+  totalMarks: 0,
+  totalQuestions: 0,
+  negativeMarks: 0,
+  passPercentage: 0,
+  resultFormat: "marks",
+  testDeclaration: "immediatelyAfterExamCompletion",
 }

@@ -64,11 +64,6 @@ export default function PromoCodesTable({remove}:{remove:(id:number) => void}){
     return values.price * ((100-promoCode.offer)/100);
   }
 
-  useEffect(() => {
-    console.log(values.promoCodes)
-  }, [values.promoCodes]);
-  
-  
   return (
     <TableContainer sx={styles}>
       <Table>

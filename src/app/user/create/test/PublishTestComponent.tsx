@@ -1,8 +1,10 @@
-import {Box, Divider, SxProps} from '@mui/material';
+import {Box, Button, Divider, SxProps} from '@mui/material';
 import Image from 'next/image';
 import PublishIcon from '@/assets/publish test/publish.svg';
 import DotIcon from '@/assets/icons/DotIcon.png';
 import HandIcon from '@/assets/icons/HandIcon.png';
+import Footer from './Footer';
+import useCreateTest from '@/hooks/useCreateTest';
 
 const styles:SxProps = {
   ".header":{
@@ -40,7 +42,7 @@ const styles:SxProps = {
         listStyle: "none",
         background:`url(${DotIcon.src}) left center no-repeat`,
         pl: "40px",
-        lineHeight: "2.5",
+        margin: "20px 0",
       },
       "span, p": {
         color: "#000",
@@ -63,10 +65,13 @@ const styles:SxProps = {
 }
 
 export default function PublishTestComponent() {
+
+  const {handleBack, publishTest, testData} = useCreateTest();
+
   return (
     <Box sx={styles}>
       <Box className="header">
-        <h4>NEET Test </h4>
+        <h4>{testData.testDetails.testName} </h4>
         <Image src={PublishIcon.src} width={PublishIcon.width} height={PublishIcon.height} alt='icon' />
         <h4>Test Status: Unpublished</h4>
       </Box>
@@ -74,23 +79,27 @@ export default function PublishTestComponent() {
         <Box className="container container1">
           <h5>Instructions :-</h5>
           <ul>
-            <li><p>Total Number Of Questions </p>:<span>50</span></li>
-            <li><p>Time Duration </p>:<span>3 Hours and 30 Minutes</span></li>
-            <li><p>Result Declaration </p>:<span>After 2 weeks</span></li>
-            <li><p>Negative Marks</p>:<span>NA</span></li>
-            <li><p>Pass Percentage</p>:<span>36</span></li>
+            <li><p>Total Number Of Questions </p>:<span>{testData.testDetails.totalQuestions}</span></li>
+            <li><p>Time Duration </p>:<span>{Math.ceil(testData.testSettings.testDuration/60)} Hours and {testData.testSettings.testDuration%60} Minutes</span></li>
+            <li><p>Result Declaration </p>:<span>{testData.testSettings.resultFormat}</span></li>
+            <li><p>Negative Marks</p>:<span>{testData.testSettings.negativeMarks}</span></li>
+            <li><p>Pass Percentage</p>:<span>{testData.testSettings.passPercentage}</span></li>
           </ul>
         </Box>
         <Box className="container container2">
           <h5>Note :-</h5>
           <ul>
             <li>Test must contains atleast one question or more.</li>
-            <li>Number Of Questions In Test should br Equal or Greater then you mentioned Questions Number in Step-1 Create Test .</li>
+            <li>Number Of Questions In Test should be Equal or Greater then you mentioned Questions Number in Step-1 Create Test .</li>
             <li>Press Publish button for publishing your test.</li>
             <li>Press unpublish button for unpublishing your test.</li>
           </ul>
         </Box>
       </Box>
+      <Footer>
+        <Button onClick={handleBack} color="success" variant="outlined">Back</Button>
+        <Button onClick={publishTest} color="success" variant="outlined">Publish</Button>
+      </Footer>
     </Box>
   )
 }

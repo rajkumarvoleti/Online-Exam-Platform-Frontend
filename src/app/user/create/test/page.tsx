@@ -8,6 +8,7 @@ import TestDetailsForm from "./TestDetailsForm";
 import TestSettingsForm from "./TestSettingsForm";
 import PricingFormComponent from "./PricingFormComponent";
 import PublishTestComponent from "./PublishTestComponent";
+import useCreateTest from "@/hooks/useCreateTest";
 
 const styles:SxProps = {
   ".main":{
@@ -24,7 +25,7 @@ const styles:SxProps = {
 
 export default function Page(){
 
-  const [index, setIndex] = useState<number>(0);
+  const {index, setIndex} = useCreateTest();
 
   return (
     <Box sx={styles}>

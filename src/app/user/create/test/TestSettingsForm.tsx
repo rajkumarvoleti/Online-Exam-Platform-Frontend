@@ -1,9 +1,14 @@
-import {Box, Divider, SxProps} from '@mui/material';
+import {Box, Button, Divider, SxProps} from '@mui/material';
 import TestSettingsComponent from './TestSettingsComponent';
 import TestEvaluationComponent from './TestEvaluationComponent';
 import ResultDeclarationSettingsComponent from './ResultDeclarationSettingsComponent';
-import PrivateSettingsComponent from './PrivateSettingsComponent';
-import OtherSettingsComponent from './OtherSettingsComponent';
+import Footer from './Footer';
+import { Form, Formik, useFormikContext } from 'formik';
+import { testSettingsInitialValues } from '@/utils/formik/initialValues';
+import { testSettingsValidationScehma } from '@/utils/validationScehma';
+import useCreateTest from '@/hooks/useCreateTest';
+import { ITestSettingsForm } from '@/interfaces/formikInterfaces';
+import { useEffect } from 'react';
 
 const styles:SxProps = {
   padding: "30px",
@@ -39,14 +44,57 @@ const styles:SxProps = {
   }
 }
 
-export default function TestSettingsForm() {
+function FormikForm() {
+
+  const {handleSettingsForm, handleBack, publishAttempted, handleNext} = useCreateTest(); 
+  const {values, resetForm, submitForm, isValid} = useFormikContext<ITestSettingsForm>();
+
+  useEffect(() => {
+    handleSettingsForm(values);
+  }, [values])
+
+  useEffect(() => {
+    async function submit() {
+      await submitForm();
+    }
+    if(publishAttempted) submit();
+  }, [publishAttempted])
+  
   return (
-    <Box sx={styles}>
+    <Form  id='settingsForm' className="form">
       <TestSettingsComponent />
       <Divider className='divider' />
       <TestEvaluationComponent />
       <Divider className='divider' />
       <ResultDeclarationSettingsComponent />
+      <Footer>
+        <Button onClick={handleBack} color="success" variant="outlined">Back</Button>
+        <Button onClick={() => {
+          resetForm();
+          handleSettingsForm(testSettingsInitialValues);
+        }} color="success" variant="outlined">Reset</Button>
+        <Button onClick={() => isValid && handleNext()} type='submit' color="success" variant="outlined">Next</Button>
+      </Footer>
+    </Form>
+  )
+}
+
+export default function TestSettingsForm() {
+
+  const {handleSettingsForm, testData} = useCreateTest(); 
+
+  return (
+    <Box sx={styles}>
+      <Formik
+        initialValues={testData.testSettings}
+        validationSchema={testSettingsValidationScehma}
+        onSubmit={() => {}}
+        onReset={() => handleSettingsForm(testSettingsInitialValues)}
+      >
+        {({}) => (
+          <FormikForm />
+        )}
+        </Formik>
     </Box>
   )
 }

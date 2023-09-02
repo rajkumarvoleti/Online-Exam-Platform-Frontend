@@ -1,13 +1,27 @@
 import * as React from 'react';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { MobileTimePicker, TimePicker, TimeView, renderTimeViewClock } from '@mui/x-date-pickers';
+import {  TimePicker, TimeView, renderTimeViewClock } from '@mui/x-date-pickers';
+import dayjs, { Dayjs } from 'dayjs';
+import { Box } from '@mui/material';
 
-export default function BasicTimePicker({handleChange, className, views}:{handleChange:() => void, className?:string, views?: TimeView[]}) {
+export default function BasicTimePicker({handleChange, className, views, error, value}:{handleChange?:(val:string) => void, className?:string, views?: TimeView[], error?:string, value: string}) {
+
+  const time = value !== "" ? dayjs(value) : null;
+
+  const onChange = (e:Dayjs|null) => {
+    if(!e)
+      return;
+    if(handleChange)
+      handleChange(e.toDate().toUTCString());
+  }
+
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <TimePicker
+    <Box>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <TimePicker
+          value={time}
+          onChange={onChange}
           className={className}
           views={views}
           viewRenderers={{
@@ -15,7 +29,9 @@ export default function BasicTimePicker({handleChange, className, views}:{handle
             minutes: renderTimeViewClock,
             seconds: renderTimeViewClock,
           }}
-        />
-    </LocalizationProvider>
+          />
+      </LocalizationProvider>
+      <p className='error'>{error}</p>
+    </Box>
   );
 }
