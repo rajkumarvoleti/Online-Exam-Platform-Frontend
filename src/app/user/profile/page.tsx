@@ -17,10 +17,14 @@ const styles:SxProps = {
     display:"grid",
     gridTemplateColumns: "1fr 4fr",
   },
-  ".options, .forms":{
-    padding: "10px",
+  ".options,":{
+    padding: "6px",
+    margin:"0px 6px"
+
   },
   ".forms":{
+    padding: "6px",
+    margin:"0px 6px",
     minHeight:"57vh",
   },
   ".menuItem":{
@@ -29,6 +33,10 @@ const styles:SxProps = {
   },
   ".menuItem.Mui-selected":{
     color: "#2200A5",
+  },
+  ".basicForm":{
+    // margin:"7px"
+
   }
 }
 
@@ -38,11 +46,11 @@ export default function Page() {
 
   return (
     <Box sx={styles}>
-      <Card>
+      <Card elevation={0.5} className="basicForm">
         <BasicForm />
       </Card>
       <Box className="container">
-        <Card className="options">
+        <Card elevation={0.5} className="options">
           <MenuList dense>
             <MenuItem onClick={() => setFormNumber(1)} className="menuItem" selected={formNumber === 1}>
               <ListItemText>My Details</ListItemText>
@@ -52,7 +60,7 @@ export default function Page() {
             </MenuItem>
           </MenuList>
         </Card>
-        <Card className="forms">
+        <Card elevation={0.5} className="forms">
           {formNumber === 1 && <UserDetailsForm />}
           {formNumber === 2 && <UpdatePasswordForm />}
         </Card>

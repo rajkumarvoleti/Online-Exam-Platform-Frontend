@@ -16,7 +16,9 @@ const styles:SxProps = {
   padding: "20px",
   width:"100%",
   ".form":{
-    display: "grid",
+    display: "flex",
+    flexWrap: "wrap",
+    border:"2px solid red",
     gridTemplateColumns: "repeat(3, 1fr)",
     gridGap: "0 30px",
     margin: "30px 0",
@@ -32,7 +34,8 @@ const styles:SxProps = {
     }
   },
   ".customInput": {
-    width: "100%",
+    width: "270px",
+    height: "69px",
   },
   ".imageUpload": {
     display: "flex",
@@ -131,7 +134,7 @@ export default function UserDetailsForm(){
           <ActionButtons handleSubmit={() => handleSubmit(values)} />
         </Form>
       )}
-      </Formik>
+    </Formik>
     </Box>
   );
 }

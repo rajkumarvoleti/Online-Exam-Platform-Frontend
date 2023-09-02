@@ -12,6 +12,7 @@ import { useRecoilValue } from "recoil";
 
 const styles:SxProps = {
   display:"flex",
+  backgroundColor: "#F6F6F6",
   ".main":{
     flexGrow: 1,
   }
