@@ -68,6 +68,7 @@ function FormikForm() {
       {({ push, remove }:{push: (obj: IPromoCode) => void, remove: (index: number) => void}) => (
           <Box>
             <PromoCodesTable remove={(id:number) => {
+              console.log("removing");
               const promoCode = values.promoCodes.find(code => code.id === id);
               if(!promoCode) return;
               const index = values.promoCodes.indexOf(promoCode);

@@ -87,7 +87,11 @@ export const testDetailsValidationSchema = yup.object({
 export const testPricingValidationSchema = yup.object({
   testType: testTypeSchema,
   price: numberRequiredValidation,
-  promoCodes: yup.array().of(promoCodeSchema),
+  promoCodes: yup.lazy((value,options) => {
+    console.log({options, value});
+    if(options.context.testType === "private") return yup.array().of(promoCodeSchema);
+    return yup.array();
+  }),
 })
 
 export const testSettingsValidationScehma = yup.object({
