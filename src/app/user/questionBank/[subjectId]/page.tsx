@@ -2,12 +2,15 @@
 
 import { getSubjectRequest } from "@/api/subject";
 import { ISubject, ITopic } from "@/interfaces/examInterfaces";
-import { Box } from "@mui/material";
+import { Box, CircularProgress, SxProps } from "@mui/material";
 import { useQueries } from "@tanstack/react-query";
 import Header from "./Header";
 import Topics from "./Topics";
 import { getAllTopicsRequest } from "@/api/topic";
 import { useEffect, useState } from "react";
+
+const styles:SxProps = {
+}
 
 export default function Page({params}:{params:{subjectId:string}}) {
 
@@ -27,28 +30,27 @@ export default function Page({params}:{params:{subjectId:string}}) {
   }, [results[1].data])
 
   useEffect(() => {
-    if(!results[1].data)
+    if(!results[1].data || results[1].data.topics)
       return;
     const newTopics = results[1].data.topics.filter((topic:ITopic) => {
       return topic.name.toLowerCase().includes(query.toLowerCase());
     })
     setTopics(newTopics);
   }, [query,results[1].data])
-  
-
-  if(results[0].error || results[1].error)
-    return <p>Something went wrong</p>
 
   if(results[0].isLoading || results[1].isLoading)
-    return <p>loading...</p>
+    <Box className='center' sx={styles}><CircularProgress /></Box>
+  
+  if(results[0].error || results[1].error)
+    <Box className='center' sx={styles}>Something went wrong</Box>
 
-  const subject:ISubject = results[0].data.subject;
+  const subject:ISubject = results[0].data?.subject;
 
-  if(!subject.id)
+  if(!subject || !subject.id)
     return <></>
 
   return (
-    <Box>
+    <Box sx={styles}>
       <Header setQuery={setQuery} subject={subject} />
       <Topics topics={topics} />
     </Box>

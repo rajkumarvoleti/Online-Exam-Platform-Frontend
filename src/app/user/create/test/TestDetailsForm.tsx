@@ -1,4 +1,4 @@
-import { Box, Button, SelectChangeEvent, SxProps } from "@mui/material";
+import { Box, Button, CircularProgress, SelectChangeEvent, SxProps } from "@mui/material";
 import Footer from "./Footer";
 import { FieldArray, Form, Formik, useFormikContext } from "formik";
 import { testDetailsInitialValues } from "@/utils/formik/initialValues";
@@ -23,6 +23,8 @@ const styles:SxProps = {
   justifyContent: "space-between",
   ".form":{
     width: "100%",
+    minHeight: "75vh",
+    height: "100%",
     padding: "20px",
     display: "flex",
     flexWrap:"wrap",
@@ -94,10 +96,10 @@ function FormikForm() {
   
 
   if(isLoading)
-    return <p>loading ...</p>
+    return <Box className="form center"><CircularProgress /></Box>
 
   if(error)
-    return <p>Something went wrong</p>
+    return <Box className="center form">Something went wrong</Box>
 
   const questionBanks:IQuestionBank[] = data.questionBanks;
   const options:IAutoCompleteOption[] = questionBanks?.map(bank => ({id: JSON.stringify(bank.id), label: bank.name}));

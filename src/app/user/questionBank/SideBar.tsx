@@ -1,4 +1,4 @@
-import { Box, Card } from '@mui/material';
+import { Box, Card, CircularProgress } from '@mui/material';
 import SideBarHeader from './SideBarHeader';
 import SubjectComponent from './SubjectComponent';
 import { ISubject } from '@/interfaces/examInterfaces';
@@ -64,18 +64,18 @@ export default function SideBar() {
   }, [query, data])
   
   if(error)
-    return <p>Something went wrong</p>
+    return <Card className='center' sx={styles}>Something went wrong</Card>
 
   if (isLoading)
-    return <p>loading..</p>;
+    return <Card className='center' sx={styles}><CircularProgress /></Card>;
 
   return (
     <Card sx={styles}>
       <SideBarHeader setQuery={setQuery} />
       <Box className="main">
         <h5 className='heading'>All Subjects</h5>
-        {subjects.length === 0 && <p>No subjects to show</p>}
-        {subjects.map((subject: ISubject, i: number) => (
+        {subjects && subjects.length === 0 && <p>No subjects to show</p>}
+        {subjects && subjects.map((subject: ISubject, i: number) => (
           <SubjectComponent key={i} subject={subject} />
         ))}
       </Box>

@@ -1,7 +1,7 @@
 "use client"
 
 import { IQuestionType } from "@/interfaces/questionInterfaces";
-import { Box, SxProps } from "@mui/material";
+import { Box, CircularProgress, SxProps } from "@mui/material";
 import { useEffect, useState } from "react";
 import Header from "./Header";
 import WordComponent from "@/components/WordComponent";
@@ -14,6 +14,7 @@ import { getQuestionRequest } from "@/api/question";
 
 const styles:SxProps = {
   width: "100%",
+  minHeight: "90vh",
 }
 
 export default function Page({params}:{params:{questionId:string}}) {
@@ -38,10 +39,10 @@ export default function Page({params}:{params:{questionId:string}}) {
   }, [data])
   
   if(error)
-    return <p>Something went wrong</p>
+    return <Box className='center' sx={styles}>Something went wrong</Box>
   
   if(isLoading)
-    return <p>loading...</p>
+    return <Box className='center' sx={styles}><CircularProgress /></Box>
   
   if(!question)
     return <></>
@@ -49,8 +50,8 @@ export default function Page({params}:{params:{questionId:string}}) {
   return (
     <Box sx={styles}>
       <Header level={question.complexity} type={type} setType={setType} />
-        <WordComponent value={question.question} handleData={handleQuestion} />
-        <AnswerComponent answer={question.answer} type={type} />
+      <WordComponent value={question.question} handleData={handleQuestion} />
+      <AnswerComponent answer={question.answer} type={type} />
       <Footer questionId={questionId} />
     </Box>
   )

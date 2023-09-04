@@ -1,5 +1,5 @@
 "use client"
-import {Box, Card, SxProps, Tab, Tabs} from '@mui/material';
+import {Box, Card, CircularProgress, SxProps, Tab, Tabs} from '@mui/material';
 import Header from './Header';
 import {useState} from 'react';
 import ExamCard from './ExamCard';
@@ -9,6 +9,7 @@ import { getAllExamsRequest } from '@/api/exam';
 import { IExam } from '@/interfaces/examInterfaces';
 
 const styles:SxProps = {
+  minHeight: "90vh",
   ".tabs":{
     margin: "20px",
   },
@@ -41,10 +42,10 @@ export default function Page(){
   const tabs = ["Start Now","Completed" ,"Coming Soon"]
 
   if(error)
-    return <p>error</p>
+    return <Box sx={styles}>error</Box>
   
   if(isLoading)
-    return <p>loading...</p>
+    return <Box className="center" sx={styles}><CircularProgress /></Box>
   
   console.log(data);
 
@@ -60,7 +61,7 @@ export default function Page(){
       </Card>
       <Box className="center">
         {tabValue === 0 && <Box className="cards">
-          {data.exams.map((exam:IExam) => (
+          {data.exams && data.exams.map((exam:IExam) => (
             <ExamCard exam={exam} key={exam.id}/>
           ))}
         </Box>}
