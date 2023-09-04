@@ -22,10 +22,8 @@ export default function Page({params}:{params:{examId:string}}) {
   useEffect(() => {
     if(!data || !data.exam)
       return;
-    var questions:IQuizQuestion[] = [];
-    data.exam.subjects.forEach((subject:IQuizSubject) => {
-      questions = [...questions,...subject.questions];
-    });
+    var questions:IQuizQuestion[] = data.exam.questions;
+    console.log(data);
     initializeQuestions(questions);
   }, [data])  
 
@@ -38,7 +36,8 @@ export default function Page({params}:{params:{examId:string}}) {
   const handleClick = () =>{
     if(!data.exam)
       return;
-    startExam(data.exam.totalTime);
+    console.log(data.exam.testDuration);
+    startExam(data.exam.testDuration);
     router.push(`/quiz/exam/${examId}`);
   }
 

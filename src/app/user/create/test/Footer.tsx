@@ -12,10 +12,6 @@ const styles:SxProps = {
   mt: "50px !important",
   "button":{
     width: "150px",
-    color: "#969696",
-    ":last-child":{
-      color: "#2200A5",
-    }
   }
 }
 

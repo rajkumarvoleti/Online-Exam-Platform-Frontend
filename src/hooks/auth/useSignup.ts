@@ -3,6 +3,7 @@ import { useToast } from "../useToast";
 import { ISignupForm } from "@/interfaces/formikInterfaces";
 import { useRouter } from "next-nprogress-bar";
 import { useMutation } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 
 const useSignupMutation = ({request}:{request:({signupOptions}:{signupOptions:ISignupForm}) => Promise<any>}) => {
 
@@ -32,17 +33,19 @@ const useSignupMutation = ({request}:{request:({signupOptions}:{signupOptions:IS
 }
 
 export const useSignup = () => {
-  const {loadingToast} = useToast();
+  const [loading, setLoading] = useState(false);
 
   const signupQuery = useSignupMutation({request:signupRequest})
+
+  useEffect(() => {
+    setLoading(prev => signupQuery.isLoading);
+  }, [signupQuery.isLoading])
 
   const signup = ({signupOptions}:{signupOptions:ISignupForm}) => {
 
     signupQuery.mutate(signupOptions);
-    if(signupQuery.isLoading)
-      loadingToast({msg: "Creating your account"});
     return signupQuery.data;
   }
 
-  return {signup};
+  return {signup, loading};
 }

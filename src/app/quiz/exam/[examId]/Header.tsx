@@ -38,6 +38,8 @@ const styles:SxProps = {
 
 export default function Header({time}:{time:ITime}){
 
+  console.log(time);
+
   return (
     <Card sx={styles}>
       <Box className="testName">

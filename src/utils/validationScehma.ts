@@ -27,6 +27,8 @@ const numberRequiredValidation = yup.number().required("This Field is required")
 
 const positiveIntegerRequiredValidation = yup.number().required("This Field is required").moreThan(-1,"Please use a positive value");
 
+const dateValidation = stringRequiredValidation.notOneOf(["Invalid Date"], "Invalid Time");
+
 const promoCodeSchema = yup.object().shape({
   code: stringRequiredValidation,
   offer: yup.number().required('Offer value is required').min(0, 'Invalid value').max(100,"Invalid value"),
@@ -88,14 +90,26 @@ export const testPricingValidationSchema = yup.object({
   promoCodes: yup.array().of(promoCodeSchema),
 })
 
-export const testSettingsValidationScehma: yup.ObjectSchema<ITestSettingsForm> = yup.object({
+export const testSettingsValidationScehma = yup.object({
   testDateAvailability: yup.string().oneOf(["specific","always"]).required("This field is required"),
   testTimeAvailability: yup.string().oneOf(["specific","always"]).required("This field is required"),
   testDurationAvailability: yup.string().oneOf(["specific","always"]).required("This field is required"),
-  testStartDate: stringRequiredValidation.notOneOf(["Invalid Date"], "Invalid Date"),
-  testEndDate: stringRequiredValidation.notOneOf(["Invalid Date"], "Invalid Date"),
-  testStartTime: stringRequiredValidation.notOneOf(["Invalid Date"], "Invalid Time"),
-  testEndTime: stringRequiredValidation.notOneOf(["Invalid Date"], "Invalid Time"),
+  testStartDate: yup.lazy((value,options) => {
+    if(options.context.testDateAvailability === "specific") return dateValidation;
+    return yup.string();
+  }),
+  testEndDate: yup.lazy((value,options) => {
+    if(options.context.testDateAvailability === "specific") return dateValidation;
+    return yup.string();
+  }),
+  testStartTime: yup.lazy((value,options) => {
+    if(options.context.testTimeAvailability === "specific") return dateValidation;
+    return yup.string();
+  }),
+  testEndTime: yup.lazy((value,options) => {
+    if(options.context.testTimeAvailability === "specific") return dateValidation;
+    return yup.string();
+  }),
   testDuration: numberRequiredValidation,
   totalMarks: numberRequiredValidation,
   totalQuestions: numberRequiredValidation,

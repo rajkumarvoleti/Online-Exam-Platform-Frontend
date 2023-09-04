@@ -12,6 +12,10 @@ import { ILoginForm } from "@/interfaces/formikInterfaces";
 import { useLogin } from "@/hooks/auth/useLogin";
 import ExternalSigninDiv from '@/components/auth/ExternalSigninDiv';
 import Link from "next/link";
+import LoadingButton from '@mui/lab/LoadingButton';
+import { useEffect } from "react";
+import { boolean } from "yup";
+import { atom } from "recoil";
 
 const styles = {
   flexDirection: "column",
@@ -30,12 +34,17 @@ const styles = {
 
 export default function Page() {
 
-  const { internalLogin } = useLogin();
+  const { internalLogin, loading } = useLogin();
 
   const handleSubmit = async (values: ILoginForm) => {
     console.log(values);
     internalLogin({ email: values.email, password: values.password });
   }
+
+  useEffect(() => {
+    console.log({loading})
+  }, [loading])
+  
 
   return (
     <Box sx={styles} className="center">
@@ -60,7 +69,7 @@ export default function Page() {
               InputImage={PasswordIcon}
               type="password"
             />
-            <Button type="submit" fullWidth variant="contained">Log In</Button>
+            <LoadingButton loading={loading} type="submit" fullWidth variant="contained">Log In</LoadingButton>
           </Form>
         )}
       </Formik>

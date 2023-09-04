@@ -55,7 +55,7 @@ export default function SideBar() {
   }, [data])
 
   useEffect(() => {
-    if(!data)
+    if(!data || !data.subjects)
       return;
     const newSubjects = data.subjects.filter((subject:ISubject) => {
       return subject.name.toLowerCase().includes(query.toLowerCase());

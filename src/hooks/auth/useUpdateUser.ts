@@ -1,12 +1,13 @@
 import { MutateOptions } from "react-query";
 import { useToast } from "../useToast";
-import { useSetRecoilState } from "recoil";
+import { atom, useRecoilState, useSetRecoilState } from "recoil";
 import { sessionAtom } from "@/utils/atoms/sessionAtom";
 import { IUserDetailsForm } from "@/interfaces/formikInterfaces";
 import { IUser } from "@/interfaces/userInterfaces";
 import { useMutation } from "@tanstack/react-query";
 import { updatePasswordRequest, updateUserRequest } from "@/api/auth";
 import useUser from "../useUser";
+import { useEffect, useState } from "react";
 
 const useUpdateUserMutation = ({request, options}:{request:(data:IUser) => Promise<any>, options:any}) => {
   return useMutation(
@@ -14,6 +15,11 @@ const useUpdateUserMutation = ({request, options}:{request:(data:IUser) => Promi
     options,
   )
 }
+
+const updateUserLoadingAtom = atom<boolean>({
+  key:"updateUserLoading",
+  default: false,
+})
 
 const useUpdatePasswordMutation = ({request, options}:{request:({currentPassword, newPassword}:{currentPassword: string, newPassword: string}) => Promise<any>, options:any}) => {
   return useMutation(
@@ -27,6 +33,7 @@ export const useUpdateUser = () => {
   const currentUser = useUser();
   const {successToast, errorToast, loadingToast} = useToast();
   const setSession = useSetRecoilState(sessionAtom);
+  const [loading, setLoading] = useRecoilState(updateUserLoadingAtom);
 
   const mutationOptions:MutateOptions = {
     onSuccess: (data:any, variables:any) => {
@@ -48,6 +55,12 @@ export const useUpdateUser = () => {
 
   const updateUserQuery = useUpdateUserMutation({request:updateUserRequest,options:mutationOptions});
   const updatePasswordQuery = useUpdatePasswordMutation({request:updatePasswordRequest,options:mutationOptions});
+
+  useEffect(() => {
+    const isLoading = updatePasswordQuery.isLoading || updateUserQuery.isLoading;
+    setLoading(prev => isLoading);
+  }, [updatePasswordQuery.isLoading,updateUserQuery.isLoading])
+  
 
   const updateUser = async (userDetails:IUserDetailsForm) => {
     if(!currentUser)
@@ -79,5 +92,5 @@ export const useUpdateUser = () => {
     return updatePasswordQuery.data;
   }
 
-  return {updateUser, updatePassword}
+  return {updateUser, updatePassword, loading}
 }

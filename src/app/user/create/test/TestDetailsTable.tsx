@@ -59,13 +59,23 @@ export default function TestDetailsTable(){
 
   const {values, setFieldValue} = useFormikContext<ITestDetailsForm>();
 
-  const handleTotalQuestions = async (sum:number) => {
+  const handleTotalQuestions = async () => {
+    const sum = values.questionBanks.map(bank => bank.selectedTotalQuestions).filter(val => typeof val === "number" && val > 0).reduce((prev,curr) => prev + curr, 0);
     await setFieldValue("totalQuestions",sum);
   }
 
+  const handleSelectedTotalQuestions = async () => {
+    await Promise.all(
+      values.questionBanks.map(async(bank,i) => {
+        const sum = getTotalSelectedQuestions(i);
+        await setFieldValue(`questionBanks[${i}].selectedTotalQuestions`,sum);
+      })
+    )
+  }
+
   useEffect(() => {
-    const sum = values.questionBanks.map(bank => bank.selectedTotalQuestions).filter(val => typeof val === "number" && val > 0).reduce((prev,curr) => prev + curr, 0);
-    handleTotalQuestions(sum);
+    handleSelectedTotalQuestions();
+    handleTotalQuestions();
   }, [values.questionBanks])
   
   
@@ -118,7 +128,7 @@ export default function TestDetailsTable(){
                   type="number"
                   name={`questionBanks[${index}].selectedTotalQuestions`}
                   placeholder=""
-                  value={values.questionBanks[index].selectedTotalQuestions = getTotalSelectedQuestions(index)}
+                  value={values.questionBanks[index].selectedTotalQuestions}
                 />
               </TableCell>
               <TableCell align="center" size="small">

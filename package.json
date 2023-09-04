@@ -22,6 +22,7 @@
     "@mediapipe/face_detection": "^0.4.1646425229",
     "@mkyy/mui-search-bar": "^0.5.2",
     "@mui/icons-material": "^5.14.1",
+    "@mui/lab": "^5.0.0-alpha.142",
     "@mui/material": "^5.13.6",
     "@mui/x-date-pickers": "^6.12.0",
     "@react-oauth/google": "^0.11.0",

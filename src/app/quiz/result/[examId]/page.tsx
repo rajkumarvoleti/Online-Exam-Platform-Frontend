@@ -18,6 +18,7 @@ export default function Page({params}:{params:{examId:string}}) {
   const {ended} = useRecoilValue(quizAtom);
   const {getResponses} = useQuiz();
   const responses = getResponses();
+  console.log(responses);
   const {data, error, isLoading} = useQuery(["result",examId],async () => await getResultRequest(responses));
 
   const router = useRouter();

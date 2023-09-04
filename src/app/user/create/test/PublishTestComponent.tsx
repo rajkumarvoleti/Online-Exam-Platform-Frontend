@@ -5,6 +5,7 @@ import DotIcon from '@/assets/icons/DotIcon.png';
 import HandIcon from '@/assets/icons/HandIcon.png';
 import Footer from './Footer';
 import useCreateTest from '@/hooks/useCreateTest';
+import LoadingButton from '@mui/lab/LoadingButton/LoadingButton';
 
 const styles:SxProps = {
   ".header":{
@@ -66,7 +67,9 @@ const styles:SxProps = {
 
 export default function PublishTestComponent() {
 
-  const {handleBack, publishTest, testData} = useCreateTest();
+  const {handleBack, publishTest, testData, loading} = useCreateTest();
+
+  const timeDuration = testData.testSettings.testDurationAvailability === "always" ? "always" : `${Math.ceil(testData.testSettings.testDuration/60)} Hours and ${testData.testSettings.testDuration%60} Minutes`;
 
   return (
     <Box sx={styles}>
@@ -80,7 +83,7 @@ export default function PublishTestComponent() {
           <h5>Instructions :-</h5>
           <ul>
             <li><p>Total Number Of Questions </p>:<span>{testData.testDetails.totalQuestions}</span></li>
-            <li><p>Time Duration </p>:<span>{Math.ceil(testData.testSettings.testDuration/60)} Hours and {testData.testSettings.testDuration%60} Minutes</span></li>
+            <li><p>Time Duration </p>:<span>{timeDuration}</span></li>
             <li><p>Result Declaration </p>:<span>{testData.testSettings.resultFormat}</span></li>
             <li><p>Negative Marks</p>:<span>{testData.testSettings.negativeMarks}</span></li>
             <li><p>Pass Percentage</p>:<span>{testData.testSettings.passPercentage}</span></li>
@@ -98,7 +101,7 @@ export default function PublishTestComponent() {
       </Box>
       <Footer>
         <Button onClick={handleBack} color="success" variant="outlined">Back</Button>
-        <Button onClick={publishTest} color="success" variant="outlined">Publish</Button>
+        <LoadingButton disabled={loading} loading={loading} onClick={publishTest} variant="outlined">Publish</LoadingButton>
       </Footer>
     </Box>
   )
