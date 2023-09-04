@@ -49,26 +49,6 @@ export default function SubjectComponent({ subject }: { subject: ISubject }) {
 
   const handleOpenEditModal = () => setOpenEditModal(true);
   const handleCloseEditModal = () => setOpenEditModal(false);
-
-  // const handleToggleAccordian = () => setOpenAccordian(prev => !prev);
-  // const handleOpenAccordian = () => setOpenAccordian(true);
-  // const handleCloseAccordian = () => setOpenAccordian(false);
-
-  // const isActiveTopic = (topicId:number | undefined) => {
-  //   if(!topicId) return false;
-  //   return pathName === `/user/questionBank/${topicId}`;
-  // }
-
-  // useEffect(() => {
-  //   const res = subject.topics.find(topic => isActiveTopic(topic.id));
-  //   if(res)
-  //     handleOpenAccordian();
-  //   else
-  //     handleCloseAccordian();
-  //   return () => {
-  //     handleCloseAccordian();
-  //   }
-  // }, [pathName])
   
   const handleSubject = () => {
     router.push(`/user/questionBank/${subject.id}`);
@@ -88,20 +68,8 @@ export default function SubjectComponent({ subject }: { subject: ISubject }) {
           </Box>
           <EditDeleteOptionsMenu className="options" handleDelete={handleOpenDeleteModal} handleEdit={handleOpenEditModal} />
         </Box>
-        {/* <Box className="icons">
-          <IconButton onClick={handleOpenEditModal} size="small">
-            <EditIcon color="primary" />
-          </IconButton>
-          <IconButton onClick={handleOpenDeleteModal} size="small">
-            <DeleteForeverIcon color="error" />
-          </IconButton>
-        </Box> */}
       </AccordionSummary>
       <AccordionDetails>
-        {/* {subject.topicsCount === 0 && <p>No Topics</p>}
-        {subject.topics.map((topic, i) =>
-          <TopicComponent key={i} topic={topic} />
-        )} */}
       </AccordionDetails>
       <ModalComponent open={openDeleteModal} >
         <DeleteSubjectModal id={subject.id} handleClose={handleCloseDeleteModal} />

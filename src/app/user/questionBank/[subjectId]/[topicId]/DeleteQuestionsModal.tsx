@@ -24,8 +24,6 @@ export default function DeleteQuestionModal({ handleClose, topicId}: { handleClo
       handleClose();
   }, [loading]);
 
-
-
   const handleDelete = async () => {
     console.log(selectedQuestions);
     await deleteQuestions({ids:selectedQuestions,topicId});

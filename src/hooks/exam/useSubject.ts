@@ -3,6 +3,7 @@ import useUser from "../useUser"
 import { useToast } from "../useToast";
 import { ISubject } from "@/interfaces/examInterfaces";
 import { createSubjectRequest, deleteSubjectRequest, updateSubjectRequest } from "@/api/subject";
+import { useEffect, useState } from "react";
 
 const useSubjectMutation = ({ request, options }: { request: ({ subjectData, userId }: { subjectData: ISubject, userId: number }) => Promise<any>, options: any }) => {
   return useMutation(
@@ -28,6 +29,7 @@ const useDeleteSubject = ({ request, options }: { request: (id: number) => Promi
 export const useSubject = () => {
   const user = useUser();
   const queryClient = useQueryClient();
+  const [loading, setLoading] = useState(false);
 
   const { successToast, errorToast, loadingToast } = useToast();
 
@@ -80,15 +82,20 @@ export const useSubject = () => {
 
   const subjectMutationQuery = useSubjectMutation({ request: createSubjectRequest, options: mutationOptions });
   const updateSubjectMutationQuery = useUpdateSubjectMutation({ request: updateSubjectRequest, options: updateMutationOptions });
-
   const subjectDeleteMutationQuery = useDeleteSubject({ request: deleteSubjectRequest, options: deleteMutationOptions });
+
+  const isLoading = subjectMutationQuery.isLoading || updateSubjectMutationQuery.isLoading || subjectDeleteMutationQuery.isLoading;
+
+  useEffect(() => {
+    if(isLoading) setLoading(prev => true);
+    else setLoading(prev => false);
+  }, [isLoading])
+  
 
   const createSubject = (subjectData: ISubject) => {
     if (!user?.id)
       return;
     subjectMutationQuery.mutate({ subjectData: subjectData, userId: user?.id });
-    if (subjectMutationQuery.isLoading)
-      loadingToast({ msg: "Creating subject" });
     return subjectMutationQuery.data;
   }
 
@@ -96,17 +103,13 @@ export const useSubject = () => {
     if (!subjectData.id)
       return;
     updateSubjectMutationQuery.mutate({ subjectData: subjectData, id: subjectData.id });
-    if (updateSubjectMutationQuery.isLoading)
-      loadingToast({ msg: "Updating subject" });
     return updateSubjectMutationQuery.data;
   }
 
   const deleteSubject = (id: number) => {
     subjectDeleteMutationQuery.mutate(id);
-    if (subjectDeleteMutationQuery.isLoading)
-      loadingToast({ msg: "Deleting subject" });
   }
 
-  return { createSubject, deleteSubject, updateSubject };
+  return { createSubject, deleteSubject, updateSubject, loading };
 
 }

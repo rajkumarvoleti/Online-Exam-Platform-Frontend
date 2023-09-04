@@ -24,7 +24,6 @@ export default function Page({params}:{params:{topicId:string}}) {
     initializeQuestions(data);
   }, [data])
   
-
   if(isLoading)
     return <Box className='center' sx={styles}><CircularProgress /></Box>
 

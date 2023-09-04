@@ -3,6 +3,7 @@ import useUser from "../useUser"
 import { useToast } from "../useToast";
 import { ITopic } from "@/interfaces/examInterfaces";
 import { createTopicRequest, deleteTopicRequest, updateTopicRequest } from "@/api/topic";
+import { useEffect, useState } from "react";
 
 const useTopicMutation = ({ request, options }: { request: ({ topicData, userId }: { topicData: ITopic, userId: number }) => Promise<any>, options: any }) => {
   return useMutation(
@@ -28,6 +29,7 @@ const useDeleteTopic = ({ request, options }: { request: (id: number) => Promise
 export const useTopic = () => {
   const user = useUser();
   const queryClient = useQueryClient();
+  const [loading, setLoading] = useState(false);
 
   const { successToast, errorToast, loadingToast } = useToast();
 
@@ -79,15 +81,19 @@ export const useTopic = () => {
 
   const topicMutationQuery = useTopicMutation({ request: createTopicRequest, options: mutationOptions });
   const updatetopicMutationQuery = useUpdateTopicMutation({ request: updateTopicRequest, options: updateMutationOptions });
-
   const topicDeleteMutationQuery = useDeleteTopic({ request: deleteTopicRequest, options: deleteMutationOptions });
+  const isLoading = topicMutationQuery.isLoading || updatetopicMutationQuery.isLoading || topicDeleteMutationQuery.isLoading;
+
+  useEffect(() => {
+    if(isLoading) setLoading(prev => true);
+    else setLoading(prev => false);
+  }, [isLoading])
+  
 
   const createTopic = (topicData: ITopic) => {
     if (!user?.id)
       return;
     topicMutationQuery.mutate({ topicData: topicData, userId: user?.id });
-    if (topicMutationQuery.isLoading)
-      loadingToast({ msg: "Creating topic" });
     return topicMutationQuery.data;
   }
 
@@ -95,17 +101,13 @@ export const useTopic = () => {
     if (!topicData.id)
       return;
     updatetopicMutationQuery.mutate({ topicData: topicData, id: topicData.id });
-    if (updatetopicMutationQuery.isLoading)
-      loadingToast({ msg: "Updating topic" });
     return updatetopicMutationQuery.data;
   }
 
   const deleteTopic = (id: number) => {
     topicDeleteMutationQuery.mutate(id);
-    if (topicDeleteMutationQuery.isLoading)
-      loadingToast({ msg: "Deleting topic" });
   }
 
-  return { createTopic, deleteTopic, updateTopic };
+  return { createTopic, deleteTopic, updateTopic, loading };
 
 }

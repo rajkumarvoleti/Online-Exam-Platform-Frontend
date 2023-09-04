@@ -49,6 +49,7 @@
     "next": "^13.4.7",
     "next-nprogress-bar": "^2.0.3",
     "next-progress": "^2.3.1",
+    "next13-progressbar": "^1.0.2",
     "nprogress": "^0.2.0",
     "query-string": "^8.1.0",
     "react": "18.2.0",

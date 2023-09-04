@@ -4,7 +4,7 @@ import {useEffect} from 'react';
 import { getExamRequest } from "@/api/exam";
 import { useQuiz } from "@/hooks/useQuiz";
 import { IQuizQuestion, IQuizSubject } from "@/interfaces/quizInterfaces";
-import { Box, Button, SxProps } from "@mui/material";
+import { Box, Button, CircularProgress, SxProps } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
@@ -28,10 +28,10 @@ export default function Page({params}:{params:{examId:string}}) {
   }, [data])  
 
   if(error)
-    return <p>Something went wrong</p>
+    return <Box className='center' sx={styles}>Something went wrong</Box>
   
   if(isLoading)
-    return <p>loading...</p>
+    return <Box className='center' sx={styles}><CircularProgress /></Box>
   
   const handleClick = () =>{
     if(!data.exam)

@@ -32,7 +32,7 @@ export default function Page({params}:{params:{subjectId:string}}) {
   useEffect(() => {
     if(!results[1].data || results[1].data.topics)
       return;
-    const newTopics = results[1].data.topics.filter((topic:ITopic) => {
+    const newTopics = results[1].data.topics?.filter((topic:ITopic) => {
       return topic.name.toLowerCase().includes(query.toLowerCase());
     })
     setTopics(newTopics);

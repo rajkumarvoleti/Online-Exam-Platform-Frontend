@@ -1,7 +1,8 @@
 import { useSubject } from "@/hooks/exam/useSubject";
 import { ISubject } from "@/interfaces/examInterfaces";
+import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import { Box, SxProps, InputLabel, OutlinedInput, Button } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const styles: SxProps = {
   width: "300px",
@@ -23,7 +24,13 @@ const styles: SxProps = {
 export default function CreateSubjectModal({ handleClose }: { handleClose: () => void }) {
 
   const [subjectName, setSubjectName] = useState<string>("");
-  const { createSubject } = useSubject();
+  const { createSubject, loading } = useSubject();
+  const [canClose, setCanClose] = useState(false);
+
+  useEffect(() => {
+    if(loading) setCanClose(prev => true);
+    else if(!loading && canClose) handleClose();
+  }, [loading])
 
   const handleChange = (e: any) => {
     setSubjectName(e.target.value);
@@ -37,7 +44,6 @@ export default function CreateSubjectModal({ handleClose }: { handleClose: () =>
       topicsCount: 0,
     };
     createSubject(subject);
-    handleClose();
   }
 
   return (
@@ -48,7 +54,7 @@ export default function CreateSubjectModal({ handleClose }: { handleClose: () =>
       </Box>
       <Box className="buttons">
         <Button size="small" variant="outlined" onClick={handleClose}>Close</Button>
-        <Button size="small" variant="contained" onClick={handleSubmit}>Submit</Button>
+        <LoadingButton loading={loading} size="small" variant="contained" onClick={handleSubmit}>Submit</LoadingButton >
       </Box>
     </Box>
   )

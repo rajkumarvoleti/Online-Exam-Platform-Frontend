@@ -10,6 +10,13 @@ import { getExamRequest } from '@/api/exam'
 import { useRouter } from 'next/navigation'
 import { quizAtom, useQuiz } from '@/hooks/useQuiz'
 import { useRecoilValue } from 'recoil'
+import { CircularProgress, SxProps } from '@mui/material'
+import { Box } from '@mui/system'
+
+const styles:SxProps = {
+  minWidth: "100vw",
+  minHeight: "100vh",
+}
 
 export default function Page({params}:{params:{examId:string}}) {
 
@@ -41,10 +48,10 @@ export default function Page({params}:{params:{examId:string}}) {
     return <></>
   
   if(error)
-    return <p>Something went wrong</p>
+    return <Box className='center' sx={styles}>Something went wrong</Box>
 
   if(isLoading)
-    return <p>loading...</p>
+    return <Box className='center' sx={styles}><CircularProgress /></Box>
 
   if(!examId)
     return <></>
