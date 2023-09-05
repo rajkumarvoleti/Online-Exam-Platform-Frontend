@@ -1,6 +1,7 @@
 "use client"
 
 import PageHeader from "@/components/PageHeader";
+import LogoutButton from "@/components/auth/LogoutButton";
 import DrawerComponent from "@/components/drawer/DrawerComponent";
 import { useDrawer } from "@/hooks/useDrawer";
 import { useToast } from "@/hooks/useToast";
@@ -27,7 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   useEffect(() => {
     if(!session.isAuthenticated){
-      infoToast({msg:"Please login to continue"});
+      // infoToast({msg:"Please login to continue"});
       router.push("/auth/signin");
     }
   }, [session, router]);
@@ -38,7 +39,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <Box component="main" className="main">
         <PageHeader text={activeItem?.Text || ""}/>
         <Box>
-          {/* <LogoutButton /> */}
           {children}
         </Box>
       </Box>

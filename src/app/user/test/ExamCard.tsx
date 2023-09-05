@@ -86,7 +86,7 @@ export default function ExamCard({exam}:{exam:IExam}) {
           </Box>
           <Box className="time">
             <AccessTimeOutlinedIcon className="icon" />
-            <p>{exam.testStartDate} to {exam.testEndDate}</p>
+            <p>{exam.testStartDate.slice(5,16)} to {exam.testEndDate.slice(5,16)}</p>
           </Box>
         </Box>
         <Box className="buttonBox">

@@ -4,6 +4,7 @@ import { Box, SxProps } from "@mui/material";
 import { useRecoilValue } from "recoil";
 import { sessionAtom } from "@/utils/atoms/sessionAtom";
 import { useEffect, useState } from "react";
+import LogoutButton from "./auth/LogoutButton";
 
 const styles:SxProps = {
   display: "flex",
@@ -16,7 +17,7 @@ const styles:SxProps = {
     margin: 0,
   },
   ".name":{
-    fontSize: "16px",
+    fontSize: "14px",
     fontWeight: "600"
   }
 }
@@ -33,12 +34,15 @@ export default function Account(){
     }, []);
 
   return (
-    <Box sx={styles}>
-      <Image src={userImage.src} width={"40"} height={"40"} alt="user" />
-      <Box>
-        <p className="name">{name}</p>
-        <p className="email">{email}</p>
+    <>
+      <LogoutButton />
+      <Box sx={styles}>
+        <Image src={userImage.src} width={"40"} height={"40"} alt="user" />
+        <Box>
+          <p className="name">{name}</p>
+          <p className="email">{email}</p>
+        </Box>
       </Box>
-    </Box>
+    </>
   )
 }
