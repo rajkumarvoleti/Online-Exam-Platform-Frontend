@@ -16,16 +16,18 @@ const styles:SxProps = {
   ".container":{
     display:"grid",
     gridTemplateColumns: "1fr 4fr",
+    ".options,":{
+      margin:" 7px",
+      // ml:"10px"
+  
+    },
   },
-  ".options,":{
-    padding: "6px",
-    margin:"0px 6px"
-
-  },
+  
   ".forms":{
     padding: "6px",
-    margin:"0px 6px",
+    margin:"6px",
     minHeight:"57vh",
+    mr:"18px"
   },
   ".menuItem":{
     margin: "10px",
@@ -35,7 +37,8 @@ const styles:SxProps = {
     color: "#2200A5",
   },
   ".basicForm":{
-    // margin:"7px"
+    margin:"10px",
+    mb:"0px"
 
   }
 }

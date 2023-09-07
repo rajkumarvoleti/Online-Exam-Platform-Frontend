@@ -1,5 +1,5 @@
 import { FormikInput } from "@/components/formik/FormikInput";
-import { Box, Button, SxProps } from "@mui/material";
+import { Box, Button, SxProps, capitalize } from "@mui/material";
 import { Form, Formik } from "formik";
 import Image from "next/image";
 import UserImage from '@/assets/user/userImage.png';
@@ -11,26 +11,54 @@ import useUser from "@/hooks/useUser";
 import ActionButtons from "./ActionButtons";
 import { IUserDetailsForm } from "@/interfaces/formikInterfaces";
 import { useUpdateUser } from "@/hooks/auth/useUpdateUser";
+import { Transform } from "stream";
 
 const styles:SxProps = {
-  padding: "20px",
+  p: "16px",
+  // mr:"10px",
   width:"100%",
   ".form":{
     display: "flex",
-    flexWrap: "wrap",
-    border:"2px solid red",
-    gridTemplateColumns: "repeat(3, 1fr)",
-    gridGap: "0 30px",
-    margin: "30px 0",
+    flexDirection:"column",
+    gap:"5px",
+// border:"2px solid red",
+    margin: "15px 0",
+    ".input":{
+      borderRadius:"5px"
+    }
+  },
+  ".label":{
+    margin:"0",
+    color:"#5b5b5b"
+  },
+  ".rowForm":{
+    display:"flex",
+    flexDirection:"row",
+    gap:"15px",
+    // alignItems:"center",
+
+
   },
   ".tagline": {
-    gridColumn: "1/4",
-  },
-  ".bio":{
-    gridColumn: "1/4",
+    width:"300px",
     ".input":{
-      height: "200px",
-      alignItems:"start"
+      width:"830px",
+
+    }
+  },
+
+  ".bio":{
+    ".desc":{
+width:"650px",
+fontSize:"15px",
+mb:"5px",
+    },
+    // gridColumn: "1/4",
+    ".input":{
+      height: "100px",
+      alignItems:"start",
+      width:"830px"
+      
     }
   },
   ".customInput": {
@@ -39,12 +67,48 @@ const styles:SxProps = {
   },
   ".imageUpload": {
     display: "flex",
-    gap: "30px",
+    gap: "16px",
     alignItems: "center",
   },
   ".buttons":{
-    gridColumn: "1/4",
-  }
+    // gridColumn: "1/4",
+  },
+  ".circle":{
+    height: "84px",
+    width: "84px",
+    backgroundColor: "#C783FF",
+    borderRadius: "50px",
+    // display: "inline-block",
+  
+
+  },
+  ".letter":{
+    fontSize: "50px",
+    color:"white",
+    margin:" 15px 24px ",
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
+    // display: flex;
+    
+
+  },
+  ".phead":{
+    margin:"0",
+    fontWeight:"550",
+    fontSize:"15px"
+  },
+  ".formats":{
+    margin:"6px 0px",
+    fontSize:"15px"
+  },
+  ".browseBtn":{
+    color:"#2200A5",
+    textTransform:"capitalize",
+    p:"0px"
+  },
+
+
 }
 
 export default function UserDetailsForm(){
@@ -61,11 +125,14 @@ export default function UserDetailsForm(){
   return (
     <Box sx={styles}>
     <Box className="imageUpload">
-      <Image src={UserImage.src} alt="user image" width={"100"} height={"100"}/>
+      {/* <Image src={UserImage.src} alt="user image" width={"100"} height={"100"}/> */}
+      <div className="circle center">
+        <span className="letter">K</span>
+      </div>
       <Box>
         <p className="phead">Upload Image</p>
-        <p>Allowed formats: jpeg, png: Size: Up to 50kb</p>
-        <Button variant="outlined" size="small">Browse</Button>
+        <p className="formats">Allowed formats: jpeg, png: Size: Up to 50kb</p>
+        <Button variant="outlined" color="success" className="browseBtn"  size="small">Browse</Button>
       </Box>
     </Box>
     <Formik 
@@ -74,6 +141,11 @@ export default function UserDetailsForm(){
         >
       {({values}) => (
         <Form className="form">
+
+         
+
+
+          <div className="rowForm">
           <FormikInput
             name="firstName"
             label="First Name"
@@ -93,6 +165,9 @@ export default function UserDetailsForm(){
             value={values.email}
             InputImage={EmailIcon}
             />
+          </div>
+
+           <div className="rowForm">
           <FormikInput
             name="country"
             label="Country"
@@ -116,13 +191,42 @@ export default function UserDetailsForm(){
             value={values.phoneNumber}
             type="phoneNumber"
             />
+          </div>
+
+        
+          <div className="rowForm">
           <FormikInput
+            name="firstName"
+            label="First Name"
+            placeholder=""
+            value={values.firstName}
+            />
+          <FormikInput
+            name="lastName"
+            label="Last Name"
+            placeholder=""
+            value={values.lastName}
+            />
+          <FormikInput
+            name="email"
+            label="Email"
+            placeholder=""
+            value={values.email}
+            InputImage={EmailIcon}
+            />
+          </div>
+
+
+          <div className="rowForm">
+            <FormikInput
             name="tagline"
             className="tagline"
             label="Tagline"
             placeholder=""
             value={values.tagline}
             />
+          </div>
+             <div className="rowForm">
           <FormikInput
             className="bio"
             name="bio"
@@ -131,6 +235,10 @@ export default function UserDetailsForm(){
             value={values.bio}
             desc="Write a short introduction about yourself to let potential employers know about you"
             />
+             </div>
+        
+         
+      
           <ActionButtons handleSubmit={() => handleSubmit(values)} />
         </Form>
       )}
