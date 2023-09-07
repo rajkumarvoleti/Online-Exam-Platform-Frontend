@@ -6,7 +6,7 @@ import { useQuiz } from "@/hooks/useQuiz";
 import { IQuizQuestion, IQuizSubject } from "@/interfaces/quizInterfaces";
 import { Box, Button, CircularProgress, SxProps } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next-nprogress-bar';
 
 const styles:SxProps = {
   width: "100vw",

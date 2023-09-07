@@ -9,6 +9,10 @@ const styles = {
       height: "1px",
       background: "#C2E830",
     },
+    ".text":{
+      color: "#2200A5",
+      p: "0 10px",
+    }
   },
   ".icons": {
     justifyContent: "space-around",
@@ -22,7 +26,7 @@ export default function ExternalSigninDiv() {
     <Box sx={styles}>
       <Box className="center signin-with">
         <Box className="line" />
-        <p>Or sign in with</p>
+        <p className="text">Or sign in with</p>
         <Box className="line" />
       </Box>
       <Box className="center icons">

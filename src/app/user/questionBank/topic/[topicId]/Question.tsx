@@ -1,8 +1,9 @@
 import { IQuestionAndAnswer } from "@/interfaces/examInterfaces";
 import { Box, Button, Card, Checkbox, IconButton, SxProps } from "@mui/material";
 import EditIcon from '@mui/icons-material/EditOutlined';
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import useManageQuestions from "./useManageQuestions";
+import { useRouter } from "next-nprogress-bar";
 
 const styles:SxProps = {
   ".card":{
@@ -34,7 +35,7 @@ export default function Question({question}:{question:IQuestionAndAnswer}){
   const {selectedQuestions, toggleQuestion} = useManageQuestions();
 
   const handleEditQuestion = () => {
-    router.push(`${pathName}/${question.questionId}`);
+    router.push(`/user/edit/question/${question.questionId}`);
   }
   
   const handleCheckBox = () => {

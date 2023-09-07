@@ -1,4 +1,5 @@
 import useManageQuestion from "@/hooks/exam/useManageQuestion";
+import { ITopic } from "@/interfaces/examInterfaces";
 import { IQuestionLevel, IQuestionType } from "@/interfaces/questionInterfaces";
 import { Box, Card, InputLabel, MenuItem, Select, SelectChangeEvent, SxProps } from "@mui/material";
 import { useSearchParams } from "next/navigation";
@@ -27,7 +28,7 @@ const styles:SxProps = {
   }
 }
 
-export default function Header({type,setType}:{type:IQuestionType, setType:(t:IQuestionType) => any}) {
+export default function Header({type,setType, topic}:{type:IQuestionType, setType:(t:IQuestionType) => any, topic?:ITopic}) {
 
   const searchParams = useSearchParams();
   const [difficulty, setDifficulty] = useState<IQuestionLevel>("easy");
@@ -47,7 +48,7 @@ export default function Header({type,setType}:{type:IQuestionType, setType:(t:IQ
 
   return (
     <Card sx={styles}>
-      <h4>Create a New Question For {searchParams.get("topicName")}</h4>
+      <h4>Create a New Question For {topic?.name}</h4>
       <Box className="options">
         <Box className="option">
           <InputLabel className="label">Question Level</InputLabel>

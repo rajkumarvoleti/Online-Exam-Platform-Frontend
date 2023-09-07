@@ -3,6 +3,7 @@ import SearchBarComp from '@/components/SearchBarComp';
 import ModalComponent from '@/components/ModalComponent';
 import { useState } from "react";
 import CreateSubjectModal from './CreateSubjectModal';
+import { useRouter } from "next-nprogress-bar";
 
 const styles = {
   display: "flex",
@@ -40,15 +41,20 @@ const styles = {
 export default function SideBarHeader({setQuery}:{setQuery:(query:string) => void}) {
 
   const [openSubjectModal, setOpenSubjectModal] = useState<boolean>(false);
+  const router = useRouter();
 
   const handleOpenSubjectModal = () => setOpenSubjectModal(true);
   const handleCloseSubjectModal = () => setOpenSubjectModal(false);
+
+  const handleClick = () => {
+    router.push("/user/create/questionBank");
+  }
 
   return (
     <Box sx={styles}>
       <h4>SUBJECT</h4>
       <Box className="buttons center">
-        <Button onClick={handleOpenSubjectModal} className='newButton' variant='outlined'>
+        <Button onClick={handleClick} className='newButton' variant='outlined'>
           + New
         </Button>
         {/* <FilterAltOutlinedIcon className='icon' />

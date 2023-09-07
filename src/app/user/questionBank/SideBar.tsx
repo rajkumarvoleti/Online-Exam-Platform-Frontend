@@ -5,6 +5,8 @@ import { ISubject } from '@/interfaces/examInterfaces';
 import { useQuery } from '@tanstack/react-query';
 import { getAllSubjectsRequest } from '@/api/subject';
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { useRouter } from 'next-nprogress-bar';
 
 const styles = {
   width: "280px",
@@ -47,12 +49,23 @@ export default function SideBar() {
   const { data, isLoading, error } = useQuery(["subjects"], getAllSubjectsRequest);
   const [subjects, setSubjects] = useState<ISubject[]>([]);
   const [query, setQuery] = useState("");
+  const router = useRouter();
+  const pathName = usePathname();
 
   useEffect(() => {
     if(!data)
       return;
     setSubjects(data.subjects);
   }, [data])
+
+  useEffect(() => {
+    console.log(pathName);
+    if(pathName === "/user/questionBank" && subjects[0]){
+      const id = subjects[0].id;
+      router.push(`/user/questionBank/subject/${id}`);
+    }
+  }, [pathName,subjects])
+  
 
   useEffect(() => {
     if(!data || !data.subjects)

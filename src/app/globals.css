@@ -50,14 +50,13 @@ div {
   border-radius: 8px;
   border-color: #938A90;
   background: #FFF;
-  margin: 10px 0;
 }
 
 .label {
   color: #000;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
-  margin: 5px;
+  margin: 5px 0px;
 }
 
 h3 {
@@ -123,4 +122,9 @@ p.phead {
 
 .ck-content {
   min-height: 300px;
+}
+
+.MuiButton-root {
+  border-radius: 8px;
+  text-transform: capitalize;
 }

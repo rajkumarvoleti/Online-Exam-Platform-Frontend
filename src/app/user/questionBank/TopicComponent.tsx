@@ -4,10 +4,11 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { ITopic } from "@/interfaces/examInterfaces";
 import { useState } from "react";
 import ModalComponent from "@/components/ModalComponent";
-import DeleteTopicModal from "./DeleteTopicModal";
-import EditTopicModal from "./EditTopicModal";
+import DeleteTopicModal from "./subject/[subjectId]/DeleteTopicModal";
+import EditTopicModal from "./subject/[subjectId]/EditTopicModal";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 
 const styles: SxProps = {
   display: "flex",
@@ -31,6 +32,7 @@ const styles: SxProps = {
 export default function TopicComponent({ topic }: { topic: ITopic }) {
 
   const pathName = usePathname();
+  const router = useRouter();
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
 
@@ -39,6 +41,10 @@ export default function TopicComponent({ topic }: { topic: ITopic }) {
 
   const handleOpenEditModal = () => setOpenEditModal(true);
   const handleCloseEditModal = () => setOpenEditModal(false);
+
+  const handleEdit = () => {
+    router.push(`/user/edit/topic/${topic.id}`);
+  }
 
   const redirectLink = `/user/questionBank/${topic.id}?topicName=${topic.name}`;
   const cleanRedirectLink = `/user/questionBank/${topic.id}`;
@@ -52,7 +58,7 @@ export default function TopicComponent({ topic }: { topic: ITopic }) {
         {topic.name}
       </Link>
       <Box className="icons">
-        <IconButton onClick={handleOpenEditModal} size="small">
+        <IconButton onClick={handleEdit} size="small">
           <EditIcon color="primary" />
         </IconButton>
         <IconButton onClick={handleOpenDeleteModal} size="small">

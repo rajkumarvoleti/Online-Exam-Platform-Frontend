@@ -7,6 +7,7 @@ import CompletedExamCard from './CompletedExamCard';
 import { useQuery } from '@tanstack/react-query';
 import { getAllExamsRequest } from '@/api/exam';
 import { IExam } from '@/interfaces/examInterfaces';
+import dayjs from 'dayjs';
 
 const styles:SxProps = {
   minHeight: "90vh",
@@ -39,7 +40,7 @@ export default function Page(){
   const [tabValue, setTabValue] = useState<number>(0);
   const {data, error, isLoading} = useQuery(["exams"],async () => await getAllExamsRequest())
 
-  const tabs = ["Start Now","Completed" ,"Coming Soon"]
+  const tabs = ["Start Now","Completed" ,"Coming Soon"];
 
   if(error)
     return <Box sx={styles}>error</Box>
@@ -47,11 +48,32 @@ export default function Page(){
   if(isLoading)
     return <Box className="center" sx={styles}><CircularProgress /></Box>
   
+  if(!data.exams)
+    return <></>
+
+  const isLive = ({start, end}:{start:string,end:string}) => {
+    if(start === "always")
+      return true;
+    return dayjs(start).isBefore(dayjs()) && dayjs(end).isAfter(dayjs());
+  }
+
+  const isUpcoming = (start:string)  => {
+    return dayjs(start).isAfter(dayjs());
+  }
+
+  const isCompleted = (end:string) => {
+    return dayjs(end).isBefore(dayjs());
+  }
+
+  const liveExams:IExam[] = data.exams.filter((exam:IExam) => isLive({start:exam.testStartDate, end: exam.testEndDate})) || [];
+  const upcomingExams:IExam[] = data.exams.filter((exam:IExam) => isUpcoming(exam.testStartDate)) || [];
+  const completedExams:IExam[] = data.exams.filter((exam:IExam) => isCompleted(exam.testEndDate)) || [];
+
   console.log(data);
 
   return (
     <Box sx={styles}>
-      <Header/>
+      <Header totalExams={data.exams.length}/>
       <Card>
         <Tabs className='tabs' value={tabValue}>
             {tabs.map((tab,i) => 
@@ -61,21 +83,19 @@ export default function Page(){
       </Card>
       <Box className="center">
         {tabValue === 0 && <Box className="cards">
-          {data.exams && data.exams.map((exam:IExam) => (
+          {liveExams.map((exam:IExam) => (
             <ExamCard exam={exam} key={exam.id}/>
           ))}
         </Box>}
         {tabValue === 1 && <Box className="cards">
-          <CompletedExamCard />
-          {/* <CompletedExamCard />
-          <CompletedExamCard />
-          <CompletedExamCard /> */}
+          {completedExams.map((exam:IExam) => (
+            <ExamCard exam={exam} key={exam.id}/>
+          ))}
         </Box>}
         {tabValue === 2 && <Box className="cards">
-          {/* <ExamCard/>
-          <ExamCard/>
-          <ExamCard/>
-          <ExamCard/> */}
+          {upcomingExams.map((exam:IExam) => (
+            <ExamCard exam={exam} key={exam.id}/>
+          ))}
         </Box>}
       </Box>
     </Box>

@@ -9,13 +9,17 @@ import { MsalProvider } from "@azure/msal-react";
 import { Configuration, PublicClientApplication } from "@azure/msal-browser";
 import { usePathname } from "next/navigation";
 import BackToLogin from "@/components/buttons/BackToLogin";
+import { SxProps } from "@mui/material";
 
-const styles = {
+const styles:SxProps = {
   padding: "40px 80px",
   width: "100vw",
+  height: "100vh",
   ".header": {
     diplay: "flex",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    position: "sticky",
+    top: "40px",
   },
   ".container": {
     display: "flex",
@@ -24,6 +28,8 @@ const styles = {
     },
     ".img-container": {
       height: "80vh",
+      position: "sticky",
+      top: "90px",
     }
   },
   ".form": {
@@ -60,7 +66,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </Box>
       <Box className="container">
         <Box className="img-container center">
-          <Image src={UserImage.src} alt="header-logo" height={UserImage.height} width={UserImage.width} priority={true} />
+          <Image src={UserImage.src} alt="header-logo" height={UserImage.height/0.9} width={UserImage.width/0.9} priority={true} />
         </Box>
         <Box className="form center">
           {children}

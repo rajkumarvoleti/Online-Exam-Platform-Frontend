@@ -1,6 +1,7 @@
 import { ISignupOptions } from '@/interfaces/authInterfaces';
-import { ILoginForm, IPromoCode, ITestDetailsForm, ITestEvaluationForm, ITestPricingForm, ITestSettingsForm, IUpdatePasswordForm, IUserDetailsForm } from '@/interfaces/formikInterfaces';
+import { ICreateSubjectTopic, ICreateTopic, ILoginForm, IPromoCode, ITestDetailsForm, ITestEvaluationForm, ITestPricingForm, ITestSettingsForm, IUpdatePasswordForm, IUserDetailsForm } from '@/interfaces/formikInterfaces';
 import { IQuestionBank, ISelectedQuestionBank } from '@/interfaces/otherInterfaces';
+import dayjs from 'dayjs';
 import * as yup from 'yup';
 import 'yup-phone';
 
@@ -88,7 +89,6 @@ export const testPricingValidationSchema = yup.object({
   testType: testTypeSchema,
   price: numberRequiredValidation,
   promoCodes: yup.lazy((value,options) => {
-    console.log({options, value});
     if(options.context.testType === "private") return yup.array().of(promoCodeSchema);
     return yup.array();
   }),
@@ -103,7 +103,13 @@ export const testSettingsValidationScehma = yup.object({
     return yup.string();
   }),
   testEndDate: yup.lazy((value,options) => {
-    if(options.context.testDateAvailability === "specific") return dateValidation;
+    if(options.context.testDateAvailability === "specific"){
+      return dateValidation.test('is-greater', 'End date must be greater than start date', function (value,context) {
+        const start = dayjs(context.parent.testStartDate);
+        const end = dayjs(context.parent.testEndDate);
+        return start.isValid() && start.isBefore(end);
+      });
+    } 
     return yup.string();
   }),
   testStartTime: yup.lazy((value,options) => {
@@ -111,14 +117,39 @@ export const testSettingsValidationScehma = yup.object({
     return yup.string();
   }),
   testEndTime: yup.lazy((value,options) => {
-    if(options.context.testTimeAvailability === "specific") return dateValidation;
+    if(options.context.testTimeAvailability === "specific"){
+      return dateValidation.test('is-greater', 'End time must be greater than start time', function (value,context) {
+        const start = dayjs(context.parent.testStartTime);
+        const end = dayjs(context.parent.testEndTime);
+        return start.isValid() && start.isBefore(end);
+      });
+    } 
     return yup.string();
   }),
   testDuration: numberRequiredValidation,
   totalMarks: numberRequiredValidation,
+  marksPerQuestion: numberRequiredValidation,
   totalQuestions: numberRequiredValidation,
   negativeMarks: positiveIntegerRequiredValidation,
   passPercentage: numberRequiredValidation.lessThan(101,"Please enter a valid value"),
   resultFormat: stringRequiredValidation,
   testDeclaration: stringRequiredValidation,
 })
+
+export const createTopicValidationScehma: yup.ObjectSchema<ICreateTopic> = yup.object({
+  id: yup.number().required(),
+  name: stringRequiredValidation,
+  description: stringRequiredValidation,
+})
+
+export const createSubjectTopicValidationScehma = yup.object({
+  name: stringRequiredValidation,
+  description: stringRequiredValidation,
+  topics: yup.array().of(createTopicValidationScehma).min(1, "Add atleast one chapter"),
+})
+
+export const createSubjectValidationSchema = yup.object({
+  name: stringRequiredValidation,
+  description: stringRequiredValidation,
+})
+

@@ -4,7 +4,7 @@ import { getResultRequest } from "@/api/exam";
 import { quizAtom, useQuiz } from "@/hooks/useQuiz";
 import { Box, Button, CircularProgress, SxProps } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 import { useEffect } from "react";
 import { useRecoilValue } from "recoil";
 

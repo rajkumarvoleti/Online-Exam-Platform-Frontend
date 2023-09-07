@@ -1,11 +1,11 @@
 import { Button, Card, SxProps } from "@mui/material";
 import { Box } from "@mui/material";
 import SearchBarComp from "@/components/SearchBarComp";
-import { useRouter } from "next/navigation";
 import { ISubject } from "@/interfaces/examInterfaces";
 import { useState } from "react";
 import CreateTopicModal from "./CreateTopicModal";
 import ModalComponent from "@/components/ModalComponent";
+import { useRouter } from "next-nprogress-bar";
 
 const styles:SxProps = {
   display: "flex",
@@ -39,6 +39,10 @@ export default function Header({subject, setQuery}:{subject:ISubject, setQuery:(
   const [openCreateTopicModal, setOpenCreateTopicModal] = useState<boolean>(false);
   const handleOpenCreateTopicModal = () => setOpenCreateTopicModal(true);
   const handleCloseCreateTopicModal = () => setOpenCreateTopicModal(false);
+
+  const handleClick = () => {
+    router.push(`/user/create/topics/${subject.id}`);
+  }
 
   if(!subject.id)
     return;

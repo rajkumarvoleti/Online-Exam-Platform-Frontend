@@ -41,6 +41,7 @@ export const useTopic = () => {
         successToast({ msg: "Topic Created Successfully" });
         queryClient.invalidateQueries(["topics",variables.topicData.subjectId],{exact: true})
         queryClient.invalidateQueries(["subjects"], {exact: true});
+        queryClient.invalidateQueries(["subject",variables.topicData.subjectId], {exact: true});
       }
     },
     onError: (error: any, variables: any) => {
@@ -54,8 +55,9 @@ export const useTopic = () => {
         errorToast({ msg: data.error });
       else {
         successToast({ msg: "Topic Updated Successfully" });
-        console.log(variables.topicData.subjectId);
-        queryClient.invalidateQueries(["topics"])
+        console.log(data);
+        const id = variables.topicData.subjectId;
+        queryClient.invalidateQueries(["topics",id],{exact: true})
       }
     },
     onError: (error: any, variables: any) => {
@@ -72,6 +74,7 @@ export const useTopic = () => {
         successToast({ msg: "Topic Deleted Successfully" });
         queryClient.invalidateQueries(["topics", data.topic.subjectId]);
         queryClient.invalidateQueries(["subjects"], {exact: true});
+        queryClient.invalidateQueries(["subject",data.topic.subjectId], {exact: true});
       }
     },
     onError: (error: any, variables: any) => {

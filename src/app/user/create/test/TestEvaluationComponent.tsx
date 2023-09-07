@@ -2,6 +2,7 @@ import { FormikInput } from '@/components/formik/FormikInput';
 import { ITestSettingsForm } from '@/interfaces/formikInterfaces';
 import {Box, SxProps} from '@mui/material';
 import { useFormikContext } from 'formik';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 const styles:SxProps = {
   h4:{
@@ -22,22 +23,42 @@ const styles:SxProps = {
 }
 
 export default function TestEvaluationComponent() {
-  const {values} = useFormikContext<ITestSettingsForm>();
+
+  const {values, setFieldValue} = useFormikContext<ITestSettingsForm>();
+
+  const handleTotalMarks = async() => {
+    const total = values.marksPerQuestion * values.totalQuestions;
+    await setFieldValue("totalMarks",total);
+  }
+  useEffect(() => {
+    handleTotalMarks();
+  }, [values.marksPerQuestion, values.totalQuestions])
+  
+
   return (
     <Box sx={styles}>
       <h4>Test Evaluation</h4>
       <Box className="form">
         <FormikInput
           name="totalQuestions"
-          label="Test Questions"
+          label="Total Questions"
           type='number'
           placeholder=""
+          disabled
           value={values.totalQuestions}
+        />
+        <FormikInput
+          name="marksPerQuestion"
+          label="Marks Per Question"
+          type='number'
+          placeholder=""
+          value={values.marksPerQuestion}
         />
         <FormikInput
           name="totalMarks"
           label="Total Marks"
           type='number'
+          disabled
           placeholder="RPA"
           value={values.totalMarks}
         />

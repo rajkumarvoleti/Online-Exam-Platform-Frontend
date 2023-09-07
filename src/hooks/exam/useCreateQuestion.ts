@@ -4,6 +4,7 @@ import { useToast } from "../useToast";
 import { IQuestionAndAnswer } from "@/interfaces/examInterfaces";
 import { createQuestionRequest, createQuestionsRequest, deleteQuestionRequest, deleteQuestionsRequest, updateQuestionRequest } from "@/api/question";
 import { useEffect, useState } from "react";
+import { useRouter } from "next-nprogress-bar";
 
 const useQuestionMutation = ({ request, options }: { request: ({ questionData, userId }: { questionData: IQuestionAndAnswer, userId: number }) => Promise<any>, options: any }) => {
   return useMutation(
@@ -44,6 +45,7 @@ export const useQuestion = () => {
   const user = useUser();
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const { successToast, errorToast, loadingToast } = useToast();
 
@@ -60,6 +62,7 @@ export const useQuestion = () => {
         successToast({ msg: "Question Created Successfully" });
         const topicId = data.question.topicId;
         queryClient.invalidateQueries(["questions",topicId], { exact: true });
+        router.push(`/user/questionBank/topic/${topicId}`);
       }
     },
     onError: (error: any, variables: any) => {
@@ -73,8 +76,9 @@ export const useQuestion = () => {
         errorToast({ msg: data.error });
       else {
         successToast({ msg: "Questions Created Successfully" });
-        // const topicId = data.question.topicId;
-        // queryClient.invalidateQueries(["questions",topicId], { exact: true });
+        const topicId = data.question.topicId;
+        queryClient.invalidateQueries(["questions",topicId], { exact: true });
+
       }
     },
     onError: (error: any, variables: any) => {
@@ -88,10 +92,12 @@ export const useQuestion = () => {
         errorToast({ msg: data.error });
       else {
         successToast({ msg: "Question Updated Successfully" });
+        console.log(data);
         const topicId = data.question.topicId;
-        const questionId = data.question.questionId;
+        const questionId = data.question.id;
         queryClient.invalidateQueries(["questions",topicId], { exact: true })
         queryClient.invalidateQueries(["question",questionId], { exact: true })
+        router.push(`/user/questionBank/topic/${topicId}`);
       }
     },
     onError: (error: any, variables: any) => {

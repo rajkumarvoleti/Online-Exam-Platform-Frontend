@@ -8,13 +8,14 @@ import Header from "./Header";
 import Topics from "./Topics";
 import { getAllTopicsRequest } from "@/api/topic";
 import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const styles:SxProps = {
 }
 
 export default function Page({params}:{params:{subjectId:string}}) {
-
-  const id = parseInt(params.subjectId);
+  const id = parseInt(params.subjectId,10);
+  const router = useRouter();
   const results = useQueries({queries: [
     {queryKey: ["subject",id],queryFn: async() =>  await getSubjectRequest(id)},
     {queryKey: ["topics",id],queryFn: async() => await getAllTopicsRequest({subjectId:id})},

@@ -3,7 +3,6 @@ import Image from "next/image";
 import {INextImage} from '../../interfaces/imageInterfaces';
 
 const styles = {
-  pt:"4px",
   pr:"4px"
 }
 

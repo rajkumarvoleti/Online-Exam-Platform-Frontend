@@ -24,7 +24,10 @@ export default function Footer({topicId}:{topicId:number}) {
     <Card sx={styles}>
       <Button color="success" variant="outlined">Cancel</Button>
       <Button color="success" variant="outlined">Save & Next</Button>
-      <LoadingButton loading={loading} onClick={() => handleSubmit(topicId)} color="success" variant="outlined">Save</LoadingButton>
+      {loading ? 
+      <LoadingButton loading variant="contained" />:
+      <Button onClick={() => handleSubmit(topicId)} color="success" variant="outlined">Save</Button>
+      }
     </Card>
   )
 }

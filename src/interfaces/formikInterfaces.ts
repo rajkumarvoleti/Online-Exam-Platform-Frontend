@@ -42,6 +42,7 @@ export interface ITestDetailsForm {
 export interface ITestEvaluationForm {
   totalQuestions: number,
   totalMarks: number,
+  marksPerQuestion: number,
   passPercentage: number,
   negativeMarks: number,
 }
@@ -54,6 +55,8 @@ export interface ITestSettingsForm extends ITestEvaluationForm {
   testEndDate:string,
   testStartTime: string,
   testEndTime: string,
+  testDurationHours: number,
+  testDurationMinutes: number,
   testDuration: number,
   resultFormat: string,
   testDeclaration: string,
@@ -77,4 +80,16 @@ export interface ICreateTestData {
   testDetails:ITestDetailsForm,
   testSettings:ITestSettingsForm,
   pricing:ITestPricingForm,
+}
+
+export interface ICreateTopic {
+  id: number,
+  name: string,
+  description: string,
+}
+
+export interface ICreateSubjectTopic {
+  name: string,
+  description: string,
+  topics: ICreateTopic[],
 }

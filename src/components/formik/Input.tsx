@@ -1,6 +1,9 @@
-import { Box, InputLabel, OutlinedInput, SxProps } from "@mui/material";
+import { Box, InputAdornment, InputLabel, OutlinedInput, SxProps } from "@mui/material";
 import InputStartAdorment from "./InputStartAdorment";
 import { IInputProps } from "@/interfaces/inputInterfaces";
+import { useState } from "react";
+import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOffOutlined';
 
 const styles: SxProps = {
   mt:"0",
@@ -12,10 +15,16 @@ const styles: SxProps = {
     maxWidth:"200px",
   },
   ".input":{
-    height:"38px"
+    height:"38px",
+    borderRadius: "8px",
+    fontSize: "15px",
   },
   ".desc":{
     color: "#B9B9B9",
+    m: 0,
+  },
+  label: {
+    color: "#000",
   }
 }
 
@@ -35,6 +44,16 @@ export function SimpleInput({label, disabled, type, value, name}:{label:string, 
 }
 
 export default function Input(props: IInputProps){
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const passwordType  = showPassword ? "text" : "password";
+  const inputType = props.type === "password" ? passwordType : props.type;
+
   return(
     <Box className={props.className + " customInput"} sx={styles}>
       <InputLabel className="label">{props.label}</InputLabel>
@@ -44,7 +63,7 @@ export default function Input(props: IInputProps){
         disabled={props.disabled}
         name={props.name}
         error={props.error ? true : false}
-        type={props.type ?? "text"}
+        type={inputType ?? "text"}
         value={props.value}
         onChange={props.onChange}
         onBlur={props.onBlur}
@@ -56,6 +75,17 @@ export default function Input(props: IInputProps){
         autoComplete={props.autoCompleteOff ? "off" : undefined} 
         className="input center"
         startAdornment={props.InputImage && <InputStartAdorment InputImage={props.InputImage}/>}
+        endAdornment={
+          props.type === 'password' && (
+            <InputAdornment position="end">
+              {showPassword ? (
+                <VisibilityOffIcon fontSize="small" onClick={togglePasswordVisibility} />
+              ) : (
+                <VisibilityIcon fontSize="small" onClick={togglePasswordVisibility} />
+              )}
+            </InputAdornment>
+          )
+        }
       />
       <p className="error">{props.error}</p>
     </Box>

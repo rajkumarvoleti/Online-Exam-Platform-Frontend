@@ -5,7 +5,7 @@ import { ITestSettingsForm } from '@/interfaces/formikInterfaces';
 import { generateArray } from '@/utils/helperFunctions';
 import { Box, SxProps, Select, MenuItem, SelectChangeEvent} from '@mui/material';
 import { useFormikContext } from 'formik';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 const styles:SxProps = {
   ".group":{
@@ -79,6 +79,11 @@ export default function TestSettingsComponent() {
     return undefined;
   }
 
+  useEffect(() => {
+    handleCustomChange("testDuration")(values.testDurationHours + values.testDurationMinutes);
+  }, [values.testDurationHours, values.testDurationMinutes])
+  
+
   return (
     <Box sx={styles}>
       <Box className="groups">
@@ -125,9 +130,9 @@ export default function TestSettingsComponent() {
           {values.testDurationAvailability === "specific" && 
           <Box className="options">
             <p className='label'>Time Duration:</p>
-            <CustomTimePicker value={values.testDuration} type='hours' options={generateArray(0,12,1)} label='Hours' className='picker customPicker' handleChange={handleCustomChange("testDuration")} />
+            <CustomTimePicker value={values.testDurationHours} type='hours' options={generateArray(0,12,1)} label='Hours' className='picker customPicker' handleChange={handleCustomChange("testDurationHours")} />
             <p className='label to'></p>
-            <CustomTimePicker value={values.testDuration} type='minutes' options={generateArray(0,55,5)} label='Minutes' className='picker customPicker' handleChange={handleCustomChange("testDuration")} />
+            <CustomTimePicker value={values.testDurationMinutes} type='minutes' options={generateArray(0,55,5)} label='Minutes' className='picker customPicker' handleChange={handleCustomChange("testDurationMinutes")} />
           </Box>}
         </Box>
       </Box>

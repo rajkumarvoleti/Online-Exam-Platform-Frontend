@@ -69,7 +69,7 @@ export default function PublishTestComponent() {
 
   const {handleBack, publishTest, testData, loading} = useCreateTest();
 
-  const timeDuration = testData.testSettings.testDurationAvailability === "always" ? "always" : `${Math.ceil(testData.testSettings.testDuration/60)} Hours and ${testData.testSettings.testDuration%60} Minutes`;
+  const timeDuration = testData.testSettings.testDurationAvailability === "always" ? "always" : `${Math.floor(testData.testSettings.testDuration/60)} Hours and ${testData.testSettings.testDuration%60} Minutes`;
 
   return (
     <Box sx={styles}>

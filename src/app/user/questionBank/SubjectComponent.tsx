@@ -6,8 +6,9 @@ import { ISubject } from "@/interfaces/examInterfaces";
 import ModalComponent from "@/components/ModalComponent";
 import DeleteSubjectModal from "./DeleteSubjectModal";
 import EditSubjectModal from "./EditSubjectModal";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import EditDeleteOptionsMenu from "@/components/EditDeleteOptionsMenu";
+import { useRouter } from "next-nprogress-bar";
 
 const styles:SxProps = {
   padding: "5px 0",
@@ -51,7 +52,11 @@ export default function SubjectComponent({ subject }: { subject: ISubject }) {
   const handleCloseEditModal = () => setOpenEditModal(false);
   
   const handleSubject = () => {
-    router.push(`/user/questionBank/${subject.id}`);
+    router.push(`/user/questionBank/subject/${subject.id}`);
+  }
+
+  const handleEdit = () => {
+    router.push(`/user/edit/subject/${subject.id}`);
   }
 
   if (!subject.id)

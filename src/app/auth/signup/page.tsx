@@ -14,16 +14,19 @@ import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 
 const styles = {
   flexDirection:"column",
+  mb: "50px",
   ".loginFormik":{
     width: "360px",
+    a:{
+      color: "#008AC2",
+    },
   },
   h4:{
     textAlign:"center",
   },
   ".signin":{
     gap: "30px"
-
-  }
+  },
 }
 
 export default function Page(){

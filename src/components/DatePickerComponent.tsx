@@ -19,7 +19,7 @@ export default function BasicDatePicker({error,handleChange, className, value}:{
   return (
     <Box>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DatePicker value={date} onChange={onChange} className={className} />
+        <DatePicker format='DD-MM-YYYY' value={date} onChange={onChange} className={className} />
       </LocalizationProvider>
       <p className='error'>{error}</p>
     </Box>

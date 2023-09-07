@@ -1,4 +1,4 @@
-import { ILoginForm, ISignupForm, ITestDetailsForm, ITestEvaluationForm, ITestPricingForm, ITestSettingsForm, IUpdatePasswordForm, IUserDetailsForm } from "@/interfaces/formikInterfaces";
+import { ICreateSubjectTopic, ILoginForm, ISignupForm, ITestDetailsForm, ITestEvaluationForm, ITestPricingForm, ITestSettingsForm, IUpdatePasswordForm, IUserDetailsForm } from "@/interfaces/formikInterfaces";
 import { IUser } from "@/interfaces/userInterfaces";
 
 export const loginInitialValues:ILoginForm = {
@@ -64,11 +64,24 @@ export const testSettingsInitialValues:ITestSettingsForm = {
   testEndDate: "",
   testStartTime: "",
   testEndTime: "",
+  testDurationHours: 0,
+  testDurationMinutes: 0,
   testDuration: 0,
   totalMarks: 0,
+  marksPerQuestion: 0,
   totalQuestions: 0,
   negativeMarks: 0,
   passPercentage: 0,
   resultFormat: "marks",
   testDeclaration: "immediatelyAfterExamCompletion",
+}
+
+export const createSubjectTopicInitialValues:ICreateSubjectTopic = {
+  name: "",
+  description: "",
+  topics: [{
+    id: Math.random(),
+    name: "",
+    description: "",
+  }]
 }
