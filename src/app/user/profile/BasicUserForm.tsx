@@ -3,9 +3,23 @@ import useUser from "@/hooks/useUser";
 import { Box, SxProps } from "@mui/material";
 
 const styles:SxProps = {
+  
   display: "flex",
   gap:"20px",
-  margin:"20px"
+  margin:"20px",
+
+  ".customInput":{
+    width:"220px",
+    label:{
+      margin:"0",
+      color:"#272727",
+      fontSize:"14px"
+    },
+    ".input":{
+      margin:"0",
+      borderRadius:"5px"
+    }
+  }
 }
 
 export default function BasicForm() {
@@ -20,6 +34,7 @@ export default function BasicForm() {
         value={user?.firstName || ""}
         disabled={true}
         type="text"
+
       />
       <SimpleInput
         name="phoneNumber"

@@ -108,11 +108,11 @@ p {
 
 p.phead {
   color: #272727;
-  /* font-family: Inter; */
+  /* font-family: Inter;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
-  line-height: 24.542px;
+  line-height: 24.542px; */
 }
 
 .buttonText {
@@ -125,6 +125,6 @@ p.phead {
 }
 
 .MuiButton-root {
-  border-radius: 8px;
+  border-radius: 5px;
   text-transform: capitalize;
 }

@@ -9,14 +9,17 @@ const styles:SxProps = {
   display: "flex",
   flexWrap: "wrap",
   justifyContent: "flex-end",
+  pr:"0",
   gap: "15px",
+  mt:"70px",
   "button":{
-    width: "153px",
-    height: "38px",
+    width: "140px",
+    height: "33px",
     flexShrink: "0",
     borderRadius: "6px",
     border: "1px solid #C2E830",
     color: "#969696",
+    fontWeight:"550"
   },
   ".save":{
     color:"#2200A5"
@@ -34,6 +37,7 @@ export default function ActionButtons({handleSubmit}:{handleSubmit: () => any}) 
   const handleReset = () => {
     formikContext.resetForm();
   }
+  
 
   return (
     <Box className="buttons" sx={styles}>
