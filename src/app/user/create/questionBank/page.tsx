@@ -3,7 +3,7 @@
 import { FormikInput } from "@/components/formik/FormikInput";
 import { createSubjectTopicInitialValues } from "@/utils/formik/initialValues";
 import { createSubjectTopicValidationScehma } from "@/utils/validationScehma";
-import { Box, Button, SxProps } from "@mui/material";
+import { Box, Button, Card, SxProps } from "@mui/material";
 import { FieldArray, Form, Formik } from "formik";
 import FormTable from "./FormTable";
 import { ICreateTopic } from "@/interfaces/formikInterfaces";
@@ -12,6 +12,7 @@ import { useSubject } from "@/hooks/exam/useSubject";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 
 const styles:SxProps = {
+  margin: "10px",
   padding: "30px",
   ".form":{
     minHeight: "90vh",
@@ -41,7 +42,7 @@ export default function Page() {
   const {createSubjectAndTopics, loading} = useSubject();
 
   return (
-    <Box sx={styles}>
+    <Card sx={styles}>
       <Formik
         initialValues={createSubjectTopicInitialValues}
         validationSchema={createSubjectTopicValidationScehma}
@@ -74,13 +75,13 @@ export default function Page() {
             </FieldArray>
             <Footer>
               {/* <Button variant="outlined">Back</Button> */}
-              <Button onClick={() => resetForm()} variant="outlined">Reset</Button>
-              {loading ? <LoadingButton loading /> : 
-              <Button type="submit" variant="outlined">Save</Button>}
+              <Button color="success" onClick={() => resetForm()} variant="outlined">Reset</Button>
+              {loading ? <LoadingButton variant="contained" loading>Save</LoadingButton> : 
+              <Button className="submitButton" color="success" type="submit" variant="outlined">Save</Button>}
             </Footer>
           </Form>
         )}
       </Formik>
-    </Box>
+    </Card>
   );
 }

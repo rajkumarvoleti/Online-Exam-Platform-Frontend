@@ -32,7 +32,7 @@ const styles:SxProps = {
       margin: "0 10px",
     },
     ".input":{
-      width: "240px",
+      width: "220px",
       height: "40px",
     },
     ".desc":{
@@ -177,7 +177,7 @@ function FormikForm() {
             resetForm();
             handleDetailsForm(testDetailsInitialValues);
             }} color="success" variant="outlined">Reset</Button>
-          <Button onClick={() => isValid && handleNext()} type="submit" color="success" variant="outlined">Next</Button>
+          <Button className="submitButton" onClick={() => isValid && handleNext()} type="submit" color="success" variant="outlined">Next</Button>
         </Footer>
     </Form>
   )

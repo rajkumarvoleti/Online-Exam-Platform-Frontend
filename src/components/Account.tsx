@@ -10,7 +10,6 @@ const styles:SxProps = {
   display: "flex",
   alignItems: "center",
   alignContent: "flex-end",
-  border: "2px solid red",
   ">*":{
     margin: "10px",
     maxWidth: "240px",
@@ -18,7 +17,9 @@ const styles:SxProps = {
   ".name,.email":{
     margin: 0,
     width: "150px",
-    textOverflow: "ellipsis"
+    whiteSpace: "nowrap",       
+    overflow: "hidden",          
+    textOverflow: "ellipsis",
   },
   ".name":{
     fontSize: "14px",

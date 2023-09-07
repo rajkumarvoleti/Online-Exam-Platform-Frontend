@@ -23,26 +23,35 @@ const styles: SxProps = {
     ml: "10px"
   },
   ".input":{
-    mt: "6px",
+    borderRadius: "8px",
+  },
+  label:{
+    color: "#000",
   }
 }
 
 export default function MultiSelectInput(props:IInputProps) {
 
   const formikContext = useFormikContext<ITestDetailsForm>();
-  const [values, setValues] = useState<string[]>([]);
+  const prevValues = props.value as string[]
+  const [values, setValues] = useState<string[]>(prevValues || []);
   
   const handleChange = (e: SelectChangeEvent<typeof values>) => {
     const value = e.target.value;
     setValues(
       typeof value === "string" ? value.split(",") : value
       );
-    };
+  };
     
-    useEffect(() => {
-      formikContext.setFieldValue(props.name,values);
-      formikContext.setFieldTouched(props.name, true);
-    }, [values])
+  useEffect(() => {
+    formikContext.setFieldValue(props.name,values);
+    formikContext.setFieldTouched(props.name, true);
+  }, [values])
+
+  useEffect(() => {
+    
+  }, [])
+  
   
   const handleCheckBox = (opt:IAutoCompleteOption) => {
     if(props.push && props.remove){

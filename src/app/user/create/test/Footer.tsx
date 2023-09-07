@@ -9,10 +9,14 @@ const styles:SxProps = {
   padding: "20px",
   gap: "10px",
   width: "100%",
-  mt: "50px !important",
-  "button":{
+  mt: "auto",
+  button:{
     width: "150px",
-  }
+    color: "#B3B3B3"
+  },
+  ".submitButton":{
+    color: "#2200A5"
+  },
 }
 
 export default function Footer({children}:{children:ReactNode}) {

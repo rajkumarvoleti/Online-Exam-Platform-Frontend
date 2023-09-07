@@ -69,6 +69,7 @@ export const testSettingsInitialValues:ITestSettingsForm = {
   testDuration: 0,
   totalMarks: 0,
   marksPerQuestion: 0,
+  note: "",
   totalQuestions: 0,
   negativeMarks: 0,
   passPercentage: 0,

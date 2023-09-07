@@ -1,7 +1,7 @@
 "use client"
 
 import { IQuestionType } from "@/interfaces/questionInterfaces";
-import { Box, CircularProgress, SxProps } from "@mui/material";
+import { Box, Card, CircularProgress, SxProps } from "@mui/material";
 import { useEffect, useState } from "react";
 import Header from "./Header";
 import WordComponent from "@/components/WordComponent";
@@ -15,6 +15,7 @@ import { getQuestionRequest } from "@/api/question";
 const styles:SxProps = {
   width: "100%",
   minHeight: "90vh",
+  m: "10px",
 }
 
 export default function Page({params}:{params:{questionId:string}}) {
@@ -48,11 +49,11 @@ export default function Page({params}:{params:{questionId:string}}) {
     return <></>
 
   return (
-    <Box sx={styles}>
+    <Card sx={styles}>
       <Header level={question.complexity} type={type} setType={setType} />
       <WordComponent value={question.question} handleData={handleQuestion} />
       <AnswerComponent answer={question.answer} type={type} />
       <Footer questionId={questionId} />
-    </Box>
+    </Card>
   )
 }

@@ -45,6 +45,7 @@ export interface ITestEvaluationForm {
   marksPerQuestion: number,
   passPercentage: number,
   negativeMarks: number,
+  note: string,
 }
 
 export interface ITestSettingsForm extends ITestEvaluationForm {

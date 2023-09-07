@@ -12,7 +12,12 @@ const styles:SxProps = {
   mt: "50px !important",
   "button":{
     width: "150px",
-  }
+    color: "#B3B3B3"
+
+  },
+  ".submitButton":{
+    color: "#2200A5"
+  },
 }
 
 export default function Footer({children}:{children:ReactNode}) {

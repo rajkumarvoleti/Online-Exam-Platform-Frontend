@@ -101,7 +101,7 @@ export default function PublishTestComponent() {
       </Box>
       <Footer>
         <Button onClick={handleBack} color="success" variant="outlined">Back</Button>
-        <LoadingButton disabled={loading} loading={loading} onClick={publishTest} variant="outlined">Publish</LoadingButton>
+        <LoadingButton className='submitButton' color="success" disabled={loading} loading={loading} onClick={publishTest} variant="outlined">Publish</LoadingButton>
       </Footer>
     </Box>
   )

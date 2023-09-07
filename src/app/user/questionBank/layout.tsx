@@ -5,7 +5,9 @@ import SideBar from "./SideBar";
 
 const styles: SxProps = {
   display: "flex",
+  margin: "10px",
   ".main":{
+    margin: "0 10px",
     width: "100%",
   }
 }

@@ -10,7 +10,7 @@ import { useRouter } from 'next-nprogress-bar';
 
 const styles = {
   width: "280px",
-  minHeight: "90vh",
+  minHeight: "85vh",
   flexShrink: "0",
   padding: "10px 0",
   position: "sticky",

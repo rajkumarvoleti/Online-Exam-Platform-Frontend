@@ -1,6 +1,6 @@
 "use client"
 
-import { Box, CircularProgress, SxProps } from "@mui/material";
+import { Box, Card, CircularProgress, SxProps } from "@mui/material";
 import Header from "./Header";
 import Questions from "./Questions";
 import { useQueries, useQuery } from "@tanstack/react-query";
@@ -13,6 +13,10 @@ import { getTopicRequest } from "@/api/topic";
 const styles:SxProps ={
   width: "100%",
   minHeight: "90vh",
+  ".container":{
+    minHeight: "74vh",
+    m: "10px 0",
+  }
 }
 
 export default function Page({params}:{params:{topicId:string}}) {
@@ -42,10 +46,12 @@ export default function Page({params}:{params:{topicId:string}}) {
 
     
   return (
-    <Box>
+    <Box sx={styles}>
       <Header topic={results[1].data.topic} />
-      {filteredQuestions.length !== 0 && <DeleteQuestions topicId={topicId}/>}
-      <Questions questions={filteredQuestions} />
+      <Card className="container">
+        {filteredQuestions.length !== 0 && <DeleteQuestions topicId={topicId}/>}
+        <Questions questions={filteredQuestions} />
+      </Card>
     </Box>
   )
 }

@@ -1,3 +1,4 @@
+import { FormikInput } from '@/components/formik/FormikInput';
 import { ITestSettingsForm } from '@/interfaces/formikInterfaces';
 import {Box, FormControlLabel, Radio, RadioGroup, SxProps} from '@mui/material';
 import { FormikHandlers, useFormikContext } from 'formik';
@@ -21,8 +22,16 @@ const styles:SxProps = {
     alignItems: "flex-start",
   },
   ".radioHead":{
+    color: "#000",
     width: "180px",
     m: "10px 0"
+  },
+  ".note":{
+    width: "100%",
+  },
+  ".note .input":{
+    width: "100%",
+    height: "150px",
   }
 }
 
@@ -88,6 +97,13 @@ export default function ResultDeclarationSettingsComponent() {
             ))}
           </RadioGroup>
         </Box>
+        <FormikInput
+          name="note"
+          label="Note"
+          className='note'
+          placeholder=""
+          value={values.note}
+        />
       </Box>
     </Box>
   )

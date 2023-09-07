@@ -1,7 +1,7 @@
 "use client"
 
 import { IQuestionType } from "@/interfaces/questionInterfaces";
-import { Box, CircularProgress, SxProps } from "@mui/material";
+import { Box, Card, CircularProgress, SxProps } from "@mui/material";
 import { useEffect, useState } from "react";
 import Header from "./Header";
 import WordComponent from "@/components/WordComponent";
@@ -13,6 +13,7 @@ import { getTopicRequest } from "@/api/topic";
 
 const styles:SxProps = {
   width: "100%",
+  m: "10px",
 }
 
 export default function Page({params}:{params:{topicId:string}}) {
@@ -33,11 +34,11 @@ export default function Page({params}:{params:{topicId:string}}) {
     <Box><CircularProgress /></Box>
 
   return (
-    <Box sx={styles}>
+    <Card sx={styles}>
       <Header topic={data?.topic} type={type} setType={setType} />
         <WordComponent value={""} handleData={handleQuestion} />
         <AnswerComponent type={type} />
       <Footer topicId={topicId} />
-    </Box>
+    </Card>
   )
 }

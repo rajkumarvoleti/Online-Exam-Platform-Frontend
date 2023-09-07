@@ -2,10 +2,11 @@ import { Box, MenuItem, Select, SelectChangeEvent, SxProps } from "@mui/material
 import { useEffect, useState } from "react";
 
 const styles:SxProps = {
-  display:"flex"
+  display:"flex",
+  ".label":{
+    pl: "10px",
+  }
 }
-
-
 
 export default function CustomTimePicker({className, label, options, handleChange, type, value}:{className:string, label:string, options:number[], handleChange:(val:number) => void, type: "hours" | "minutes", value: number}) {
 

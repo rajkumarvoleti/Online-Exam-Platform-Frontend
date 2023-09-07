@@ -17,6 +17,7 @@ const styles:SxProps = {
   ".customInput":{
     display: "flex",
     alignItems: "center",
+    m: "30px 20px",
     label: {
       width: "100px",
       color: "#5B5B5B"
@@ -26,6 +27,17 @@ const styles:SxProps = {
       height: "40px",
     }
   },
+  ".table":{
+    m: "20px",
+    "> *":{
+      m: "10px 0",
+    },
+  },
+  ".form":{
+    display: "flex",
+    flexDirection: "column",
+    minHeight: "68vh",
+  }
 }
 
 function FormikForm() {
@@ -66,7 +78,7 @@ function FormikForm() {
       </Box>
       {values.testType === "private" && <FieldArray name="promoCodes">
       {({ push, remove }:{push: (obj: IPromoCode) => void, remove: (index: number) => void}) => (
-          <Box>
+          <Box className="table">
             <PromoCodesTable remove={(id:number) => {
               console.log("removing");
               const promoCode = values.promoCodes.find(code => code.id === id);
@@ -81,7 +93,7 @@ function FormikForm() {
         <Footer>
           <Button onClick={handleBack} color="success" variant="outlined">Back</Button>
           <Button onClick={() => resetForm()} color="success" variant="outlined">Reset</Button>
-          <Button onClick={() => isValid && handleNext()} type='submit' color="success" variant="outlined">Next</Button>
+          <Button className='submitButton' onClick={() => isValid && handleNext()} type='submit' color="success" variant="outlined">Next</Button>
         </Footer>
     </Form>
   )

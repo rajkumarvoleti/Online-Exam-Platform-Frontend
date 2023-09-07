@@ -1,4 +1,5 @@
 import { FormikInput } from '@/components/formik/FormikInput';
+import useCreateTest from '@/hooks/useCreateTest';
 import { ITestSettingsForm } from '@/interfaces/formikInterfaces';
 import {Box, SxProps} from '@mui/material';
 import { useFormikContext } from 'formik';
@@ -14,17 +15,22 @@ const styles:SxProps = {
   ".form":{
     display: "flex",
     flexWrap: "wrap",
+    justifyContent: "space-between",
     gap: "15px",
     label:{
-      color: "#5B5B5B",
       m: 0,
-    }
+    },
+    ".input":{
+      width: "160px",
+    },
+
   }
 }
 
 export default function TestEvaluationComponent() {
 
   const {values, setFieldValue} = useFormikContext<ITestSettingsForm>();
+  const {testData} = useCreateTest();
 
   const handleTotalMarks = async() => {
     const total = values.marksPerQuestion * values.totalQuestions;
@@ -33,7 +39,6 @@ export default function TestEvaluationComponent() {
   useEffect(() => {
     handleTotalMarks();
   }, [values.marksPerQuestion, values.totalQuestions])
-  
 
   return (
     <Box sx={styles}>

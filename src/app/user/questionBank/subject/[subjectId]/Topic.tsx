@@ -32,7 +32,7 @@ export default function Topic({topic}:{topic:ITopic}) {
     return
 
   return (
-    <Card className="topicCard">
+    <Box className="topicCard">
       <Box onClick={() => handleClick(topic)} className="details">
         <h5>{topic.name}</h5>
         <p className="questionCount">Questions: {topic.questionsCount}</p>
@@ -44,6 +44,6 @@ export default function Topic({topic}:{topic:ITopic}) {
       <ModalComponent open={openDeleteModal}>
         <DeleteTopicModal handleClose={handleCloseDeleteModal} id={topic.id || 1} />
       </ModalComponent>
-    </Card>
+    </Box>
   )
 }

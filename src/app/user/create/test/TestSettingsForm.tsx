@@ -9,6 +9,7 @@ import { testSettingsValidationScehma } from '@/utils/validationScehma';
 import useCreateTest from '@/hooks/useCreateTest';
 import { ITestSettingsForm } from '@/interfaces/formikInterfaces';
 import { useEffect } from 'react';
+import { useRecoilValue } from 'recoil';
 
 const styles:SxProps = {
   padding: "30px",
@@ -46,12 +47,21 @@ const styles:SxProps = {
 
 function FormikForm() {
 
-  const {handleSettingsForm, handleBack, publishAttempted, handleNext} = useCreateTest(); 
-  const {values, resetForm, submitForm, isValid} = useFormikContext<ITestSettingsForm>();
+  const {handleSettingsForm, handleBack, publishAttempted, handleNext,testData} = useCreateTest(); 
+  const {values, resetForm, submitForm, isValid, setFieldValue} = useFormikContext<ITestSettingsForm>();
 
   useEffect(() => {
     handleSettingsForm(values);
   }, [values])
+
+  useEffect(() => {
+    const handleTotalQuestion = async() => {
+      const value = testData.testDetails.totalQuestions; 
+      await setFieldValue("totalQuestions",value);
+    }
+    handleTotalQuestion();
+  }, [testData.testDetails.totalQuestions])
+  
 
   useEffect(() => {
     async function submit() {
@@ -73,7 +83,7 @@ function FormikForm() {
           resetForm();
           handleSettingsForm(testSettingsInitialValues);
         }} color="success" variant="outlined">Reset</Button>
-        <Button onClick={() => isValid && handleNext()} type='submit' color="success" variant="outlined">Next</Button>
+        <Button className='submitButton' onClick={() => isValid && handleNext()} type='submit' color="success" variant="outlined">Next</Button>
       </Footer>
     </Form>
   )

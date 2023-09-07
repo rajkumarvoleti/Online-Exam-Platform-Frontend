@@ -1,14 +1,15 @@
 import { ITopic } from "@/interfaces/examInterfaces";
-import { Box, SxProps } from "@mui/material";
+import { Box, Card, SxProps } from "@mui/material";
 import Topic from "./Topic";
 
 const styles:SxProps = {
+  m: "10px 0",
+  minHeight: "74vh",
   display: "flex",
-  alignItems: "center",
-  justifyContent: "space-around",
-  padding: "20px",
   flexWrap: "wrap",
   gap: "20px",
+  alignItems: "flex-start",
+  padding: "20px",
   ".topicCard": {
     ".details":{
       cursor:"pointer",
@@ -37,11 +38,11 @@ const styles:SxProps = {
 export default function Topics({topics}:{topics:ITopic[]}) {
 
   return (
-    <Box sx={styles}>
+    <Card sx={styles}>
       {topics.length === 0 && <p>No Chapters to display</p>}
       {topics.map((topic:ITopic, i: number) => (
         <Topic topic={topic} key={i} />
       ))}
-    </Box>
+    </Card>
   )
 }

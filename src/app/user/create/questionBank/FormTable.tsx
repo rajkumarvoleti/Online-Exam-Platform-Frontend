@@ -9,6 +9,7 @@ const styles:SxProps = {
   border: "1px solid #B9B9B9",
   borderRadius: "10px",
   width: "809px",
+  mb: "10px",
   ".MuiTableCell-root":{
     color: "#5B5B5B",
     fontSize: "16px",

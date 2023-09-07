@@ -20,7 +20,7 @@ const styles:SxProps = {
     ".label":{
       flexShrink: "0",
       fontSize: "16px",
-      width: "120px",
+      width: "130px",
     },
     ".select":{
       flexShrink: "0",
@@ -32,7 +32,7 @@ const styles:SxProps = {
     display: "flex",
     flexWrap: "wrap",
     ".label":{
-      width: "120px",
+      width: "130px",
     },
     ".to":{
       color: "#000",

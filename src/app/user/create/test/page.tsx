@@ -11,12 +11,16 @@ import PublishTestComponent from "./PublishTestComponent";
 import useCreateTest from "@/hooks/useCreateTest";
 
 const styles:SxProps = {
+  " > *":{
+    margin: "10px",
+  },
   ".main":{
     width:"100%",
     height:"100%",
     display: "flex",
   },
   ".forms":{
+    m: "0 10px",
     width: "100%",
     height:"100%",
     minHeight: "73vh",
