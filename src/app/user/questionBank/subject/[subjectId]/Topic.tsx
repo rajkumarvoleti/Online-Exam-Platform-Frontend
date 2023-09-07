@@ -1,18 +1,18 @@
 import EditDeleteOptionsMenu from "@/components/EditDeleteOptionsMenu";
 import ModalComponent from "@/components/ModalComponent";
 import { Box, Card } from "@mui/material";
-import EditTopicModal from "../EditTopicModal";
-import DeleteTopicModal from "../DeleteTopicModal";
+import EditTopicModal from "./EditTopicModal";
+import DeleteTopicModal from "./DeleteTopicModal";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { ITopic } from "@/interfaces/examInterfaces";
+import { useRouter } from "next-nprogress-bar";
 
 export default function Topic({topic}:{topic:ITopic}) {
 
   const router = useRouter();
 
   const handleClick = (topic:ITopic) => {
-    router.push(`/user/questionBank/${topic.subjectId}/${topic.id}?topicName=${topic.name}`);
+    router.push(`/user/questionBank/topic/${topic.id}`);
   }
 
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
@@ -23,6 +23,10 @@ export default function Topic({topic}:{topic:ITopic}) {
 
   const handleOpenEditModal = () => setOpenEditModal(true);
   const handleCloseEditModal = () => setOpenEditModal(false);
+
+  const handleEdit = () => {
+    router.push(`/user/edit/topic/${topic.id}`);
+  }
 
   if(!topic.id)
     return

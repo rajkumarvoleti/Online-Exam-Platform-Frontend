@@ -8,7 +8,7 @@ import { useQuestion } from "./useCreateQuestion";
 export default function useManageQuestion() {
   const [questionData, setQuestionData] = useRecoilState(questionAndAnswerAtom);
   const {errorToast} = useToast();
-  const { createQuestion, updateQuestion } = useQuestion();
+  const { createQuestion, updateQuestion, loading } = useQuestion();
 
   const handleQuestion = (data: string) => {
     setQuestionData(prev => {return {...prev,question:data}});
@@ -87,6 +87,6 @@ export default function useManageQuestion() {
     updateQuestion({questionData:newQuestionData,id:questionId});
   }
 
-  return { handleAnswer, handleQuestion, handleOptions, handleSubmit, handleExplanation, handleComplexity, handleType, handleUpdate };
+  return {loading, handleAnswer, handleQuestion, handleOptions, handleSubmit, handleExplanation, handleComplexity, handleType, handleUpdate };
 
 }

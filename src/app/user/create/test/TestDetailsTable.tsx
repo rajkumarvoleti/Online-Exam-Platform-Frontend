@@ -57,7 +57,27 @@ const styles:SxProps = {
 
 export default function TestDetailsTable(){
 
-  const {values} = useFormikContext<ITestDetailsForm>();
+  const {values, setFieldValue} = useFormikContext<ITestDetailsForm>();
+
+  const handleTotalQuestions = async () => {
+    const sum = values.questionBanks.map(bank => bank.selectedTotalQuestions).filter(val => typeof val === "number" && val > 0).reduce((prev,curr) => prev + curr, 0);
+    await setFieldValue("totalQuestions",sum);
+  }
+
+  const handleSelectedTotalQuestions = async () => {
+    await Promise.all(
+      values.questionBanks.map(async(bank,i) => {
+        const sum = getTotalSelectedQuestions(i);
+        await setFieldValue(`questionBanks[${i}].selectedTotalQuestions`,sum);
+      })
+    )
+  }
+
+  useEffect(() => {
+    handleSelectedTotalQuestions();
+    handleTotalQuestions();
+  }, [values.questionBanks])
+  
   
 
   const getTotalSelectedQuestions = (index:number) => {
@@ -78,6 +98,7 @@ export default function TestDetailsTable(){
   
   return (
     <TableContainer sx={styles}>
+      <h4 className="tableHeading">Define Test Level</h4>
       <Table>
         <TableHead>
           <TableRow  className="headingRow">
@@ -107,7 +128,7 @@ export default function TestDetailsTable(){
                   type="number"
                   name={`questionBanks[${index}].selectedTotalQuestions`}
                   placeholder=""
-                  value={values.questionBanks[index].selectedTotalQuestions = getTotalSelectedQuestions(index)}
+                  value={values.questionBanks[index].selectedTotalQuestions}
                 />
               </TableCell>
               <TableCell align="center" size="small">

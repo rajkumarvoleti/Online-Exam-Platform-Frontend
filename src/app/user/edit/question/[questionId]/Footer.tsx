@@ -1,4 +1,5 @@
 import useManageQuestion from "@/hooks/exam/useManageQuestion";
+import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import { Button, Card, SxProps } from "@mui/material";
 
 const styles:SxProps = {
@@ -20,13 +21,14 @@ const styles:SxProps = {
 
 export default function Footer({questionId}:{questionId:number}) {
 
-  const { handleUpdate } = useManageQuestion();
+  const { handleUpdate, loading } = useManageQuestion();
 
   return (
     <Card sx={styles}>
       <Button color="success" variant="outlined">Cancel</Button>
       <Button color="success" variant="outlined">Update & Next</Button>
-      <Button onClick={() => handleUpdate(questionId)} color="success" variant="outlined">Update</Button>
+      {loading && <LoadingButton/>}
+      {!loading && <Button onClick={() => handleUpdate(questionId)} color="success" variant="outlined">Update</Button>}
     </Card>
   )
 }

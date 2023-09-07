@@ -16,10 +16,10 @@ const styles:SxProps = {
     height: "4px",
   },
   ".MuiStepConnector-root.Mui-active":{
-    background: "#2200A5",
+    background: "#C2E830",
   },
   ".MuiStepConnector-root.Mui-completed":{
-    background: "#2200A5",
+    background: "#C2E830",
   },
   ".MuiStepConnector-root.Mui-disabled":{
     background: "#B3B3B3",
@@ -30,7 +30,7 @@ const stepperIconStyles = (active:boolean|undefined) =>{
   const blueFilter = "brightness(0) saturate(100%) invert(18%) sepia(32%) saturate(4248%) hue-rotate(239deg) brightness(97%) contrast(154%)";
   const grayFilter = "brightness(0) saturate(100%) invert(85%) sepia(0%) saturate(0%) hue-rotate(167deg) brightness(88%) contrast(81%)";
   const filter = active ? blueFilter : grayFilter;
-  const color = active ? "#2200A5" : "#B3B3B3"
+  const color = active ? "#C2E830" : "#B3B3B3"
   return {
     border:`10px solid ${color}`,
     borderRadius: "50%",

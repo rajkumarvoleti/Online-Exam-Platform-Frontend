@@ -1,6 +1,7 @@
 import { ISignupOptions } from '@/interfaces/authInterfaces';
-import { ILoginForm, IPromoCode, ITestDetailsForm, ITestEvaluationForm, ITestPricingForm, IUpdatePasswordForm, IUserDetailsForm } from '@/interfaces/formikInterfaces';
+import { ICreateSubjectTopic, ICreateTopic, ILoginForm, IPromoCode, ITestDetailsForm, ITestEvaluationForm, ITestPricingForm, ITestSettingsForm, IUpdatePasswordForm, IUserDetailsForm } from '@/interfaces/formikInterfaces';
 import { IQuestionBank, ISelectedQuestionBank } from '@/interfaces/otherInterfaces';
+import dayjs from 'dayjs';
 import * as yup from 'yup';
 import 'yup-phone';
 
@@ -21,14 +22,16 @@ const checkboxValidation = yup.boolean().oneOf([true],'Please check the check bo
 
 const currentPasswordValidation = yup.string().required("Current Password is required");
 
-const stringRequiredValidation = yup.string().required("This Field is required");
+const stringRequiredValidation = yup.string().required("This Field is required").notOneOf([""],"This Field cannot be empty");
 
 const numberRequiredValidation = yup.number().required("This Field is required").integer("Invalid number").moreThan(-1,"Please use a positive value");
 
 const positiveIntegerRequiredValidation = yup.number().required("This Field is required").moreThan(-1,"Please use a positive value");
 
+const dateValidation = stringRequiredValidation.notOneOf(["Invalid Date"], "Invalid Time");
+
 const promoCodeSchema = yup.object().shape({
-  code: yup.string().required('Promo code is required'),
+  code: stringRequiredValidation,
   offer: yup.number().required('Offer value is required').min(0, 'Invalid value').max(100,"Invalid value"),
 });
 
@@ -75,23 +78,78 @@ export const updatePasswordValidationSchema: yup.ObjectSchema<IUpdatePasswordFor
   confirmNewPassword: confirmPasswordValidation2,
 })
 
-export const testDetailsValidationSchema = (data:IQuestionBank[]) => yup.object({
-  testId: stringRequiredValidation,
+export const testDetailsValidationSchema = yup.object({
+  testName: stringRequiredValidation,
   testDescription: stringRequiredValidation,
   totalQuestions: numberRequiredValidation,
   questionBanks: questionBanksValidation,
 })
 
-export const testEvaluationValidationSchema: yup.ObjectSchema<ITestEvaluationForm> = yup.object({
-  totalMarks: numberRequiredValidation,
-  totalQuestions: numberRequiredValidation,
-  negativeMarks: positiveIntegerRequiredValidation,
-  passPercentage: numberRequiredValidation.lessThan(101,"Please enter a valid value")
-})
-
 export const testPricingValidationSchema = yup.object({
   testType: testTypeSchema,
   price: numberRequiredValidation,
-  promoCodes: yup.array().of(promoCodeSchema),
-
+  promoCodes: yup.lazy((value,options) => {
+    if(options.context.testType === "private") return yup.array().of(promoCodeSchema);
+    return yup.array();
+  }),
 })
+
+export const testSettingsValidationScehma = yup.object({
+  testDateAvailability: yup.string().oneOf(["specific","always"]).required("This field is required"),
+  testTimeAvailability: yup.string().oneOf(["specific","always"]).required("This field is required"),
+  testDurationAvailability: yup.string().oneOf(["specific","always"]).required("This field is required"),
+  testStartDate: yup.lazy((value,options) => {
+    if(options.context.testDateAvailability === "specific") return dateValidation;
+    return yup.string();
+  }),
+  testEndDate: yup.lazy((value,options) => {
+    if(options.context.testDateAvailability === "specific"){
+      return dateValidation.test('is-greater', 'End date must be greater than start date', function (value,context) {
+        const start = dayjs(context.parent.testStartDate);
+        const end = dayjs(context.parent.testEndDate);
+        return start.isValid() && start.isBefore(end);
+      });
+    } 
+    return yup.string();
+  }),
+  testStartTime: yup.lazy((value,options) => {
+    if(options.context.testTimeAvailability === "specific") return dateValidation;
+    return yup.string();
+  }),
+  testEndTime: yup.lazy((value,options) => {
+    if(options.context.testTimeAvailability === "specific"){
+      return dateValidation.test('is-greater', 'End time must be greater than start time', function (value,context) {
+        const start = dayjs(context.parent.testStartTime);
+        const end = dayjs(context.parent.testEndTime);
+        return start.isValid() && start.isBefore(end);
+      });
+    } 
+    return yup.string();
+  }),
+  testDuration: numberRequiredValidation,
+  totalMarks: numberRequiredValidation,
+  marksPerQuestion: numberRequiredValidation,
+  totalQuestions: numberRequiredValidation,
+  negativeMarks: positiveIntegerRequiredValidation,
+  passPercentage: numberRequiredValidation.lessThan(101,"Please enter a valid value"),
+  resultFormat: stringRequiredValidation,
+  testDeclaration: stringRequiredValidation,
+})
+
+export const createTopicValidationScehma: yup.ObjectSchema<ICreateTopic> = yup.object({
+  id: yup.number().required(),
+  name: stringRequiredValidation,
+  description: stringRequiredValidation,
+})
+
+export const createSubjectTopicValidationScehma = yup.object({
+  name: stringRequiredValidation,
+  description: stringRequiredValidation,
+  topics: yup.array().of(createTopicValidationScehma).min(1, "Add atleast one chapter"),
+})
+
+export const createSubjectValidationSchema = yup.object({
+  name: stringRequiredValidation,
+  description: stringRequiredValidation,
+})
+

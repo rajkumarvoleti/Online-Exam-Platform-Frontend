@@ -1,8 +1,8 @@
 import { FormikInput } from '@/components/formik/FormikInput';
-import { testEvaluationInitialValues } from '@/utils/formik/initialValues';
-import { testEvaluationValidationSchema } from '@/utils/validationScehma';
+import { ITestSettingsForm } from '@/interfaces/formikInterfaces';
 import {Box, SxProps} from '@mui/material';
-import { Form, Formik } from 'formik';
+import { useFormikContext } from 'formik';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 const styles:SxProps = {
   h4:{
@@ -11,7 +11,7 @@ const styles:SxProps = {
     fontWeight: "600",
     mt: "40px",
   },
-  form:{
+  ".form":{
     display: "flex",
     flexWrap: "wrap",
     gap: "15px",
@@ -23,47 +23,61 @@ const styles:SxProps = {
 }
 
 export default function TestEvaluationComponent() {
+
+  const {values, setFieldValue} = useFormikContext<ITestSettingsForm>();
+
+  const handleTotalMarks = async() => {
+    const total = values.marksPerQuestion * values.totalQuestions;
+    await setFieldValue("totalMarks",total);
+  }
+  useEffect(() => {
+    handleTotalMarks();
+  }, [values.marksPerQuestion, values.totalQuestions])
+  
+
   return (
     <Box sx={styles}>
       <h4>Test Evaluation</h4>
-      <Formik
-        initialValues={testEvaluationInitialValues}
-        validationSchema={testEvaluationValidationSchema}
-        onSubmit={(values) => console.log(values)}
-      >
-        {({values}) => (
-          <Form className="form">
-            <FormikInput
-              name="totalQuestions"
-              label="Test Questions"
-              type='number'
-              placeholder=""
-              value={values.totalQuestions}
-            />
-            <FormikInput
-              name="totalMarks"
-              label="Total Marks"
-              type='number'
-              placeholder="RPA"
-              value={values.totalMarks}
-            />
-            <FormikInput
-              name="passPercentage"
-              label="Pass Percentage %"
-              type="number"
-              placeholder=""
-              value={values.passPercentage}
-            />
-            <FormikInput
-              name="negativeMarks"
-              label="Negative Marks"
-              type="number"
-              placeholder=""
-              value={values.negativeMarks}
-            />
-          </Form>
-        )}
-      </Formik>
+      <Box className="form">
+        <FormikInput
+          name="totalQuestions"
+          label="Total Questions"
+          type='number'
+          placeholder=""
+          disabled
+          value={values.totalQuestions}
+        />
+        <FormikInput
+          name="marksPerQuestion"
+          label="Marks Per Question"
+          type='number'
+          placeholder=""
+          value={values.marksPerQuestion}
+        />
+        <FormikInput
+          name="totalMarks"
+          label="Total Marks"
+          type='number'
+          disabled
+          placeholder="RPA"
+          value={values.totalMarks}
+        />
+        <FormikInput
+          name="passPercentage"
+          label="Pass Percentage %"
+          type="number"
+          placeholder=""
+          value={values.passPercentage}
+        />
+        <FormikInput
+          name="negativeMarks"
+          label="Negative Marks"
+          type="number"
+          placeholder=""
+          value={values.negativeMarks}
+        />
+      </Box>
+
     </Box>
   )
 }

@@ -3,6 +3,8 @@ import useUser from "../useUser"
 import { useToast } from "../useToast";
 import { IQuestionAndAnswer } from "@/interfaces/examInterfaces";
 import { createQuestionRequest, createQuestionsRequest, deleteQuestionRequest, deleteQuestionsRequest, updateQuestionRequest } from "@/api/question";
+import { useEffect, useState } from "react";
+import { useRouter } from "next-nprogress-bar";
 
 const useQuestionMutation = ({ request, options }: { request: ({ questionData, userId }: { questionData: IQuestionAndAnswer, userId: number }) => Promise<any>, options: any }) => {
   return useMutation(
@@ -42,8 +44,15 @@ const useDeleteQuestions = ({ request, options }: { request: (ids: number[]) => 
 export const useQuestion = () => {
   const user = useUser();
   const queryClient = useQueryClient();
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const { successToast, errorToast, loadingToast } = useToast();
+
+  useEffect(() => {
+    
+  }, [])
+  
 
   const mutationOptions: MutateOptions = {
     onSuccess: async (data: any, variables: any) => {
@@ -53,6 +62,7 @@ export const useQuestion = () => {
         successToast({ msg: "Question Created Successfully" });
         const topicId = data.question.topicId;
         queryClient.invalidateQueries(["questions",topicId], { exact: true });
+        router.push(`/user/questionBank/topic/${topicId}`);
       }
     },
     onError: (error: any, variables: any) => {
@@ -66,8 +76,9 @@ export const useQuestion = () => {
         errorToast({ msg: data.error });
       else {
         successToast({ msg: "Questions Created Successfully" });
-        // const topicId = data.question.topicId;
-        // queryClient.invalidateQueries(["questions",topicId], { exact: true });
+        const topicId = data.question.topicId;
+        queryClient.invalidateQueries(["questions",topicId], { exact: true });
+
       }
     },
     onError: (error: any, variables: any) => {
@@ -81,10 +92,12 @@ export const useQuestion = () => {
         errorToast({ msg: data.error });
       else {
         successToast({ msg: "Question Updated Successfully" });
+        console.log(data);
         const topicId = data.question.topicId;
-        const questionId = data.question.questionId;
+        const questionId = data.question.id;
         queryClient.invalidateQueries(["questions",topicId], { exact: true })
         queryClient.invalidateQueries(["question",questionId], { exact: true })
+        router.push(`/user/questionBank/topic/${topicId}`);
       }
     },
     onError: (error: any, variables: any) => {
@@ -109,17 +122,21 @@ export const useQuestion = () => {
   const QuestionMutationQuery = useQuestionMutation({ request: createQuestionRequest, options: mutationOptions });
   const CreateManyQuestionsMutationQuery = useCreateManyQuestionMutation({ request: createQuestionsRequest, options: createManyMutationOptions });
   const updateQuestionMutationQuery = useUpdateQuestionMutation({ request: updateQuestionRequest, options: updateMutationOptions });
-
   const QuestionDeleteMutationQuery = useDeleteQuestion({ request: deleteQuestionRequest, options: deleteMutationOptions });
-
   const QuestionsDeleteMutationQuery = useDeleteQuestions({ request: deleteQuestionsRequest, options: deleteMutationOptions });
+
+  useEffect(() => {
+    const isLoading = QuestionMutationQuery.isLoading || CreateManyQuestionsMutationQuery.isLoading || updateQuestionMutationQuery.isLoading || QuestionDeleteMutationQuery.isLoading || QuestionsDeleteMutationQuery.isLoading;
+    if(isLoading)
+      setLoading(prev => true);
+    else
+      setLoading(prev => false);
+  }, [QuestionMutationQuery.isLoading,CreateManyQuestionsMutationQuery.isLoading,updateQuestionMutationQuery.isLoading,QuestionDeleteMutationQuery.isLoading,QuestionsDeleteMutationQuery.isLoading])
 
   const createQuestion = (questionData: IQuestionAndAnswer) => {
     if (!user?.id)
       return;
     QuestionMutationQuery.mutate({ questionData: questionData, userId: user?.id });
-    if (QuestionMutationQuery.isLoading)
-      loadingToast({ msg: "Creating Question" });
     return QuestionMutationQuery.data;
   }
 
@@ -127,8 +144,6 @@ export const useQuestion = () => {
     if (!user?.id)
       return;
     CreateManyQuestionsMutationQuery.mutate({ questionsData: questionsData, userId: user?.id });
-    if (CreateManyQuestionsMutationQuery.isLoading)
-      loadingToast({ msg: "Creating Question" });
     return CreateManyQuestionsMutationQuery.data;
   }
 
@@ -136,23 +151,17 @@ export const useQuestion = () => {
     if(!user || !user.id)
       return;
     updateQuestionMutationQuery.mutate({ questionData: questionData, id:id, userId:user?.id });
-    if (updateQuestionMutationQuery.isLoading)
-      loadingToast({ msg: "Updating Question" });
     return updateQuestionMutationQuery.data;
   }
 
   const deleteQuestion = async ({id, topicId}:{id: number,topicId:number}) => {
     QuestionDeleteMutationQuery.mutate(id);
-    if (QuestionDeleteMutationQuery.isLoading)
-      loadingToast({ msg: "Deleting Question" });
   }
 
   const deleteQuestions = async ({ids, topicId}:{ids: number[],topicId:number}) => {
     QuestionsDeleteMutationQuery.mutate(ids);
-    if (QuestionsDeleteMutationQuery.isLoading)
-      loadingToast({ msg: "Deleting Questions" });
   }
 
-  return { createQuestion, deleteQuestion, updateQuestion, createQuestions, deleteQuestions };
+  return { createQuestion, deleteQuestion, updateQuestion, createQuestions, deleteQuestions, loading };
 
 }

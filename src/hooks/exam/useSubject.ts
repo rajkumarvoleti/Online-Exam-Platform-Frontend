@@ -2,11 +2,22 @@ import { MutateOptions, useMutation, useQueryClient } from "@tanstack/react-quer
 import useUser from "../useUser"
 import { useToast } from "../useToast";
 import { ISubject } from "@/interfaces/examInterfaces";
-import { createSubjectRequest, deleteSubjectRequest, updateSubjectRequest } from "@/api/subject";
+import { createSubjectAndTopicRequest, createSubjectRequest, deleteSubjectRequest, updateSubjectRequest } from "@/api/subject";
+import { useEffect, useState } from "react";
+import { ICreateSubjectTopic } from "@/interfaces/formikInterfaces";
+import { useRouter } from "next-nprogress-bar";
+import { usePathname } from "next/navigation";
 
 const useSubjectMutation = ({ request, options }: { request: ({ subjectData, userId }: { subjectData: ISubject, userId: number }) => Promise<any>, options: any }) => {
   return useMutation(
     async ({ subjectData, userId }: { subjectData: ISubject, userId: number }) => request({ subjectData, userId }),
+    options,
+  )
+}
+
+const useSubjectTopicsMutation = ({ request, options }: { request: ({ subjectTopicsData, userId }: { subjectTopicsData: ICreateSubjectTopic, userId: number }) => Promise<any>, options: any }) => {
+  return useMutation(
+    async ({ subjectTopicsData, userId }: { subjectTopicsData: ICreateSubjectTopic, userId: number }) => request({ subjectTopicsData, userId }),
     options,
   )
 }
@@ -28,6 +39,9 @@ const useDeleteSubject = ({ request, options }: { request: (id: number) => Promi
 export const useSubject = () => {
   const user = useUser();
   const queryClient = useQueryClient();
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const pathName = usePathname();
 
   const { successToast, errorToast, loadingToast } = useToast();
 
@@ -37,10 +51,12 @@ export const useSubject = () => {
         errorToast({ msg: data.error });
       else {
         successToast({ msg: "Subject Created Successfully" });
-        queryClient.setQueryData(["subjects"],(oldData:any) =>{
-          console.log(oldData);
-          return {...oldData, subjects: [...oldData.subjects, data.subject]};
-        });
+        // queryClient.setQueryData(["subjects"],(oldData:any) =>{
+        //   console.log(oldData);
+        //   return {...oldData, subjects: [...oldData.subjects, data.subject]};
+        // });
+        const id:number = data.subjectAndTopics.id;
+        router.push(`/user/questionBank/subject/${id}`);
         queryClient.invalidateQueries(["subjects"], { exact: true });
       }
     },
@@ -69,8 +85,10 @@ export const useSubject = () => {
         errorToast({ msg: data.error });
       else {
         successToast({ msg: "Subject Deleted Successfully" });
-        console.log(data);
+        const id = variables
         queryClient.invalidateQueries(["subjects"], { exact: true });
+        if(pathName === `/user/questionBank/subject/${id}`)
+          router.push("/user/questionBank");
       }
     },
     onError: (error: any, variables: any) => {
@@ -79,16 +97,28 @@ export const useSubject = () => {
   }
 
   const subjectMutationQuery = useSubjectMutation({ request: createSubjectRequest, options: mutationOptions });
+  const subjectTopicsMutationQuery = useSubjectTopicsMutation({ request: createSubjectAndTopicRequest, options: mutationOptions });
   const updateSubjectMutationQuery = useUpdateSubjectMutation({ request: updateSubjectRequest, options: updateMutationOptions });
-
   const subjectDeleteMutationQuery = useDeleteSubject({ request: deleteSubjectRequest, options: deleteMutationOptions });
+
+  const isLoading = subjectMutationQuery.isLoading || updateSubjectMutationQuery.isLoading || subjectDeleteMutationQuery.isLoading || subjectTopicsMutationQuery.isLoading;
+
+  useEffect(() => {
+    if(isLoading) setLoading(prev => true);
+    else setLoading(prev => false);
+  }, [isLoading])
 
   const createSubject = (subjectData: ISubject) => {
     if (!user?.id)
       return;
     subjectMutationQuery.mutate({ subjectData: subjectData, userId: user?.id });
-    if (subjectMutationQuery.isLoading)
-      loadingToast({ msg: "Creating subject" });
+    return subjectMutationQuery.data;
+  }
+
+  const createSubjectAndTopics = (subjectTopicsData: ICreateSubjectTopic) => {
+    if (!user?.id)
+      return;
+    subjectTopicsMutationQuery.mutate({ subjectTopicsData, userId: user?.id });
     return subjectMutationQuery.data;
   }
 
@@ -96,17 +126,13 @@ export const useSubject = () => {
     if (!subjectData.id)
       return;
     updateSubjectMutationQuery.mutate({ subjectData: subjectData, id: subjectData.id });
-    if (updateSubjectMutationQuery.isLoading)
-      loadingToast({ msg: "Updating subject" });
     return updateSubjectMutationQuery.data;
   }
 
   const deleteSubject = (id: number) => {
     subjectDeleteMutationQuery.mutate(id);
-    if (subjectDeleteMutationQuery.isLoading)
-      loadingToast({ msg: "Deleting subject" });
   }
 
-  return { createSubject, deleteSubject, updateSubject };
+  return { createSubject, deleteSubject, updateSubject, loading, createSubjectAndTopics };
 
 }

@@ -13,6 +13,10 @@ export const getAllTopicsRequest = ({ subjectId }: { subjectId: number }) => {
   return request({ url: '/topic/getAll', method: 'get', params: {subjectId} });
 }
 
+export const getTopicRequest = (topicId: number) => {
+  return request({ url: '/topic/get', method: 'get', params: {topicId} });
+}
+
 export const deleteTopicRequest = (id: number) => {
   return request({ url: '/topic/delete', method: 'delete', data: { id } });
 }

@@ -7,6 +7,7 @@ import { useLogin } from '@/hooks/auth/useLogin';
 export default function GoogleLoginButton() {
 
   const {googleLogin} = useLogin();
+
   return (
     <ExternalLoginButton login={googleLogin} ButtonIcon={GoogleIcon}/>
   )

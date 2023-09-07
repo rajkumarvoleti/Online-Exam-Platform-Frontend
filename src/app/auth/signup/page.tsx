@@ -1,7 +1,6 @@
 "use client"
 
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import { Formik, Form } from 'formik';
 import { signupInitialValues } from "@/utils/formik/initialValues";
 import { signupValidationSchema } from "@/utils/validationScehma";
@@ -11,24 +10,28 @@ import PasswordIcon from "@/assets/formik/password-icon.svg";
 import ExternalSigninDiv from "@/components/auth/ExternalSigninDiv";
 import { useSignup } from "@/hooks/auth/useSignup";
 import Link from "next/link";
+import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 
 const styles = {
   flexDirection:"column",
+  mb: "50px",
   ".loginFormik":{
     width: "360px",
+    a:{
+      color: "#008AC2",
+    },
   },
   h4:{
     textAlign:"center",
   },
   ".signin":{
     gap: "30px"
-
-  }
+  },
 }
 
 export default function Page(){
 
-  const { signup } = useSignup();
+  const { signup, loading } = useSignup();
 
   return (
     <Box sx={styles} className="center">
@@ -94,7 +97,7 @@ export default function Page(){
             placeholder=""
             value={false}
           />
-          <Button type="submit" fullWidth variant="contained">Sign Up</Button>
+          <LoadingButton loading={loading} type="submit" fullWidth variant="contained">Sign Up</LoadingButton>
         </Form>
       )}
       </Formik>

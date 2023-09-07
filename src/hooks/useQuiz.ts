@@ -5,8 +5,7 @@ import { INumberButtonType } from "@/interfaces/buttonInterfaces";
 import { IQuizData, IQuizQuestion, IResultQuery } from "@/interfaces/quizInterfaces";
 import { ITime, getTimeFromSeconds } from "@/utils/timeUtils";
 import { recoilPersist } from 'recoil-persist'
-import { useQuery } from "react-query";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 
 const { persistAtom } = recoilPersist()
 

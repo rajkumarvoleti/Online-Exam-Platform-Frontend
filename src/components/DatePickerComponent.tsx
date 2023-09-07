@@ -1,35 +1,27 @@
-// /* eslint-disable react/display-name */
-// import { forwardRef, useState } from "react";
-// import DatePicker from 'react-datepicker';
-// import "react-datepicker/dist/react-datepicker.css";
-
-
-// export default function DatePickerComponent() {
-//   const [startDate, setStartDate] = useState(new Date());
-//   const ExampleCustomInput = forwardRef(({ value, onClick }:{value?:any, onClick?:any}, ref:any) => (
-//     <button className="example-custom-input" onClick={onClick} ref={ref}>
-//       {value}
-//     </button>
-//   ));
-//   return (
-//     <DatePicker
-//       className="datePicker"
-//       selected={startDate}
-//       onChange={(date:any) => setStartDate(date)}
-//       customInput={<ExampleCustomInput />}
-//     />
-//   );
-// }
-
 import * as React from 'react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs, { Dayjs } from 'dayjs';
+import { Box } from '@mui/material';
 
-export default function BasicDatePicker({handleChange, className}:{handleChange:() => void, className?:string}) {
+export default function BasicDatePicker({error,handleChange, className, value}:{error?:string, handleChange?:(val:string) => void, className?:string, value:string}) {
+
+  const date = value !== "" ? dayjs(value): null;
+
+  const onChange = (e:Dayjs|null) => {
+    if(!e)
+      return;
+    if(handleChange)
+      handleChange(e.toDate().toUTCString());
+  }
+
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DatePicker className={className} />
-    </LocalizationProvider>
+    <Box>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DatePicker format='DD-MM-YYYY' value={date} onChange={onChange} className={className} />
+      </LocalizationProvider>
+      <p className='error'>{error}</p>
+    </Box>
   );
 }

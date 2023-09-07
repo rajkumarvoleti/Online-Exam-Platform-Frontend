@@ -5,6 +5,7 @@ import LanguageIcon from "@/components/icons/LanguageIcon";
 import { useRouter } from "next/navigation";
 import { IExam } from "@/interfaces/examInterfaces";
 import { useQuiz } from "@/hooks/useQuiz";
+import dayjs from "dayjs";
 
 const styles:SxProps = {
   margin: "10px",
@@ -80,13 +81,15 @@ export default function ExamCard({exam}:{exam:IExam}) {
             <DescriptionOutlinedIcon className="icon" />
             <p>{exam.totalQuestions} Questions</p>
             <Divider className="divider" orientation="vertical" />
-            <p>{exam.totalTime} Minutes</p>
+            <p>{exam.testDuration} Minutes</p>
             <Divider className="divider" orientation="vertical" />
             <p>{exam.totalMarks} marks</p>
           </Box>
           <Box className="time">
             <AccessTimeOutlinedIcon className="icon" />
-            <p>{exam.testAvailabilityStart.toString().slice(0,10)} to {exam.testAvailabilityEnd.toString().slice(0,10)}</p>
+            {exam.testStartDate === "always" ?
+            <p>Always</p>:
+            <p>{dayjs(exam.testStartDate).format('DD-MM-YY')} to {dayjs(exam.testEndDate).format('DD-MM-YY')}</p>}
           </Box>
         </Box>
         <Box className="buttonBox">

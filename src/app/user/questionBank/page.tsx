@@ -10,7 +10,6 @@ const styles: SxProps = {
   }
 }
 
-
 export default function Page() {
 
   const {createQuestions} = useQuestion();

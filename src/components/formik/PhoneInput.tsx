@@ -14,6 +14,7 @@ const styles = {
     height:"38px",
   },
   ".input > *": {
+    borderRadius: "8px",
     width: "100%",
     height:"100%",
   }
@@ -32,6 +33,7 @@ export default function PhoneInput(props: IInputProps){
     <Box className="customInput" sx={styles}>
       <InputLabel className="label">{props.label}</InputLabel>
       <MuiTelInput
+        inputProps={{style:{borderRadius: "8px"}}}
         variant="outlined"
         ref={props.ref}
         disabled={props.disabled}

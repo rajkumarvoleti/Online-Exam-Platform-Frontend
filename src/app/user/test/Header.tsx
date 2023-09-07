@@ -25,12 +25,12 @@ const styles:SxProps = {
   },
 }
 
-export default function Header() {
+export default function Header({totalExams}:{totalExams:number}) {
 
   return (
     <Card sx={styles}>
       <Box className="container container1">
-        <h6 className="total">Total Test: 07</h6>
+        <h6 className="total">Total Test: {totalExams}</h6>
         <Button size="small" variant="outlined">+ Create Test</Button>
       </Box>
       <Box className="container container2">

@@ -4,9 +4,9 @@ import {useEffect} from 'react';
 import { getExamRequest } from "@/api/exam";
 import { useQuiz } from "@/hooks/useQuiz";
 import { IQuizQuestion, IQuizSubject } from "@/interfaces/quizInterfaces";
-import { Box, Button, SxProps } from "@mui/material";
+import { Box, Button, CircularProgress, SxProps } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next-nprogress-bar';
 
 const styles:SxProps = {
   width: "100vw",
@@ -22,23 +22,22 @@ export default function Page({params}:{params:{examId:string}}) {
   useEffect(() => {
     if(!data || !data.exam)
       return;
-    var questions:IQuizQuestion[] = [];
-    data.exam.subjects.forEach((subject:IQuizSubject) => {
-      questions = [...questions,...subject.questions];
-    });
+    var questions:IQuizQuestion[] = data.exam.questions;
+    console.log(data);
     initializeQuestions(questions);
   }, [data])  
 
   if(error)
-    return <p>Something went wrong</p>
+    return <Box className='center' sx={styles}>Something went wrong</Box>
   
   if(isLoading)
-    return <p>loading...</p>
+    return <Box className='center' sx={styles}><CircularProgress /></Box>
   
   const handleClick = () =>{
     if(!data.exam)
       return;
-    startExam(data.exam.totalTime);
+    console.log(data.exam.testDuration);
+    startExam(data.exam.testDuration);
     router.push(`/quiz/exam/${examId}`);
   }
 

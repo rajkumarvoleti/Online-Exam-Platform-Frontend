@@ -5,5 +5,5 @@ export default function LogoutButton() {
 
   const {logout} = useLogout();
 
-  return <Button onClick={logout}>Log Out</Button>
+  return <Button variant="contained" onClick={logout}>Log Out</Button>
 }

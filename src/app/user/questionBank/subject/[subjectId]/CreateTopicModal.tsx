@@ -1,7 +1,8 @@
 import { useTopic } from "@/hooks/exam/useTopic";
 import { ITopic } from "@/interfaces/examInterfaces";
+import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import { Box, SxProps, InputLabel, OutlinedInput, Button } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const styles: SxProps = {
   width: "300px",
@@ -20,38 +21,41 @@ const styles: SxProps = {
   }
 }
 
-export default function EditTopicModal({ handleClose, topic }: { handleClose: () => void, topic: ITopic }) {
+export default function CreateTopicModal({ handleClose, subjectId }: { handleClose: () => void, subjectId: number }) {
 
-  const [topicName, setTopicName] = useState<string>(topic.name);
-  const { updateTopic } = useTopic();
+  const [topicName, setTopicName] = useState<string>("");
+  const { createTopic, loading } = useTopic();
+  const [canClose, setCanClose] = useState(false);
 
   const handleChange = (e: any) => {
     setTopicName(e.target.value);
   }
 
   const handleSubmit = () => {
-    if (!topic.id)
-      return;
-    const newTopic: ITopic = {
-      id: topic.id,
+    console.log(topicName);
+    const topic: ITopic = {
       name: topicName,
       description: "",
-      subjectId: topic.subjectId,
+      subjectId: subjectId,
       questionsCount: 0,
     };
-    updateTopic(newTopic);
-    handleClose();
+    createTopic(topic);
   }
+
+  useEffect(() => {
+    if(loading) setCanClose(prev => true);
+    else if(!loading && canClose) handleClose();
+  }, [loading])
 
   return (
     <Box sx={styles}>
       <Box className="inputBox">
         <InputLabel className="label">Topic Name</InputLabel>
-        <OutlinedInput value={topicName} onChange={handleChange} className="input" />
+        <OutlinedInput onChange={handleChange} className="input" />
       </Box>
       <Box className="buttons">
         <Button size="small" variant="outlined" onClick={handleClose}>Close</Button>
-        <Button size="small" variant="contained" onClick={handleSubmit}>Submit</Button>
+        <LoadingButton loading={loading} size="small" variant="contained" onClick={handleSubmit}>Submit</LoadingButton>
       </Box>
     </Box>
   )

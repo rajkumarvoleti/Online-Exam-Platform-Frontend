@@ -1,4 +1,6 @@
+import { ITestSettingsForm } from '@/interfaces/formikInterfaces';
 import {Box, FormControlLabel, Radio, RadioGroup, SxProps} from '@mui/material';
+import { FormikHandlers, useFormikContext } from 'formik';
 
 const styles:SxProps = {
   h4:{
@@ -9,6 +11,7 @@ const styles:SxProps = {
   },
   ".radioGroups":{
     display: "flex",
+    gap:"20px",
     flexWrap: "wrap",
     justifyContent: "space-between",
     maxWidth: "900px",
@@ -42,7 +45,7 @@ const resultFormatOptions = [
   },
 ]
 
-const timeDeclarationOptions = [
+const testDeclarationOptions = [
   {
     id: "showResultAfterEachQuestion",
     label: "Show Result After Each Question",
@@ -62,22 +65,25 @@ const timeDeclarationOptions = [
 ]
 
 export default function ResultDeclarationSettingsComponent() {
+
+  const {handleChange, values} = useFormikContext<ITestSettingsForm>();
+
   return (
     <Box sx={styles}>
       <h4>Result Declaration Settings</h4>
       <Box className="radioGroups">
         <Box className="radioGroup">
           <p className='radioHead'>Result Format: </p>
-          <RadioGroup defaultValue="female">
+          <RadioGroup value={values.resultFormat} onChange={handleChange} name='resultFormat'>
             {resultFormatOptions.map(opt => (
               <FormControlLabel key={opt.id} value={opt.id} control={<Radio color='default' size='small' />} label={opt.label} />
             ))}
           </RadioGroup>
         </Box>
         <Box className="radioGroup">
-          <p className='radioHead'>Time Declaration: </p>
-          <RadioGroup defaultValue="female">
-            {timeDeclarationOptions.map(opt => (
+          <p className='radioHead'>Test Declaration: </p>
+          <RadioGroup value={values.testDeclaration} onChange={handleChange} name='testDeclaration'>
+            {testDeclarationOptions.map(opt => (
               <FormControlLabel key={opt.id} value={opt.id} control={<Radio color='default' size='small' />} label={opt.label} />
             ))}
           </RadioGroup>

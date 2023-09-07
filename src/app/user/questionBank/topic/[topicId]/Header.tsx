@@ -1,10 +1,15 @@
-import { Button, Card, SxProps } from "@mui/material";
+import { Button, Card, CircularProgress, SxProps } from "@mui/material";
 import { Box } from "@mui/material";
 import SearchBarComp from "@/components/SearchBarComp";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import QuestionNumberInput from "./QuestionNumberInput";
 import FilterMenu from "./FilterMenu";
 import useManageQuestions from "./useManageQuestions";
+import { useRouter } from "next-nprogress-bar";
+import { useQuery } from "@tanstack/react-query";
+import { getTopicRequest } from "@/api/topic";
+import { useState, useEffect } from "react";
+import { ITopic } from "@/interfaces/examInterfaces";
 
 const styles:SxProps = {
   display: "flex",
@@ -24,22 +29,18 @@ const styles:SxProps = {
   },
 }
 
-export default function Header({topicId}:{topicId:number}) {
+export default function Header({topic}:{topic:ITopic}) {
 
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const pathName = usePathname();
-  const topicName = searchParams.get("topicName");
-  const {setQuestionNumber, setQuery} = useManageQuestions();
+  const {setQuery, setQuestionNumber} = useManageQuestions();
 
   const handleNew = () => {
-    const url = pathName.slice(0, pathName.lastIndexOf("/"));
-    router.push(`${url}/add/${topicId}?topicName=${topicName}`);
+    router.push(`/user/create/questions/${topic.id}`);
   }
 
   return (
     <Card sx={styles}>
-      <h4>Questions for {topicName}</h4>
+      <h4>Questions for {topic.name}</h4>
       <Box className="options">
         <Button onClick={handleNew} className='newButton' variant='outlined'>
           + New

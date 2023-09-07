@@ -1,6 +1,6 @@
 import { useQuiz } from '@/hooks/useQuiz';
 import {Box, Button, Card, SxProps} from '@mui/material';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next-nprogress-bar';
 
 const styles:SxProps = {
   display: "flex",
