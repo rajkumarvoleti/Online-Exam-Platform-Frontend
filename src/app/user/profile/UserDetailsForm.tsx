@@ -15,14 +15,12 @@ import { Transform } from "stream";
 
 const styles:SxProps = {
   p: "16px",
-  // mr:"10px",
   width:"100%",
   ".form":{
     display: "flex",
-    flexDirection:"column",
-    gap:"5px",
-// border:"2px solid red",
+    flexWrap: "wrap",
     margin: "15px 0",
+    gap: "20px",
     ".input":{
       borderRadius:"5px"
     }
@@ -35,30 +33,20 @@ const styles:SxProps = {
     display:"flex",
     flexDirection:"row",
     gap:"15px",
-    // alignItems:"center",
-
-
   },
   ".tagline": {
-    width:"300px",
-    ".input":{
-      width:"830px",
-
-    }
+    flexBasis: "100%",
   },
-
+  
   ".bio":{
+    flexBasis: "100%",
     ".desc":{
-width:"650px",
-fontSize:"15px",
-mb:"5px",
+      fontSize:"15px",
+      mb:"5px",
     },
-    // gridColumn: "1/4",
     ".input":{
       height: "100px",
       alignItems:"start",
-      width:"830px"
-      
     }
   },
   ".customInput": {
@@ -70,17 +58,11 @@ mb:"5px",
     gap: "16px",
     alignItems: "center",
   },
-  ".buttons":{
-    // gridColumn: "1/4",
-  },
   ".circle":{
     height: "84px",
     width: "84px",
     backgroundColor: "#C783FF",
     borderRadius: "50px",
-    // display: "inline-block",
-  
-
   },
   ".letter":{
     fontSize: "50px",
@@ -89,9 +71,6 @@ mb:"5px",
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
-    // display: flex;
-    
-
   },
   ".phead":{
     margin:"0",
@@ -107,8 +86,6 @@ mb:"5px",
     textTransform:"capitalize",
     p:"0px"
   },
-
-
 }
 
 export default function UserDetailsForm(){
@@ -141,11 +118,6 @@ export default function UserDetailsForm(){
         >
       {({values}) => (
         <Form className="form">
-
-         
-
-
-          <div className="rowForm">
           <FormikInput
             name="firstName"
             label="First Name"
@@ -165,9 +137,6 @@ export default function UserDetailsForm(){
             value={values.email}
             InputImage={EmailIcon}
             />
-          </div>
-
-           <div className="rowForm">
           <FormikInput
             name="country"
             label="Country"
@@ -191,33 +160,25 @@ export default function UserDetailsForm(){
             value={values.phoneNumber}
             type="phoneNumber"
             />
-          </div>
-
-        
-          <div className="rowForm">
           <FormikInput
-            name="firstName"
-            label="First Name"
+            name="totalExperience"
+            label="Total Experience"
+            type="number"
             placeholder=""
-            value={values.firstName}
+            value={values.totalExperience}
             />
           <FormikInput
-            name="lastName"
-            label="Last Name"
+            name="experienceIn"
+            label="Experience In"
             placeholder=""
-            value={values.lastName}
+            value={values.experienceIn}
             />
           <FormikInput
-            name="email"
-            label="Email"
+            name="qualification"
+            label="Qualification"
             placeholder=""
-            value={values.email}
-            InputImage={EmailIcon}
+            value={values.qualification}
             />
-          </div>
-
-
-          <div className="rowForm">
             <FormikInput
             name="tagline"
             className="tagline"
@@ -225,8 +186,6 @@ export default function UserDetailsForm(){
             placeholder=""
             value={values.tagline}
             />
-          </div>
-             <div className="rowForm">
           <FormikInput
             className="bio"
             name="bio"
@@ -235,10 +194,6 @@ export default function UserDetailsForm(){
             value={values.bio}
             desc="Write a short introduction about yourself to let potential employers know about you"
             />
-             </div>
-        
-         
-      
           <ActionButtons handleSubmit={() => handleSubmit(values)} />
         </Form>
       )}

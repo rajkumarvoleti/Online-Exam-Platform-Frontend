@@ -13,12 +13,14 @@ const styles:SxProps = {
     margin:"20px",
     gap:"10px"
   },
+  ".MuiList-root":{
+    p: "0",
+  },
   ".container":{
     display:"grid",
     gridTemplateColumns: "1fr 4fr",
     ".options,":{
       margin:" 7px",
-      // ml:"10px"
   
     },
   },
@@ -30,11 +32,18 @@ const styles:SxProps = {
     mr:"18px"
   },
   ".menuItem":{
-    margin: "10px",
-    padding: "10px"
+    padding: "20px",
+  },
+  ".menuItem:hover":{
+    backgroundColor: "#fff",
+  },
+  ".MuiListItemText-primary":{
+    fontWeight: "500",
   },
   ".menuItem.Mui-selected":{
+    backgroundColor: "#fff",
     color: "#2200A5",
+    border: "2px solid #C2E830",
   },
   ".basicForm":{
     margin:"10px",

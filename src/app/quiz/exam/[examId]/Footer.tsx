@@ -1,3 +1,4 @@
+import ModalComponent from '@/components/ModalComponent';
 import { useQuiz } from '@/hooks/useQuiz';
 import {Box, Button, Card, SxProps} from '@mui/material';
 import { useRouter } from 'next-nprogress-bar';
@@ -79,6 +80,7 @@ export default function Footer({examId}:{examId:number}){
           <p className="buttonText">Submit</p>
         </Button>
       </Box>
+
     </Card>
   )
 }

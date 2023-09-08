@@ -33,7 +33,10 @@ export const getUserDetails = (user:IUser) => {
       label: user.timezone || "",
     },
     tagline: user.tagline || "",
-    bio: user.bio || ""
+    bio: user.bio || "",
+    totalExperience: user.totalExperience || 0,
+    experienceIn: user.experienceIn || "",
+    qualification: user.qualification || "",
   }
 }
 

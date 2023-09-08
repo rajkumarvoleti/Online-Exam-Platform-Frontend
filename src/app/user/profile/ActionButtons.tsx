@@ -10,8 +10,9 @@ const styles:SxProps = {
   flexWrap: "wrap",
   justifyContent: "flex-end",
   pr:"0",
+  pb: "0",
   gap: "15px",
-  mt:"70px",
+  mt:"90px",
   "button":{
     width: "140px",
     height: "33px",
@@ -19,7 +20,7 @@ const styles:SxProps = {
     borderRadius: "6px",
     border: "1px solid #C2E830",
     color: "#969696",
-    fontWeight:"550"
+    fontWeight:"500",
   },
   ".save":{
     color:"#2200A5"
