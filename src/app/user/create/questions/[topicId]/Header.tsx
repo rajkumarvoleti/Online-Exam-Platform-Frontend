@@ -1,17 +1,26 @@
 import useManageQuestion from "@/hooks/exam/useManageQuestion";
-import { ITopic } from "@/interfaces/examInterfaces";
+import { IQuestionAndAnswer, ITopic } from "@/interfaces/examInterfaces";
+import { ICreateQuestions } from "@/interfaces/formikInterfaces";
 import { IQuestionLevel, IQuestionType } from "@/interfaces/questionInterfaces";
-import { Box, Card, InputLabel, MenuItem, Select, SelectChangeEvent, SxProps } from "@mui/material";
+import { Box, Button, Card, InputLabel, MenuItem, Select, SelectChangeEvent, SxProps } from "@mui/material";
+import { useFormikContext } from "formik";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const styles:SxProps = {
   display: "flex",
   flexWrap: "wrap",
-  padding: "10px 20px",
   alignItems: "center",
   justifyContent: "space-between",
   width: "100%",
+  mb: "10px",
+  h4:{
+    fontSize: "20px",
+    fontWeight: "400",
+    color: "#000",
+    m: 0,
+    pl: "10px",
+  },
   ".options":{
     display: "flex",
     gap: "10px",
@@ -20,7 +29,12 @@ const styles:SxProps = {
     width: "180px",
     height: "40px",
     borderRadius: "7px",
-    border: "1px solid #C2E830",
+    border: "1px solid #B9B9B9",
+  },
+  ".removeButton":{
+    height: "40px",
+    mt: "33px",
+    borderRadius: "8px",
   },
   ".label":{
     color: "#000",
@@ -28,31 +42,33 @@ const styles:SxProps = {
   }
 }
 
-export default function Header({type,setType, topic}:{type:IQuestionType, setType:(t:IQuestionType) => any, topic?:ITopic}) {
+export default function Header({index}:{index:number}) {
 
-  const searchParams = useSearchParams();
-  const [difficulty, setDifficulty] = useState<IQuestionLevel>("easy");
-  const { handleComplexity } = useManageQuestion();
-
-  const handleQuestionDifficulty = (e:SelectChangeEvent) => {
-    setDifficulty(e.target.value as IQuestionLevel);
-  }
-
-  const handleQuestionType = (e:SelectChangeEvent) => {
-    setType(e.target.value as IQuestionType);
-  }
+  const {values, handleChange, setFieldValue, validateField} = useFormikContext<ICreateQuestions>();
+  // values.questions[index].answer.type
 
   useEffect(() => {
-    handleComplexity(difficulty);
-  }, [difficulty])
+    console.log(values);
+  }, [values])
+
+  const handleRemove = (id:number|undefined) => {
+    if(!id)
+      return;
+    return async() => {
+      const newQuestions = values.questions.filter(question => question.questionId !== id);
+      await setFieldValue("questions",newQuestions);
+    }
+  }
+  
 
   return (
-    <Card sx={styles}>
-      <h4>Create a New Question For {topic?.name}</h4>
+    <Box sx={styles}>
+      <h4>Question No : {index+1} of {values.questions.length}</h4>
       <Box className="options">
+        <Button className="removeButton" color="error" onClick={handleRemove(values.questions[index].questionId)} variant="outlined" size="small">Remove Question</Button>
         <Box className="option">
           <InputLabel className="label">Question Level</InputLabel>
-          <Select className="select" onChange={handleQuestionDifficulty} value={difficulty}>
+          <Select name={`questions[${index}].complexity`} className="select" onChange={handleChange} value={values.questions[index].complexity}>
             <MenuItem value={"easy"}>Easy</MenuItem>
             <MenuItem value={"medium"}>Medium</MenuItem>
             <MenuItem value={"hard"}>Hard</MenuItem>
@@ -60,7 +76,7 @@ export default function Header({type,setType, topic}:{type:IQuestionType, setTyp
         </Box>
         <Box className="option">
           <InputLabel className="label">Question Type</InputLabel>
-          <Select className="select" onChange={handleQuestionType} value={type}>
+          <Select className="select" name={`questions[${index}].answer.type`} onChange={handleChange} value={values.questions[index].answer.type}>
             <MenuItem value={"trueOrFalse"}>True Or False</MenuItem>
             <MenuItem value={"fillInTheBlanks"}>Fill in the Blanks</MenuItem>
             <MenuItem value={"multipleChoice"}>Multiple Choice</MenuItem>
@@ -68,6 +84,6 @@ export default function Header({type,setType, topic}:{type:IQuestionType, setTyp
           </Select>
         </Box>
       </Box>
-    </Card>
+    </Box>
   )
 }

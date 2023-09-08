@@ -1,3 +1,4 @@
+import { IQuestionAndAnswer } from "./examInterfaces"
 import { ICountry, IQuestionBank, ISelectedQuestionBank, ITimeZone } from "./otherInterfaces"
 
 export interface ILoginForm {
@@ -93,4 +94,8 @@ export interface ICreateSubjectTopic {
   name: string,
   description: string,
   topics: ICreateTopic[],
+}
+
+export interface ICreateQuestions {
+  questions: IQuestionAndAnswer[],
 }

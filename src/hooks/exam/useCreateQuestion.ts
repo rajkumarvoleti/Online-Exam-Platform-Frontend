@@ -61,7 +61,7 @@ export const useQuestion = () => {
       else {
         successToast({ msg: "Question Created Successfully" });
         const topicId = data.question.topicId;
-        queryClient.invalidateQueries(["questions",topicId], { exact: true });
+        await queryClient.invalidateQueries(["questions",topicId], { exact: true });
         router.push(`/user/questionBank/topic/${topicId}`);
       }
     },
@@ -76,9 +76,10 @@ export const useQuestion = () => {
         errorToast({ msg: data.error });
       else {
         successToast({ msg: "Questions Created Successfully" });
-        const topicId = data.question.topicId;
-        queryClient.invalidateQueries(["questions",topicId], { exact: true });
-
+        const topicId = data.topicId;
+        console.log(topicId);
+        await queryClient.invalidateQueries(["questions",topicId], { exact: true });
+        router.push(`/user/questionBank/topic/${topicId}`);
       }
     },
     onError: (error: any, variables: any) => {
@@ -95,8 +96,8 @@ export const useQuestion = () => {
         console.log(data);
         const topicId = data.question.topicId;
         const questionId = data.question.id;
-        queryClient.invalidateQueries(["questions",topicId], { exact: true })
-        queryClient.invalidateQueries(["question",questionId], { exact: true })
+        await queryClient.invalidateQueries(["questions",topicId], { exact: true })
+        await queryClient.invalidateQueries(["question",questionId], { exact: true })
         router.push(`/user/questionBank/topic/${topicId}`);
       }
     },
@@ -111,7 +112,7 @@ export const useQuestion = () => {
         errorToast({ msg: data.error });
       else {
         successToast({ msg: "Questions Deleted Successfully" });
-        queryClient.invalidateQueries(["questions",data.topicId], { exact: true })
+        await queryClient.invalidateQueries(["questions",data.topicId], { exact: true })
       }
     },
     onError: (error: any, variables: any) => {
@@ -142,6 +143,8 @@ export const useQuestion = () => {
 
   const createQuestions = (questionsData: IQuestionAndAnswer[]) => {
     if (!user?.id)
+      return;
+    if(questionsData.length === 0)
       return;
     CreateManyQuestionsMutationQuery.mutate({ questionsData: questionsData, userId: user?.id });
     return CreateManyQuestionsMutationQuery.data;

@@ -5,6 +5,9 @@ import MCQComponent from "./MCQComponent";
 import { IQuestionType } from "@/interfaces/questionInterfaces";
 import useManageQuestion from "@/hooks/exam/useManageQuestion";
 import { useEffect, useState } from "react";
+import { FormikErrors, useFormikContext } from "formik";
+import { ICreateQuestions } from "@/interfaces/formikInterfaces";
+import { IOption, IQuestionAndAnswer } from "@/interfaces/examInterfaces";
 
 const styles: SxProps = {
   ".heading": {
@@ -12,6 +15,7 @@ const styles: SxProps = {
     display: "flex",
     alignItems: "center",
     pl: "20px",
+    mt: "20px"
   },
   ".explanation": {
     margin: "20px",
@@ -34,32 +38,36 @@ const styles: SxProps = {
   },
 }
 
-export default function AnswerComponent({ type }: { type: IQuestionType }) {
+export default function AnswerComponent({ index }: { index:number }) {
+  
+  const {handleChange, values, errors, touched} = useFormikContext<ICreateQuestions>();
 
-  const { handleExplanation } = useManageQuestion();
-  const [explanation, setExplanation] = useState("");
+  const type = values.questions[index].answer.type;
 
-  const handleChange = (e:any) => {
-    setExplanation(e.target.value);
-  }
+  const questionError = touched.questions && touched.questions[index].answer?.description &&  errors.questions && (errors.questions[index] as FormikErrors<IQuestionAndAnswer>);
+  const optionsError = touched.questions && touched.questions[index].answer?.options &&  questionError && questionError.answer?.options;
+  const optionError = optionsError && (optionsError[index] as FormikErrors<IOption>);
 
   useEffect(() => {
-    handleExplanation(explanation);
-  }, [explanation])
+    console.log(errors);
+  }, [errors])
   
-  
+
   return (
     <Box sx={styles}>
       <Box className="heading">
         <h4>Correct Answer</h4>
       </Box>
-      {type === "trueOrFalse" && <TrueOrFalseComponent />}
-      {type === "fillInTheBlanks" && <FillInTheBlanksComponent />}
-      {type === "subjective" && <FillInTheBlanksComponent />}
-      {type === "multipleChoice" && <MCQComponent />}
+      {type === "trueOrFalse" && <TrueOrFalseComponent index={index} />}
+      {type === "fillInTheBlanks" && <FillInTheBlanksComponent index={index} />}
+      {type === "subjective" && <FillInTheBlanksComponent index={index} />}
+      {type === "multipleChoice" && <MCQComponent index={index} />}
+      <p className="error">{questionError && questionError.answer?.description}</p>
+      <p className="error">{typeof optionsError === "string" && optionsError}</p>
+      <p className="error">{optionError && optionError?.description}</p>
       <Box className="explanation">
         <InputLabel className="label">Explanation</InputLabel>
-        <OutlinedInput value={explanation} onChange={handleChange} className="input" />
+        <OutlinedInput name={`questions[${index}].answer.explanation`} value={values.questions[index].answer.explanation} onChange={handleChange} className="input" />
       </Box>
     </Box>
   )

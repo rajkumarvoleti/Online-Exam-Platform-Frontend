@@ -1,7 +1,9 @@
 import WordComponent from "@/components/WordComponent";
 import useManageQuestion from "@/hooks/exam/useManageQuestion";
 import { IOption } from "@/interfaces/examInterfaces";
+import { ICreateQuestions } from "@/interfaces/formikInterfaces";
 import { Box, Button, Checkbox, InputLabel, SxProps } from "@mui/material";
+import { useFormikContext } from "formik";
 import { useEffect, useState } from "react";
 
 const styles:SxProps = {
@@ -29,32 +31,31 @@ const styles:SxProps = {
   }
 }
 
-export default function MCQComponent() {
+export default function MCQComponent({index}:{index:number}) {
 
-  const [choices, setChoices] = useState<IOption[]>([{description:"",isCorrect:false}]);
-  const { handleOptions } = useManageQuestion();
+  const {values, setFieldValue, handleChange} = useFormikContext<ICreateQuestions>();
 
-  const handleAddChoice = () => {
-    setChoices(choices => [...choices,{description:"",isCorrect:false}]);
+  const choices = values.questions[index].answer.options;
+  
+  const handleRemoveChoice = async (i:number) => {
+    const newChoices = choices.filter((choice,choiceIndex) => choiceIndex !== i);
+    await setFieldValue(`questions[${index}].answer.options`, newChoices);
   }
-  const handleRemoveChoice = (i:number) => {
-    setChoices(choices => [...choices.slice(0,i),...choices.slice(i+1)]);
-  }
-  const handleChoiceDescription = (i:number) => {
-    return (data:string) => {
-      setChoices(choices => [...choices.slice(0,i),{...choices[i], description:data},...choices.slice(i+1)]);
-    }
-  }
-  const handleChoiceAnswer = (i:number) => {
-    return (e:any) => {
-      const data = e.target.checked;
-      setChoices(choices => [...choices.slice(0,i),{...choices[i], isCorrect:data},...choices.slice(i+1)]);
+
+  const handleData = (i:number) => {
+    return async(data:string) => {
+      await setFieldValue(`questions[${index}].answer.options[${i}].description`,data);
     }
   }
 
-  useEffect(() => {
-    handleOptions(choices);
-  }, [choices])
+  const addChoice = async() => {
+    const newChoices:IOption[] = [...choices,{description: "", isCorrect: false}];
+    await setFieldValue(`questions[${index}].answer.options`, newChoices);
+  }
+
+  // useEffect(() => {
+  //   console.log(values.questions)
+  // }, [values])
   
 
   return (
@@ -69,14 +70,14 @@ export default function MCQComponent() {
               </Box>
               <Box className="center">
                 <p>Correct Answer</p>
-                <Checkbox onChange={handleChoiceAnswer(i)}/>
+                <Checkbox name={`questions[${index}].answer.options[${i}].isCorrect`} onChange={handleChange} checked={choices[i].isCorrect}/>
               </Box>
             </Box>
-            <WordComponent value={val.description} handleData={handleChoiceDescription(i)} />
+            <WordComponent value={choices[i].description} handleData={handleData(i)} />
           </Box>
         )
       })}
-      <Button className="addButton" size="small" onClick={handleAddChoice} variant="outlined">Add Choice</Button>
+      <Button className="addButton" size="small" onClick={addChoice} variant="outlined">Add Choice</Button>
     </Box>
   )
 }

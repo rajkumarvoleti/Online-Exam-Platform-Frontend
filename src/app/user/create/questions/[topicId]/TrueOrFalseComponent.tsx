@@ -1,9 +1,11 @@
 import useManageQuestion from "@/hooks/exam/useManageQuestion";
+import { IQuestionAndAnswer } from "@/interfaces/examInterfaces";
+import { ICreateQuestions } from "@/interfaces/formikInterfaces";
 import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
+import { FormikErrors, useFormikContext } from "formik";
 import { useEffect, useState } from "react";
 
 const styles = {
-  padding: "20px",
   "> *":{
     padding: "20px",
   },
@@ -14,21 +16,12 @@ const styles = {
   },
 }
 
-export default function TrueOrFalseComponent() {
-  const [value, setValue] = useState<string>("true");
-  const { handleAnswer } = useManageQuestion();
+export default function TrueOrFalseComponent({index}:{index:number}) {
 
-  useEffect(() => {
-    handleAnswer(value);
-  },[value])
-
-  const handleChange = (e:any) => {
-    setValue(e.target.value);
-  }
-
+  const {handleChange, values, errors} = useFormikContext<ICreateQuestions>()
 
   return (
-    <RadioGroup onChange={handleChange} sx={styles} row className="radioGroup" value={value}>
+    <RadioGroup name={`questions[${index}].answer.description`} onChange={handleChange} sx={styles} row className="radioGroup" value={values.questions[index].answer.description}>
       <FormControlLabel value={"true"} control={<Radio color="secondary" />} label="True" />
       <FormControlLabel value={"false"} control={<Radio color="secondary" />} label="False" />
     </RadioGroup>

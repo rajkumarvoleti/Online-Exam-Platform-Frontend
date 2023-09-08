@@ -3,9 +3,9 @@
 import { Box, Card, CircularProgress, SxProps } from "@mui/material";
 import Header from "./Header";
 import Questions from "./Questions";
-import { useQueries, useQuery } from "@tanstack/react-query";
+import { useQueries } from "@tanstack/react-query";
 import { getQuestionsRequest } from "@/api/question";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useManageQuestions from "./useManageQuestions";
 import DeleteQuestions from "./DeleteQuestions";
 import { getTopicRequest } from "@/api/topic";

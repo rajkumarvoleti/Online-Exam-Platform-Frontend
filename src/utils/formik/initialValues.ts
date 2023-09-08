@@ -1,4 +1,5 @@
-import { ICreateSubjectTopic, ILoginForm, ISignupForm, ITestDetailsForm, ITestEvaluationForm, ITestPricingForm, ITestSettingsForm, IUpdatePasswordForm, IUserDetailsForm } from "@/interfaces/formikInterfaces";
+import { IQuestionAndAnswer } from "@/interfaces/examInterfaces";
+import { ICreateQuestions, ICreateSubjectTopic, ILoginForm, ISignupForm, ITestDetailsForm, ITestEvaluationForm, ITestPricingForm, ITestSettingsForm, IUpdatePasswordForm, IUserDetailsForm } from "@/interfaces/formikInterfaces";
 import { IUser } from "@/interfaces/userInterfaces";
 
 export const loginInitialValues:ILoginForm = {
@@ -85,4 +86,25 @@ export const createSubjectTopicInitialValues:ICreateSubjectTopic = {
     name: "",
     description: "",
   }]
+}
+
+export const getCreateQuestionsInitialValues = (id:number):ICreateQuestions => {
+  return {
+    questions :[
+      {
+        topicId: id,
+        questionId: Math.random(),
+        question: "",
+        complexity: "easy",
+        answer: {
+          description: "",
+          explanation: "",
+          options: [{
+            description: "",
+            isCorrect: true,
+          }],
+          type: "subjective"
+        }
+      }
+  ]}
 }

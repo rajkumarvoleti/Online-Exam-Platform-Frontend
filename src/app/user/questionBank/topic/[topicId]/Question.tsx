@@ -74,7 +74,7 @@ export default function Question({question}:{question:IQuestionAndAnswer}){
             <p className="optionNumber">A{")"}</p>
             <p>{question.answer.description}</p>
           </Box>}
-          {question.answer.options.map((opt,i) => (
+          {question.answer.type === "multipleChoice" && question.answer.options.map((opt,i) => (
             <Box className="options" key={opt.description}>
               <p className={opt.isCorrect ? "optionNumber correctOption" : "optionNumber"}>{i+1}{")"}</p>
               <p className="ans" dangerouslySetInnerHTML={{__html:opt.description}} />

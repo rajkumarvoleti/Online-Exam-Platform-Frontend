@@ -1,5 +1,7 @@
 import useManageQuestion from "@/hooks/exam/useManageQuestion";
+import { ICreateQuestions } from "@/interfaces/formikInterfaces";
 import { Box, InputLabel, OutlinedInput, SxProps } from "@mui/material";
+import { useFormikContext } from "formik";
 import { useEffect, useState } from "react";
 
 const styles:SxProps = {
@@ -19,20 +21,15 @@ const styles:SxProps = {
   }
 }
 
-export default function FillInTheBlanksComponent() {
+export default function FillInTheBlanksComponent({index}:{index:number}) {
 
-  const [value, setValue] = useState<string>("");
-  const { handleAnswer } = useManageQuestion();
-
-  useEffect(() => {
-    handleAnswer(value);
-  },[value])
+  const {handleChange, values} = useFormikContext<ICreateQuestions>();
 
   return (
     <Box sx={styles}>
       <Box className="inputBox">
         <InputLabel className="label">Answer :</InputLabel>
-        <OutlinedInput onChange={(e:any) => setValue(e.target.value)} className="input" />
+        <OutlinedInput name={`questions[${index}].answer.description`} value={values.questions[index].answer.description} onChange={handleChange} className="input" />
       </Box>
     </Box>
   )

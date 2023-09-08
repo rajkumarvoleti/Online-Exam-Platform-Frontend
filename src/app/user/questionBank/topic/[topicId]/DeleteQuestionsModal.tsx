@@ -15,7 +15,7 @@ const styles: SxProps = {
 export default function DeleteQuestionModal({ handleClose, topicId}: { handleClose: () => void, topicId:number }) {
 
   const { deleteQuestions, loading } = useQuestion();
-  const { selectedQuestions } = useManageQuestions();
+  const { selectedQuestions, removeAllQuestions } = useManageQuestions();
   const [canClose, setCanClose] = useState(false);
 
   useEffect(() => {
@@ -32,6 +32,13 @@ export default function DeleteQuestionModal({ handleClose, topicId}: { handleClo
   useEffect(() => {
     console.log(loading);
   }, [loading])
+
+  useEffect(() => {
+    return () => {
+      removeAllQuestions();
+    }
+  }, [])
+  
   
 
   return (

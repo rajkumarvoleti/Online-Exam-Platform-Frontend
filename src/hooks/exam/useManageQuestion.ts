@@ -1,4 +1,4 @@
-import { IOption } from "@/interfaces/examInterfaces";
+import { IOption, IQuestionAndAnswer } from "@/interfaces/examInterfaces";
 import { IQuestionLevel, IQuestionType } from "@/interfaces/questionInterfaces";
 import { questionAndAnswerAtom } from "@/utils/atoms/questionAtom";
 import { useRecoilState } from "recoil";
@@ -37,6 +37,10 @@ export default function useManageQuestion() {
   const validateMcq = () => {
     const isValid = questionData.answer.options.find(option => option.isCorrect === true);
     return isValid;
+  }
+
+  const handleManySubmit = ({topicId, values}:{topicId:number, values:IQuestionAndAnswer[]}) => {
+    
   }
 
   const handleSubmit = (topicId:number) => {

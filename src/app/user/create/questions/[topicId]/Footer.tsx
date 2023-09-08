@@ -1,3 +1,4 @@
+import { useQuestion } from "@/hooks/exam/useCreateQuestion";
 import useManageQuestion from "@/hooks/exam/useManageQuestion";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import { Button, Card, SxProps } from "@mui/material";
@@ -18,7 +19,7 @@ const styles:SxProps = {
 
 export default function Footer({topicId}:{topicId:number}) {
 
-  const { handleSubmit, loading } = useManageQuestion();
+  const { loading } = useQuestion();
 
   return (
     <Card sx={styles}>
@@ -26,7 +27,7 @@ export default function Footer({topicId}:{topicId:number}) {
       <Button color="success" variant="outlined">Save & Next</Button>
       {loading ? 
       <LoadingButton loading variant="contained" />:
-      <Button onClick={() => handleSubmit(topicId)} color="success" variant="outlined">Save</Button>
+      <Button type="submit" color="success" variant="outlined">Save</Button>
       }
     </Card>
   )

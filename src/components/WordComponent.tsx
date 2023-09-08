@@ -19,6 +19,7 @@ function WordComponent({handleData, value}:{handleData:(data:string)=>void, valu
   if (loaded) {
     return (
       <CKEditor
+        
         editor={ClassicEditor}
         data={value}
         onReady={(editor:any) => {

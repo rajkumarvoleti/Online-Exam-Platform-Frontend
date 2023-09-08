@@ -1,4 +1,5 @@
 import { ISignupOptions } from '@/interfaces/authInterfaces';
+import { IAnswer, IOption, IQuestionAndAnswer } from '@/interfaces/examInterfaces';
 import { ICreateSubjectTopic, ICreateTopic, ILoginForm, IPromoCode, ITestDetailsForm, ITestEvaluationForm, ITestPricingForm, ITestSettingsForm, IUpdatePasswordForm, IUserDetailsForm } from '@/interfaces/formikInterfaces';
 import { IQuestionBank, ISelectedQuestionBank } from '@/interfaces/otherInterfaces';
 import dayjs from 'dayjs';
@@ -29,6 +30,8 @@ const numberRequiredValidation = yup.number().required("This Field is required")
 const positiveIntegerRequiredValidation = yup.number().required("This Field is required").moreThan(-1,"Please use a positive value");
 
 const dateValidation = stringRequiredValidation.notOneOf(["Invalid Date"], "Invalid Time");
+
+const booleanValidation = yup.boolean().required("This field is required");
 
 const promoCodeSchema = yup.object().shape({
   code: stringRequiredValidation,
@@ -153,3 +156,47 @@ export const createSubjectValidationSchema = yup.object({
   description: stringRequiredValidation,
 })
 
+export const optionScehma = yup.object({
+  description:stringRequiredValidation,
+  isCorrect:booleanValidation,
+})
+
+export const optionsSchema = yup.array().of(optionScehma).test(
+  'at-least-one-option',
+  'At least one option must be selected as correct',
+  (options) => {
+    return options?.some((option) => option.isCorrect);
+  }
+)
+.min(1, 'At least one option is required');
+
+export const answerSchema = yup.object({
+  description: yup.lazy((val,options) => {
+    console.log(options.parent);
+    if (options.parent.type === 'multipleChoice') 
+      return yup.string();
+    if (options.parent.type === 'trueOrFalse') 
+      return stringRequiredValidation.oneOf(["true","false"],"Please select either true or false")
+    return stringRequiredValidation;
+  }),
+  explanation: yup.string(),
+  options: yup.lazy((val,options) => {
+    console.log(options.parent);
+    if (options.parent.type === 'multipleChoice') {
+      return optionsSchema;
+    }
+    return yup.array(); // Empty schema for other types
+  }),
+  type: stringRequiredValidation,
+})
+
+
+export const createQuestionValidationScehma = yup.object({
+  question: stringRequiredValidation,
+  complexity: stringRequiredValidation,
+  answer: answerSchema,
+})
+
+export const createQuestionsValidationScehma = yup.object({
+  questions: yup.array().of(createQuestionValidationScehma),
+});

@@ -121,7 +121,11 @@ p.phead {
 }
 
 .ck-content {
-  min-height: 300px;
+  min-height: 200px;
+}
+
+.ck-sticky-panel__content {
+  z-index: 1 !important;
 }
 
 .MuiButton-root {
