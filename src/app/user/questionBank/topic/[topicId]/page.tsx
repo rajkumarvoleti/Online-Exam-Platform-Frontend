@@ -44,6 +44,8 @@ export default function Page({params}:{params:{topicId:string}}) {
   if(results[0].error || results[1].error)
     return <Box className='center' sx={styles}>Something went wrong</Box>
 
+  if(!results[1].data || !results[1].data.topic)
+    return <></>
     
   return (
     <Box sx={styles}>
