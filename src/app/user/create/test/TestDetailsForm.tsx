@@ -1,13 +1,13 @@
 import { Box, Button, CircularProgress, SelectChangeEvent, SxProps } from "@mui/material";
 import Footer from "./Footer";
 import { FieldArray, Form, Formik, useFormikContext } from "formik";
-import { testDetailsInitialValues } from "@/utils/formik/initialValues";
+import { selectedTopicInitialValues, testDetailsInitialValues } from "@/utils/formik/initialValues";
 import { testDetailsValidationSchema } from "@/utils/validationScehma";
 import { FormikInput } from "@/components/formik/FormikInput";
 import { IAutoCompleteOption } from "@/interfaces/inputInterfaces";
 import { useQuery } from "@tanstack/react-query";
 import { getAllQuestionBanksRequest } from "@/api/subject";
-import { IQuestionBank, ISelectedQuestionBank } from "@/interfaces/otherInterfaces";
+import { IQuestionBank, IQuestionBankTopic, ISelectedQuestionBankTopic } from "@/interfaces/otherInterfaces";
 import TestDetailsTable from "./TestDetailsTable";
 import CircleIcon from '@mui/icons-material/Circle';
 import useCreateTest from "@/hooks/useCreateTest";
@@ -81,7 +81,7 @@ function FormikForm() {
 
   const { data, isLoading, error } = useQuery(["questionBanks"], getAllQuestionBanksRequest);
   const {handleDetailsForm, publishAttempted, validateForms, handleNext} = useCreateTest();
-  const {values, resetForm, submitForm, isValid} = useFormikContext<ITestDetailsForm>();
+  const {values, resetForm, submitForm, isValid, setFieldValue} = useFormikContext<ITestDetailsForm>();
 
   useEffect(() => {
     handleDetailsForm(values);
@@ -93,15 +93,16 @@ function FormikForm() {
     }
     if(publishAttempted) submit();
   }, [publishAttempted])
-  
+
+  const questionBanks:IQuestionBank[] = data?.questionBanks;
 
   if(isLoading)
     return <Box className="form center"><CircularProgress /></Box>
 
-  if(error)
+  if(error || !questionBanks)
     return <Box className="center form">Something went wrong</Box>
 
-  const questionBanks:IQuestionBank[] = data.questionBanks;
+
   const options:IAutoCompleteOption[] = questionBanks?.map(bank => ({id: JSON.stringify(bank.id), label: bank.name}));
   
   return (
@@ -126,47 +127,28 @@ function FormikForm() {
         disabled
         value={values.totalQuestions}
       />
-      <FieldArray name="questionBanks">
-      {({ push, remove }:{push: (obj: ISelectedQuestionBank) => void, remove: (index: number) => void}) => (
-        <>
-        <FormikInput
-          push={(id:number) => {
-            const newBank = questionBanks.find(bank => bank.id === id);
-            if(!newBank) return;
-            const newSelectedBank:ISelectedQuestionBank = {...newBank, selectedEasyQuestionsCount: 0, selectedHardQuestionsCount: 0, selectedMediumQuestionsCount: 0, selectedTotalQuestions: 0};
-            push(newSelectedBank);
-          }}
-          remove={(id:number) => {
-            const bank = values.questionBanks.find(bank => bank.id === id);
-            if(!bank) return;
-            const index = values.questionBanks.indexOf(bank);
-            remove(index);
-          }}
-          name="questionBankNames"
-          label="Select Question Bank"
-          type="multiSelect"
-          options={options}
-          placeholder=""
-          value={values.questionBanks.map(bank => JSON.stringify(bank.id))}
-          />
-          <TestDetailsTable/>
-        </>
+      <FieldArray name="questionBankTopics">
+      {({push}:{push: (obj: ISelectedQuestionBankTopic) => void}) => (
+        <Box className="tableContainer">
+          <TestDetailsTable questionBanks={questionBanks}/>
+          <Button variant="outlined" onClick={() => push({...selectedTopicInitialValues, uuid:Math.random()})}>+ Add</Button>
+        </Box>
         )}
         </FieldArray>
         <Box className="details">
+          <p className="text">Questions Available For Each Selected Question Bank</p>
           <Box className="complexityDetails">
-            <CircleIcon className="icon easy" />
-            <p className="text easy">Easy</p>
+            <CircleIcon className="icon hard" />
+            <p className="text hard">Hard</p>
           </Box>
           <Box className="complexityDetails">
             <CircleIcon className="icon medium" />
             <p className="text medium">Medium</p>
           </Box>
           <Box className="complexityDetails">
-            <CircleIcon className="icon hard" />
-            <p className="text hard">Hard</p>
+            <CircleIcon className="icon easy" />
+            <p className="text easy">Easy</p>
           </Box>
-          <p className="text">Questions Available For Each Selected Question Bank</p>
         </Box>
         <Box className="details">
           <p className="text"><span>Note :</span> Enter Atleast One Question in Each Selected Question Bank</p>

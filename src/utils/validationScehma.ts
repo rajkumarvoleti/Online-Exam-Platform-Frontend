@@ -1,7 +1,6 @@
 import { ISignupOptions } from '@/interfaces/authInterfaces';
-import { IAnswer, IOption, IQuestionAndAnswer } from '@/interfaces/examInterfaces';
-import { ICreateSubjectTopic, ICreateTopic, ILoginForm, IPromoCode, ITestDetailsForm, ITestEvaluationForm, ITestPricingForm, ITestSettingsForm, IUpdatePasswordForm, IUserDetailsForm } from '@/interfaces/formikInterfaces';
-import { IQuestionBank, ISelectedQuestionBank } from '@/interfaces/otherInterfaces';
+import { ICreateTopic, ILoginForm, IUpdatePasswordForm } from '@/interfaces/formikInterfaces';
+import { ISelectedQuestionBankTopic } from '@/interfaces/otherInterfaces';
 import dayjs from 'dayjs';
 import * as yup from 'yup';
 import 'yup-phone';
@@ -43,7 +42,7 @@ const testTypeSchema = yup
 .oneOf(['private', 'open'], 'Invalid test type')
 .required('Test type is required');
 
-const getQuestionBankValidation = (bank:IQuestionBank) => yup.object().shape({
+const getQuestionBankTopicsValidation = (bank:ISelectedQuestionBankTopic) => yup.object().shape({
   easyQuestionsCount: numberRequiredValidation,
   mediumQuestionsCount: numberRequiredValidation,
   hardQuestionsCount: numberRequiredValidation,
@@ -51,13 +50,13 @@ const getQuestionBankValidation = (bank:IQuestionBank) => yup.object().shape({
   selectedMediumQuestionsCount: numberRequiredValidation.max(bank.mediumQuestionsCount,"Insufficient Questions"),
   selectedHardQuestionsCount: numberRequiredValidation.max(bank.hardQuestionsCount,"Insufficient Questions"),
   totalQuestions: numberRequiredValidation,
-  id: numberRequiredValidation,
-  name: stringRequiredValidation,
+  id: yup.number().required("This field is required").min(1, "This field is required"),
+  name: yup.string(),
 })
 
 const questionBanksValidation = yup.array().of(
   yup.lazy((value,option) => {
-    return getQuestionBankValidation(value);
+    return getQuestionBankTopicsValidation(value);
   })
 )
 
@@ -85,7 +84,7 @@ export const testDetailsValidationSchema = yup.object({
   testName: stringRequiredValidation,
   testDescription: stringRequiredValidation,
   totalQuestions: numberRequiredValidation,
-  questionBanks: questionBanksValidation,
+  questionBankTopics: questionBanksValidation,
 })
 
 export const testPricingValidationSchema = yup.object({
