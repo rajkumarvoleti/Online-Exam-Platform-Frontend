@@ -10,7 +10,7 @@ const styles:SxProps = {
   display: "flex",
   alignItems: "center",
   gap :"20px",
-  ".searchBar":{
+  ".filter":{
     ml: "auto",
   },
   h4:{
@@ -36,8 +36,8 @@ export default function Header() {
     <Box sx={styles}>
       <h4>Total Test: 07</h4>
       <Button onClick={handleClick} variant="outlined"><AddIcon fontSize="small" /> <p className="buttonText">Create Test</p></Button>
-      <SearchBarComp className="searchBar" />
-      <FilterButton variant="outlined" />
+      {/* <SearchBarComp width="100%"  className="searchBar" /> */}
+      <FilterButton className="filter" variant="outlined" />
     </Box>
   )
 }
