@@ -155,9 +155,9 @@ export default function TestDetailsTable({questionBanks}:{questionBanks:IQuestio
               <TableCell className="banks">Selected Chapters</TableCell>
               <TableCell>Actual Questions</TableCell>
               <TableCell>Choosed Questions</TableCell>
-              <TableCell>Easy</TableCell>
-              <TableCell>Medium</TableCell>
               <TableCell>Hard</TableCell>
+              <TableCell>Medium</TableCell>
+              <TableCell>Easy</TableCell>
               </>}
           </TableRow>
         </TableHead>

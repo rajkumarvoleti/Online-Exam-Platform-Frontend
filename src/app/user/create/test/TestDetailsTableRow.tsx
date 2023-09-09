@@ -25,11 +25,17 @@ const styles:SxProps = {
 
 export default function TestDetailsTableRow({selected, index, questionBanks, handleCheckBox}:{index:number, questionBanks:IQuestionBank[], handleCheckBox: (uuid:number) => (e: ChangeEvent<HTMLInputElement>) => void, selected:number[]}) {
 
+  const {values, setFieldValue, errors, touched} = useFormikContext<ITestDetailsForm>();
+
+  const prevSelectedTopic = values.questionBankTopics[index];
+  const prevSelectedTopicOption:IAutoCompleteOption | null = prevSelectedTopic ? {id: JSON.stringify(prevSelectedTopic.id), label: prevSelectedTopic.name} : null; 
+  const prevSelectedSubject = prevSelectedTopic && questionBanks.find(bank => bank.topics.map(topic => topic.id).includes(prevSelectedTopic.id));
+  const prevSelectedSubjectOption:IAutoCompleteOption | null = prevSelectedSubject ? {id: JSON.stringify(prevSelectedSubject.id), label:prevSelectedSubject.name} : null;
+
   const [questionBankOptions, setQuestionBankOptions] = useState<IAutoCompleteOption[]>([]);
   const [topicOptions, setTopicOptions] = useState<IAutoCompleteOption[]>([]);
-  const [selectedBank, setSelectedBank] = useState<IAutoCompleteOption | null>(null);
-  const [selectedTopic, setSelectedTopic] = useState<IAutoCompleteOption | null>(null);
-  const {values, setFieldValue, errors, touched} = useFormikContext<ITestDetailsForm>();
+  const [selectedBank, setSelectedBank] = useState<IAutoCompleteOption | null>(prevSelectedSubjectOption);
+  const [selectedTopic, setSelectedTopic] = useState<IAutoCompleteOption | null>(prevSelectedTopicOption);
   const topic:ISelectedQuestionBankTopic = values.questionBankTopics[index];
 
   const handleRowData = async (data:ISelectedQuestionBankTopic) => {
@@ -42,11 +48,20 @@ export default function TestDetailsTableRow({selected, index, questionBanks, han
   }, [questionBanks]);
 
   useEffect(() => {
-    setSelectedTopic(prev => null);
-    setTopicOptions(prev => []);
-
-    if(!selectedBank)
+    if(!selectedBank){
+      setSelectedTopic(prev => null);
+      setTopicOptions(prev => []);
       return;
+    }
+
+    const bank = questionBanks.find(bank => bank.id === parseInt(selectedBank.id));
+    if(selectedTopic && bank && bank.topics.map(topic => topic.id).includes(parseInt(selectedTopic.id,10))){
+      return;
+    }
+    else{
+      setSelectedTopic(prev => null);
+      setTopicOptions(prev => []);
+    }
 
     const newTopics = questionBanks.find(bank => bank.id === parseInt(selectedBank.id,10));
     if(!newTopics) return;
@@ -66,7 +81,7 @@ export default function TestDetailsTableRow({selected, index, questionBanks, han
       handleData({...selectedTopicInitialValues,uuid: topic.uuid});
     else{
       const newData = questionBanks.find(bank => bank.id === parseInt(selectedBank.id,10))?.topics.find(topic => topic.id === parseInt(selectedTopic.id,10)); 
-      if(!newData)
+      if(!newData || values.totalQuestions !== 0)
         return;
       handleData({...newData,uuid:topic.uuid});
     }
