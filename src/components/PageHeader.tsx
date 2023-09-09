@@ -2,8 +2,8 @@ import { Card, SxProps } from "@mui/material";
 
 const styles:SxProps = {
   margin: 0,
-  padding: "10px",
   display: "flex",
+  pl: "10px",
 }
 
 const urls = {
