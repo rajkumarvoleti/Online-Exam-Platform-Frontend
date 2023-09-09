@@ -10,8 +10,14 @@ import { useUpdateUser } from "@/hooks/auth/useUpdateUser";
 
 const styles:SxProps = {
   margin: "20px",
+  width: "66vw",
+
+  // width:"100%",
   ".customInput":{
     width: "270px",
+    ".input":{
+      borderRadius:"5px"
+    }
   }
 }
 

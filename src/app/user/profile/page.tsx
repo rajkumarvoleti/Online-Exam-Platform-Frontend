@@ -17,14 +17,15 @@ const styles:SxProps = {
     p: "0",
   },
   ".container":{
-    display:"grid",
-    gridTemplateColumns: "1fr 4fr",
-    ".options,":{
+    display: "flex",
+    // height: "72vh",
+        ".options":{
       margin:" 7px",
-  
+      width:"200px",
+      flexShrink: "0",
+      height: "72vh",
     },
   },
-  
   ".forms":{
     padding: "6px",
     margin:"6px",
@@ -44,6 +45,7 @@ const styles:SxProps = {
     backgroundColor: "#fff",
     color: "#2200A5",
     border: "2px solid #C2E830",
+    padding:"12PX"
   },
   ".basicForm":{
     margin:"10px",
