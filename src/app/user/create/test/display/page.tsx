@@ -1,8 +1,11 @@
 "use client"
 
-import { Box, SxProps } from "@mui/material";
+import { Box, CircularProgress, SxProps } from "@mui/material";
 import Header from "./Header";
 import TestTable from "./TestTable";
+import { useQuery } from "@tanstack/react-query";
+import { getAllExamsRequest } from "@/api/exam";
+import { IExam } from "@/interfaces/examInterfaces";
 
 const styles:SxProps = {
   backgroundColor: "white",
@@ -12,11 +15,23 @@ const styles:SxProps = {
 }
 
 export default function Page() {
+
+  const {data, error, isLoading} = useQuery(["exams"],async () => await getAllExamsRequest());
+
+
+  if(error || !data?.exams)
+    return <Box sx={styles}>error</Box>
+
+  if(isLoading)
+    return <Box className="center" sx={styles}><CircularProgress /></Box>
+
+  const exams:IExam[] = data.exams;
+
   return (
     <Box sx={styles}>
       <Header />
       <Box>
-        <TestTable />
+        <TestTable exams={exams} />
       </Box>
     </Box>
   )

@@ -80,7 +80,7 @@ export default function SideBar() {
     setSubjects(newSubjects);
   }, [query, data])
   
-  if(error)
+  if(error || !data?.subjects)
     return <Card className='center' sx={styles}>Something went wrong</Card>
 
   if (isLoading)

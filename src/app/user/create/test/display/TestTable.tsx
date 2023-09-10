@@ -1,4 +1,8 @@
-import { Checkbox, SxProps, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { IExam } from "@/interfaces/examInterfaces";
+import { Box, Checkbox, IconButton, SxProps, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { ChangeEvent, useState } from "react";
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 const styles:SxProps = {
   ".MuiTableCell-root":{
@@ -11,43 +15,87 @@ const styles:SxProps = {
   },
   ".MuiCheckbox-root": {
     color: "#0B5FFF"
+  },
+  ".deleteCell":{
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  ".checkBoxCell":{
+    width: "50px",
   }
 } 
 
-export default function TestTable() {
+export default function TestTable({exams}:{exams:IExam[]}) {
+
+  const [selected, setSelected] = useState<(number|undefined)[]>([]);
+
+  const handleSelectAll = () => {
+    setSelected(prev => exams.map(exam => exam.id));
+  }
+  
+  const handleRemoveAll = () => {
+    setSelected(prev => []);
+  }
+
+  const handleHeaderCheckBox = (e:ChangeEvent<HTMLInputElement>) => {
+    const {checked} = e.target;
+    if(checked) handleSelectAll();
+    else handleRemoveAll();
+  }
+
+  const handleCheckBox = (id:number) => {
+    return (e:ChangeEvent<HTMLInputElement>) => {
+      const {checked} = e.target;
+      if(checked) setSelected(prev => Array.from(new Set([...prev,id])));
+      else setSelected(prev => prev.filter(val => val !== id));
+    }
+  }
+
+  const handleRemove = () => {
+    console.log("removing")
+  }
+
   return (
     <TableContainer>
     <Table sx={styles}>
         <TableHead>
           <TableRow>
-            <TableCell><Checkbox color="primary" size="small" /></TableCell>
+            {selected.length === 0 ?
+            <>
+            <TableCell className="checkBoxCell"><Checkbox checked={selected.length !== 0 && selected.length === exams.length} onChange={handleHeaderCheckBox} color="primary" size="small" /></TableCell>
             <TableCell>Test Name</TableCell>
             <TableCell>Test Description</TableCell>
             <TableCell>Total Questions In Test</TableCell>
             <TableCell>Test Status</TableCell>
             <TableCell>No of attempts In Test</TableCell>
             <TableCell>Total Students Attempt</TableCell>
+            </> :
+            <>
+            <TableCell className="checkBoxCell"><Checkbox checked={selected.length !== 0 && selected.length === exams.length} onChange={handleHeaderCheckBox} color="primary" size="small" /></TableCell>
+            <TableCell colSpan={7}>
+              <Box className="deleteCell">
+                <p>{selected.length} options selected</p>
+                <IconButton onClick={handleRemove}>
+                  <DeleteIcon color="error" />
+                </IconButton>
+              </Box>
+            </TableCell>
+            </>
+            }
           </TableRow>
         </TableHead>
         <TableBody>
-          <TableRow>
-            <TableCell><Checkbox color="primary" size="small" /></TableCell>
-            <TableCell>RPA -1</TableCell>
-            <TableCell>Observation</TableCell>
-            <TableCell>30</TableCell>
-            <TableCell>Approved</TableCell>
-            <TableCell>05</TableCell>
-            <TableCell>100</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell><Checkbox color="primary" size="small" /></TableCell>
-            <TableCell>RPA -1</TableCell>
-            <TableCell>Observation</TableCell>
-            <TableCell>30</TableCell>
-            <TableCell>Approved</TableCell>
-            <TableCell>05</TableCell>
-            <TableCell>100</TableCell>
-          </TableRow>
+          {exams.map(exam => (
+            (exam.id && <TableRow key={exam.id}>
+                <TableCell className="checkBoxCell"><Checkbox checked={selected.includes(exam.id)} onChange={handleCheckBox(exam.id)} color="primary" size="small" /></TableCell>
+                <TableCell>{exam.name}</TableCell>
+                <TableCell>{exam.description}</TableCell>
+                <TableCell>{exam.totalQuestions}</TableCell>
+                <TableCell>Pending</TableCell>
+                <TableCell>0</TableCell>
+                <TableCell>0</TableCell>
+              </TableRow>)
+          ))}
         </TableBody>
     </Table>
     </TableContainer>

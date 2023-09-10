@@ -43,7 +43,6 @@ const styles:SxProps = {
     fontSize: "16px",
     color: "#000",
     height: "50px",
-    width:"100px",
     border: "1px solid #B9B9B9",
     textAlign: "center",
     verticalAlign: "middle",
