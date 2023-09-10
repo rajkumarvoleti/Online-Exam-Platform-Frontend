@@ -134,8 +134,8 @@ export const testSettingsValidationScehma = yup.object({
   totalQuestions: numberRequiredValidation,
   negativeMarks: positiveIntegerRequiredValidation,
   passPercentage: numberRequiredValidation.lessThan(101,"Please enter a valid value"),
-  resultFormat: stringRequiredValidation,
-  testDeclaration: stringRequiredValidation,
+  resultFormat: yup.string(),
+  testDeclaration: yup.string(),
 })
 
 export const createTopicValidationScehma: yup.ObjectSchema<ICreateTopic> = yup.object({

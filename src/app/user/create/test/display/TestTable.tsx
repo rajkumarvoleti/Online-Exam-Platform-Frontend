@@ -2,8 +2,9 @@ import { IExam } from "@/interfaces/examInterfaces";
 import { Box, Checkbox, IconButton, SxProps, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { ChangeEvent, useEffect, useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import useCreateTest from "@/hooks/useCreateTest";
-
+import { useRouter } from "next-nprogress-bar";
 
 const styles:SxProps = {
   ".MuiTableCell-root":{
@@ -30,6 +31,7 @@ export default function TestTable({exams}:{exams:IExam[]}) {
 
   const [selected, setSelected] = useState<(number|undefined)[]>([]);
   const {handleDelete} = useCreateTest();
+  const router = useRouter();
 
   useEffect(() => {
     setSelected([]);
@@ -63,6 +65,10 @@ export default function TestTable({exams}:{exams:IExam[]}) {
     handleDelete(filteredArray);
   }
 
+  const handleEdit = () => {
+    router.push(`/user/edit/test/${selected[0]}`);
+  }
+
   return (
     <TableContainer>
     <Table sx={styles}>
@@ -83,6 +89,9 @@ export default function TestTable({exams}:{exams:IExam[]}) {
             <TableCell colSpan={7}>
               <Box className="deleteCell">
                 <p>{selected.length} options selected</p>
+                {selected.length === 1 && <IconButton onClick={handleEdit}>
+                  <EditIcon color="error" />
+                </IconButton>}
                 <IconButton onClick={handleRemove}>
                   <DeleteIcon color="error" />
                 </IconButton>
