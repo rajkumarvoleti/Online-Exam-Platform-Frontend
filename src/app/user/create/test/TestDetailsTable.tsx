@@ -1,9 +1,13 @@
 import { FormikInput } from "@/components/formik/FormikInput";
 import { ITestDetailsForm } from "@/interfaces/formikInterfaces";
-import { ISelectedQuestionBank } from "@/interfaces/otherInterfaces";
-import { Box, Paper, SxProps, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { IAutoCompleteOption } from "@/interfaces/inputInterfaces";
+import { IQuestionBank, ISelectedQuestionBankTopic } from "@/interfaces/otherInterfaces";
+import { Autocomplete, Box, Checkbox, IconButton, Paper, SxProps, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
 import { useFormikContext } from "formik";
-import { useEffect } from "react";
+import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
+import TestDetailsTableRow from "./TestDetailsTableRow";
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 const styles:SxProps = {
   ".complexityCount":{
@@ -52,23 +56,50 @@ const styles:SxProps = {
   ".banks":{
     width:"150px",
     textAlign: "left",
+  },
+  ".deleteCell":{
+    display: "flex",
+    justifyContent: "space-between",
   }
 }
 
-export default function TestDetailsTable(){
+export default function TestDetailsTable({questionBanks}:{questionBanks:IQuestionBank[]}){
 
   const {values, setFieldValue} = useFormikContext<ITestDetailsForm>();
+  const [selected, setSelected] = useState<number[]>([]);
+
+  const handleCheckBox = (uuid:number) => {
+    return (e:ChangeEvent<HTMLInputElement>) => {
+      const {checked} = e.target;
+      if(checked) setSelected(prev => Array.from(new Set([...prev,uuid])));
+      else setSelected(prev => prev.filter(val => val !== uuid));
+    }
+  }
+
+  const handleSelectAll = () => {
+    setSelected(prev => values.questionBankTopics.map(topic => topic.uuid));
+  }
+
+  const handleRemoveAll = () => {
+    setSelected(prev => []);
+  }
+
+  const handleAll = (e:ChangeEvent<HTMLInputElement>) => {
+    const {checked} = e.target;
+    if(checked) handleSelectAll();
+    else handleRemoveAll();
+  }
 
   const handleTotalQuestions = async () => {
-    const sum = values.questionBanks.map(bank => bank.selectedTotalQuestions).filter(val => typeof val === "number" && val > 0).reduce((prev,curr) => prev + curr, 0);
+    const sum = values.questionBankTopics.map(topic => topic.selectedTotalQuestions).filter(val => typeof val === "number" && val > 0).reduce((prev,curr) => prev + curr, 0);
     await setFieldValue("totalQuestions",sum);
   }
 
   const handleSelectedTotalQuestions = async () => {
     await Promise.all(
-      values.questionBanks.map(async(bank,i) => {
+      values.questionBankTopics.map(async(topic,i) => {
         const sum = getTotalSelectedQuestions(i);
-        await setFieldValue(`questionBanks[${i}].selectedTotalQuestions`,sum);
+        await setFieldValue(`questionBankTopics[${i}].selectedTotalQuestions`,sum);
       })
     )
   }
@@ -76,24 +107,27 @@ export default function TestDetailsTable(){
   useEffect(() => {
     handleSelectedTotalQuestions();
     handleTotalQuestions();
-  }, [values.questionBanks])
+  }, [values.questionBankTopics])
   
-  
-
   const getTotalSelectedQuestions = (index:number) => {
-    const bank = values.questionBanks[index];
-    const easyCount = bank.selectedEasyQuestionsCount;
-    const mediumCount = bank.selectedMediumQuestionsCount;
-    const hardCount = bank.selectedHardQuestionsCount;
+    const topic = values.questionBankTopics[index];
+    const easyCount = topic.selectedEasyQuestionsCount;
+    const mediumCount = topic.selectedMediumQuestionsCount;
+    const hardCount = topic.selectedHardQuestionsCount;
     return Math.floor([easyCount, mediumCount, hardCount].filter(val => typeof val === "number" && val > 0).reduce((prev, curr) => prev + curr, 0));
   }
 
-  const getTotalByField = (field:keyof ISelectedQuestionBank) => {
-    return values.questionBanks.map(bank => bank[field]).filter(val => typeof val === "number" && val > 0).reduce((prev,curr) => {
+  const getTotalByField = (field:keyof ISelectedQuestionBankTopic) => {
+    return values.questionBankTopics.map(topic => topic[field]).filter(val => typeof val === "number" && val > 0).reduce((prev,curr) => {
       if(typeof prev === "number" && typeof curr === "number")
         return prev + Math.floor(curr);
       return prev;
     },0)
+  }
+
+  const handleRemove = async() => {
+    await setFieldValue("questionBankTopics",values.questionBankTopics.filter(topic => !selected.includes(topic.uuid)));
+    setSelected(prev => []);
   }
   
   return (
@@ -102,68 +136,44 @@ export default function TestDetailsTable(){
       <Table>
         <TableHead>
           <TableRow  className="headingRow">
-            <TableCell className="banks">Selected Question Banks</TableCell>
-            <TableCell>Actual Questions</TableCell>
-            <TableCell>Choosed Questions</TableCell>
-            <TableCell>Easy</TableCell>
-            <TableCell>Medium</TableCell>
-            <TableCell>Hard</TableCell>
+            {selected.length !== 0 ?
+              <>
+              <TableCell><Checkbox size="small" checked={selected.length !== 0 && selected.length === values.questionBankTopics.length} onChange={handleAll} /></TableCell>
+              <TableCell colSpan={7}>
+              <Box className="deleteCell">
+                <p>{selected.length} options selected</p>
+                <IconButton onClick={handleRemove}>
+                  <DeleteIcon color="error" />
+                </IconButton>
+              </Box>
+            </TableCell>
+              </>
+            :
+              <>
+              <TableCell><Checkbox size="small" checked={selected.length !== 0 && selected.length === values.questionBankTopics.length} onChange={handleAll} /></TableCell>
+              <TableCell className="banks">Selected Question Banks</TableCell>
+              <TableCell className="banks">Selected Chapters</TableCell>
+              <TableCell>Actual Questions</TableCell>
+              <TableCell>Choosed Questions</TableCell>
+              <TableCell>Hard</TableCell>
+              <TableCell>Medium</TableCell>
+              <TableCell>Easy</TableCell>
+              </>}
           </TableRow>
         </TableHead>
         <TableBody>
-          {values.questionBanks.map((questionBank, index) => (
-            <TableRow key={questionBank.id}>
-              <TableCell sx={{pl:"30px"}} className="banks" size="small">{questionBank.name}</TableCell>
-              <TableCell className="questionsCount" size="small">
-                <Box className="complexityCount center">
-                  {questionBank.totalQuestions}
-                  <p className="easy">({questionBank.easyQuestionsCount},</p>
-                  <p className="medium">{questionBank.mediumQuestionsCount},</p>
-                  <p className="hard">{questionBank.hardQuestionsCount})</p>
-                </Box>
-                </TableCell>
-              <TableCell size="small">
-                <FormikInput
-                  disabled
-                  type="number"
-                  name={`questionBanks[${index}].selectedTotalQuestions`}
-                  placeholder=""
-                  value={values.questionBanks[index].selectedTotalQuestions}
-                />
-              </TableCell>
-              <TableCell align="center" size="small">
-                <FormikInput
-                  type="number"
-                  name={`questionBanks[${index}].selectedEasyQuestionsCount`}
-                  placeholder=""
-                  value={values.questionBanks[index].selectedEasyQuestionsCount}
-                />
-              </TableCell>
-              <TableCell align="center" size="small">
-                <FormikInput
-                  type="number"
-                  name={`questionBanks[${index}].selectedMediumQuestionsCount`}
-                  placeholder=""
-                  value={values.questionBanks[index].selectedMediumQuestionsCount}
-                />
-              </TableCell >
-              <TableCell align="center" size="small">
-                <FormikInput
-                  type="number"
-                  name={`questionBanks[${index}].selectedHardQuestionsCount`}
-                  placeholder=""
-                  value={values.questionBanks[index].selectedHardQuestionsCount}
-                />
-              </TableCell>
-            </TableRow>
+          {values.questionBankTopics.map((topic, index) => (
+            <TestDetailsTableRow selected={selected} handleCheckBox={handleCheckBox} questionBanks={questionBanks} key={index} index={index} />
           ))}
-          <TableRow key={"total"}>
-              <TableCell sx={{pl:"30px"}} className="banks" size="small">Total : {values.questionBanks.length}</TableCell>
+          <TableRow>
+              <TableCell></TableCell>
+              <TableCell sx={{pl:"30px"}} className="banks" size="small">Total : {values.questionBankTopics.filter(topic => topic.id !== -1).length}</TableCell>
+              <TableCell sx={{pl:"30px"}} className="banks" size="small">Total : {values.questionBankTopics.filter(topic => topic.id !== -1).length}</TableCell>
               <TableCell size="small">{getTotalByField("totalQuestions")}</TableCell>
               <TableCell align="center" size="small">{getTotalByField("selectedTotalQuestions")}</TableCell>
-              <TableCell align="center" size="small">{getTotalByField("selectedEasyQuestionsCount")}</TableCell>
-              <TableCell align="center" size="small">{getTotalByField("selectedMediumQuestionsCount")}</TableCell >
               <TableCell align="center" size="small">{getTotalByField("selectedHardQuestionsCount")}</TableCell>
+              <TableCell align="center" size="small">{getTotalByField("selectedMediumQuestionsCount")}</TableCell >
+              <TableCell align="center" size="small">{getTotalByField("selectedEasyQuestionsCount")}</TableCell>
             </TableRow>
         </TableBody>
       </Table>

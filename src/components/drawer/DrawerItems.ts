@@ -27,7 +27,7 @@ export const drawerItems:IDrawerListItem[] = [
         Icon: TestIcon,
         Text: "Test",
         Index: "3,1",
-        href: "/create/test"
+        href: "/create/test/display"
       },
       {
         Icon: QuestionBankIcon,

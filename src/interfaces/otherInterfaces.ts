@@ -1,4 +1,3 @@
-
 export interface ICountry {
   id: string,
   label: string 
@@ -9,7 +8,7 @@ export interface ITimeZone {
   label: string
 }
 
-export interface IQuestionBank {
+export interface IQuestionBankTopic {
   id: number,
   name: string,
   totalQuestions: number,
@@ -17,10 +16,16 @@ export interface IQuestionBank {
   mediumQuestionsCount: number,
   hardQuestionsCount: number,
 }
-
-export interface ISelectedQuestionBank extends IQuestionBank {
+export interface ISelectedQuestionBankTopic extends IQuestionBankTopic {
+  uuid: number,
   selectedTotalQuestions: number
   selectedEasyQuestionsCount: number
   selectedMediumQuestionsCount: number
   selectedHardQuestionsCount: number
+}
+
+export interface IQuestionBank {
+  id: number,
+  name: string,
+  topics: ISelectedQuestionBankTopic[],
 }

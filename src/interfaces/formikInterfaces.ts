@@ -1,5 +1,5 @@
 import { IQuestionAndAnswer } from "./examInterfaces"
-import { ICountry, IQuestionBank, ISelectedQuestionBank, ITimeZone } from "./otherInterfaces"
+import { ICountry, IQuestionBank, ISelectedQuestionBankTopic, ITimeZone } from "./otherInterfaces"
 
 export interface ILoginForm {
   email: string,
@@ -37,7 +37,7 @@ export interface ITestDetailsForm {
   testName: string
   testDescription: string
   totalQuestions: number
-  questionBanks: ISelectedQuestionBank[],
+  questionBankTopics: ISelectedQuestionBankTopic[],
 }
 
 export interface ITestEvaluationForm {

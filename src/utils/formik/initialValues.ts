@@ -1,5 +1,6 @@
 import { IQuestionAndAnswer } from "@/interfaces/examInterfaces";
 import { ICreateQuestions, ICreateSubjectTopic, ILoginForm, ISignupForm, ITestDetailsForm, ITestEvaluationForm, ITestPricingForm, ITestSettingsForm, IUpdatePasswordForm, IUserDetailsForm } from "@/interfaces/formikInterfaces";
+import { ISelectedQuestionBankTopic } from "@/interfaces/otherInterfaces";
 import { IUser } from "@/interfaces/userInterfaces";
 
 export const loginInitialValues:ILoginForm = {
@@ -46,12 +47,25 @@ export const updatePasswordInitialValues:IUpdatePasswordForm = {
   confirmNewPassword: "",
 }
 
+export const selectedTopicInitialValues:ISelectedQuestionBankTopic = {
+  uuid: Math.random(),
+  easyQuestionsCount: 0,
+  hardQuestionsCount: 0,
+  id: -1,
+  mediumQuestionsCount: 0,
+  name: "",
+  selectedEasyQuestionsCount: 0,
+  selectedHardQuestionsCount: 0,
+  selectedMediumQuestionsCount: 0,
+  selectedTotalQuestions: 0,
+  totalQuestions: 0,
+}
+
 export const testDetailsInitialValues:ITestDetailsForm = {
   testName: "",
   testDescription: "",
   totalQuestions: 0,
-  questionBanks: [],
-
+  questionBankTopics: [],
 }
 
 export const testPricingInitialValues:ITestPricingForm = {
