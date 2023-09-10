@@ -21,7 +21,7 @@ export default function SearchBarComp({width, height, className, setQuery}: {wid
 
   return (
     <Box sx={styles} className={className}>
-      <SearchBar onSearch={() => {}} onChange={handleSearch} width={width} height={height} className="search" />
+      {/* <SearchBar onSearch={() => {}} onChange={handleSearch} width={width} height={height} className="search" /> */}
     </Box>
   )
 }
