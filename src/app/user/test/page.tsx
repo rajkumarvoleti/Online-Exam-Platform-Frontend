@@ -42,7 +42,7 @@ export default function Page(){
 
   const tabs = ["Start Now","Completed" ,"Coming Soon"];
 
-  if(error || !data.exams)
+  if(error || !data?.exams)
     return <Box sx={styles}>error</Box>
   
   if(isLoading)
