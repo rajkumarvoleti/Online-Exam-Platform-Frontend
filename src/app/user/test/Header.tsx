@@ -18,11 +18,15 @@ const styles:SxProps = {
   ".total":{
     margin: 0,
     color: "#272727",
-    fontSize: "24px",
+    fontSize: "22px",
     fontWeight: "500",
     lineHeight: "24.542px",
     pr: "40px",
   },
+  ".filterBtn":{
+    border:"1px solid #A6BED1",
+    height:"30px",
+  }
 }
 
 export default function Header({totalExams}:{totalExams:number}) {
@@ -31,11 +35,11 @@ export default function Header({totalExams}:{totalExams:number}) {
     <Card sx={styles}>
       <Box className="container container1">
         <h6 className="total">Total Test: {totalExams}</h6>
-        <Button size="small" variant="outlined">+ Create Test</Button>
+        {/* <Button size="small" variant="outlined" className="createBtn">+ Create Test</Button> */}
       </Box>
       <Box className="container container2">
         <SearchBarComp />
-        <FilterButton/>
+        <FilterButton  className="filterBtn"/>
         <OptionsMenu/>
       </Box>
     </Card>

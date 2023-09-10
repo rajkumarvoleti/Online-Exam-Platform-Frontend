@@ -4,9 +4,11 @@ import Topic from "./Topic";
 
 const styles:SxProps = {
 borderRadius:"0px",
-  minHeight: "80vh",
+  // minHeight: "80vh",
   display: "flex",
-  flexWrap: "wrap",
+  flexDirection:"row",
+    justifyContent: "flex start !important",
+    flexWrap: "wrap",
   gap: "20px",
   alignItems: "flex-start",
   padding: "20px",
@@ -21,8 +23,7 @@ borderRadius:"0px",
     },
     display: "flex",
     flexDirection:"column",
-    justifyContent: "flex start",
-    
+    justifyContent:"flex-start",
     width: "219px",
     height: "78px",
     borderRadius: "10px",
