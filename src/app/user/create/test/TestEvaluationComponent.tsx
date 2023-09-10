@@ -6,22 +6,25 @@ import { useFormikContext } from 'formik';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 const styles:SxProps = {
-  h4:{
+  h3:{
     color: "#000",
     fontSize: "20px",
     fontWeight: "600",
-    mt: "40px",
+    mt: "20px",
   },
   ".form":{
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "space-between",
-    gap: "15px",
+    gap: "5px",
     label:{
       m: 0,
+      fontSize:"14px",
+      color:"#5B5B5B",
     },
     ".input":{
-      width: "160px",
+      width: "185px",
+      borderRadius:"5px",
     },
 
   }
@@ -42,7 +45,7 @@ export default function TestEvaluationComponent() {
 
   return (
     <Box sx={styles}>
-      <h4>Test Evaluation</h4>
+      <h3>Test Evaluation</h3>
       <Box className="form">
         <FormikInput
           name="totalQuestions"

@@ -1,5 +1,5 @@
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, IconButton, SxProps } from "@mui/material";
-import RoboImage from '@/assets/common/roboImage.png';
+import RoboImage from '@/assets/common/download.svg';
 import Image from "next/image";
 import { useState } from "react";
 import { ISubject } from "@/interfaces/examInterfaces";
@@ -11,29 +11,53 @@ import EditDeleteOptionsMenu from "@/components/EditDeleteOptionsMenu";
 import { useRouter } from "next-nprogress-bar";
 
 const styles:SxProps = {
-  padding: "5px 0",
   ".summaryContent": {
     width: "100%",
     display: "flex",
-    alignItems: "center",
+    flexDirection:"column",
+    justifyContent:"flex-start",
+    // alignItems: "center",
+    boxShadow:"none",
+
+    
+    ".chapter":{
+      ml:"10px",
+      fontSize:"14px",
+    },
+    
     ".details": {
-      width: "190px",
+    
+      display:"flex",
+      flexDirection:"row",
+      justifyContent:"space-between",
+      alignItems:"center",
       pl: "10px",
-      h5:{
-        fontSize: "16px",
-      }
+    
+      ".subject":{
+        margin:"0",
+      padding:"0",
+        color:"#000",
+        fontWeight:"500",
+        fontSize:"18px",
+      },
+    
+      ".options":{
+     
+        color:"#000 !important",
+      },
+     
     }
   },
   ".addTopicButton":{
     width: "100%",
-    mb: "20px",
+    // mb: "20px",
   },
-  ".icons": {
-    width: "70px",
-    flexShrink: "0",
-    alignSelf: "flex-start",
-    marginLeft: "auto",
-  },
+  // ".icons": {
+  //   width: "70px",
+  //   flexShrink: "0",
+  //   alignSelf: "flex-start",
+  //   // marginLeft: "auto",
+  // },
   
 }
 
@@ -66,12 +90,14 @@ export default function SubjectComponent({ subject }: { subject: ISubject }) {
     <Accordion  expanded={openAccordian} disableGutters elevation={0} sx={styles}>
       <AccordionSummary className="summary">
         <Box className="summaryContent">
-          <Image className="img" src={RoboImage.src} alt="roboImage" width={RoboImage.width} height={RoboImage.height} />
+          {/* <Image className="img" src={RoboImage.src} alt="roboImage" width={RoboImage.width} height={RoboImage.height} /> */}
           <Box onClick={handleSubject} className="details">
-            <h5>{subject.name}</h5>
-            <h6>Chapters - {subject.topicsCount}</h6>
-          </Box>
+            <div className="subject">{subject.name}</div>
           <EditDeleteOptionsMenu className="options" handleDelete={handleOpenDeleteModal} handleEdit={handleOpenEditModal} />
+
+          </Box>
+          <div className="chapter">Total Chapters - {subject.topicsCount}</div>
+
         </Box>
       </AccordionSummary>
       <AccordionDetails>

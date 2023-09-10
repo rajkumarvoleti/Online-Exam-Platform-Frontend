@@ -10,17 +10,22 @@ import { useEffect } from 'react';
 const styles:SxProps = {
   ".group":{
     display:"flex",
-    margin: "20px 0",
-    gap:"20px",
+    margin: "10px 0",
+    gap:"40px",
     flexWrap: "wrap",
-    justifyContent: "space-between",
+    // justifyContent: "space",
+    alignItems:"center",
   },
   ".details":{
     display: "flex",
+    alignItems:"center",
+
     ".label":{
       flexShrink: "0",
-      fontSize: "16px",
+      fontSize: "15px",
+      // color:"",
       width: "130px",
+      alignItems:"center",
     },
     ".select":{
       flexShrink: "0",
@@ -31,6 +36,7 @@ const styles:SxProps = {
   ".options":{
     display: "flex",
     flexWrap: "wrap",
+    alignItems:"center",
     ".label":{
       width: "130px",
     },
@@ -89,7 +95,7 @@ export default function TestSettingsComponent() {
       <Box className="groups">
         <Box className="group">
           <Box className="details">
-            <p className='label'>Test Availability: </p>
+            <p className='label'>Test Availability : </p>
             <Select name='testDateAvailability' value={values.testDateAvailability} onChange={handleChange} className='select'>
               <MenuItem value="specific">Specific</MenuItem>
               <MenuItem value="always">Always</MenuItem>
@@ -97,7 +103,7 @@ export default function TestSettingsComponent() {
           </Box>
           {values.testDateAvailability === "specific" && 
           <Box className="options">
-            <p className='label'>Exam Date:</p>
+            <p className='label'>Exam Date :</p>
             <DatePickerComponent value={values.testStartDate} error={getError("testStartDate")} className={'picker datePicker'} handleChange={handleCustomChange("testStartDate")} />
             <p className='label to'>To</p>
             <DatePickerComponent value={values.testEndDate} error={getError("testEndDate")} className={'picker datePicker'} handleChange={handleCustomChange("testEndDate")} />
@@ -105,7 +111,7 @@ export default function TestSettingsComponent() {
         </Box>
         <Box className="group">
           <Box className="details">
-            <p className='label'>Time: </p>
+            <p className='label'>Time : </p>
             <Select name='testTimeAvailability' onChange={handleChange} className='select' value={values.testTimeAvailability}>
               <MenuItem value="specific">Specific</MenuItem>
               <MenuItem value="always">Always</MenuItem>
@@ -113,7 +119,7 @@ export default function TestSettingsComponent() {
           </Box>
           {values.testTimeAvailability === "specific" && 
           <Box className="options">
-            <p className='label'>Time Set:</p>
+            <p className='label'>Time Set :</p>
             <TimePickerComponent value={values.testStartTime} error={getError("testStartTime")} views={["hours","minutes"]} className='picker timePicker' handleChange={handleCustomChange("testStartTime")} />
             <p className='label to'>To</p>
             <TimePickerComponent value={values.testEndTime} error={getError("testEndTime")} views={["hours","minutes"]} className='picker timePicker' handleChange={handleCustomChange("testEndTime")} />
@@ -121,7 +127,7 @@ export default function TestSettingsComponent() {
         </Box>
         <Box className="group">
           <Box className="details">
-            <p className='label'>Duration: </p>
+            <p className='label'>Duration : </p>
             <Select name="testDurationAvailability" onChange={handleChange} className='select' value={values.testDurationAvailability}>
               <MenuItem value="specific">Specific</MenuItem>
               <MenuItem value="always">Always</MenuItem>
@@ -129,7 +135,7 @@ export default function TestSettingsComponent() {
           </Box>
           {values.testDurationAvailability === "specific" && 
           <Box className="options">
-            <p className='label'>Time Duration:</p>
+            <p className='label'>Time Duration :</p>
             <CustomTimePicker value={values.testDurationHours} type='hours' options={generateArray(0,12,1)} label='Hours' className='picker customPicker' handleChange={handleCustomChange("testDurationHours")} />
             <p className='label to'></p>
             <CustomTimePicker value={values.testDurationMinutes} type='minutes' options={generateArray(0,55,5)} label='Minutes' className='picker customPicker' handleChange={handleCustomChange("testDurationMinutes")} />

@@ -21,6 +21,7 @@ const styles:SxProps = {
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
+
   ".form":{
     width: "100%",
     minHeight: "75vh",
@@ -47,6 +48,7 @@ const styles:SxProps = {
   },
   ".details":{
     display: "flex",
+    alignItems:"center",
     gap: "30px",
     m: "20px",
     mb: "0",
@@ -57,7 +59,7 @@ const styles:SxProps = {
     "> *":{
       display: "flex",
       gap :"10px",
-      alignItems: "center",
+      // alignItems: "center",
     },
     ".text":{
       color: "#000",
@@ -74,6 +76,27 @@ const styles:SxProps = {
   },
   ".hard":{
     color: "#FF0101"
+  },
+  ".footerBtn":{
+    width: "127px",
+    height: "30px",
+    flexShrink: "0",
+    borderRadius: "5px",
+    border: "1px solid #C2E830",
+    color: "#969696",
+    fontWeight:"500",
+    textTransform:"captilize",
+  },
+  ".submitButton":{
+    width: "127px",
+    height: "30px",
+    flexShrink: "0",
+    borderRadius: "5px",
+    border: "1px solid #C2E830",
+    color: "#969696",
+    fontWeight:"500",
+    textTransform:"captilize",
+    color:"#2200A5"
   },
 }
 
@@ -172,8 +195,8 @@ function FormikForm() {
           <p className="text"><span>Note :</span> Enter Atleast One Question in Each Selected Question Bank</p>
         </Box>
         <Footer>
-          <Button color="success" variant="outlined">Back</Button>
-          <Button onClick={() => {
+          <Button className='footerBtn' color="success" variant="outlined">Back</Button>
+          <Button className='footerBtn' onClick={() => {
             resetForm();
             handleDetailsForm(testDetailsInitialValues);
             }} color="success" variant="outlined">Reset</Button>

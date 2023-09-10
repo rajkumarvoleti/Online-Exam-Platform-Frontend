@@ -42,7 +42,28 @@ const styles:SxProps = {
       width: "200px",
       flexShrink: "0",
     },
-  }
+  },
+  ".footerBtn":{
+    width: "127px",
+    height: "30px",
+    flexShrink: "0",
+    borderRadius: "5px",
+    border: "1px solid #C2E830",
+    color: "#969696",
+    fontWeight:"500",
+    textTransform:"captilize",
+  },
+  ".submitButton":{
+    width: "127px",
+    height: "30px",
+    flexShrink: "0",
+    borderRadius: "5px",
+    border: "1px solid #C2E830",
+    color: "#969696",
+    fontWeight:"500",
+    textTransform:"captilize",
+    color:"#2200A5"
+  },
 }
 
 function FormikForm() {
@@ -78,8 +99,8 @@ function FormikForm() {
       <Divider className='divider' />
       <ResultDeclarationSettingsComponent />
       <Footer>
-        <Button onClick={handleBack} color="success" variant="outlined">Back</Button>
-        <Button onClick={() => {
+        <Button className='footerBtn' onClick={handleBack} color="success" variant="outlined">Back</Button>
+        <Button className='footerBtn' onClick={() => {
           resetForm();
           handleSettingsForm(testSettingsInitialValues);
         }} color="success" variant="outlined">Reset</Button>

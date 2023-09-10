@@ -4,11 +4,11 @@ import {Box, FormControlLabel, Radio, RadioGroup, SxProps} from '@mui/material';
 import { FormikHandlers, useFormikContext } from 'formik';
 
 const styles:SxProps = {
-  h4:{
+  h3:{
     color: "#000",
     fontSize: "20px",
     fontWeight: "600",
-    mt: "40px",
+    mt: "20px",
   },
   ".radioGroups":{
     display: "flex",
@@ -22,7 +22,7 @@ const styles:SxProps = {
     alignItems: "flex-start",
   },
   ".radioHead":{
-    color: "#000",
+    color: "#5b5b5b",
     width: "180px",
     m: "10px 0"
   },
@@ -31,7 +31,10 @@ const styles:SxProps = {
   },
   ".note .input":{
     width: "100%",
-    height: "150px",
+    height: "120px",
+  },
+  ".MuiFormControlLabel-label":{
+    fontSize:"15px"
   }
 }
 
@@ -79,10 +82,10 @@ export default function ResultDeclarationSettingsComponent() {
 
   return (
     <Box sx={styles}>
-      <h4>Result Declaration Settings</h4>
+      <h3>Result Declaration Settings</h3>
       <Box className="radioGroups">
         <Box className="radioGroup">
-          <p className='radioHead'>Result Format: </p>
+          <p className='radioHead'>Result Format : </p>
           <RadioGroup value={values.resultFormat} onChange={handleChange} name='resultFormat'>
             {resultFormatOptions.map(opt => (
               <FormControlLabel key={opt.id} value={opt.id} control={<Radio color='default' size='small' />} label={opt.label} />
@@ -90,7 +93,7 @@ export default function ResultDeclarationSettingsComponent() {
           </RadioGroup>
         </Box>
         <Box className="radioGroup">
-          <p className='radioHead'>Test Declaration: </p>
+          <p className='radioHead'>Test Declaration : </p>
           <RadioGroup value={values.testDeclaration} onChange={handleChange} name='testDeclaration'>
             {testDeclarationOptions.map(opt => (
               <FormControlLabel key={opt.id} value={opt.id} control={<Radio color='default' size='small' />} label={opt.label} />
@@ -99,7 +102,7 @@ export default function ResultDeclarationSettingsComponent() {
         </Box>
         <FormikInput
           name="note"
-          label="Note"
+          label="Note :"
           className='note'
           placeholder=""
           value={values.note}

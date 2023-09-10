@@ -13,15 +13,17 @@ import { useRouter } from "next-nprogress-bar";
 const styles: SxProps = {
   display: "flex",
   justifyContent: "space-between",
-  alignItems: "center !important",
+  alignItems: "center",
   ".chapter": {
     color: "#2200A5",
     fontSize: "16px",
     lineHeight: "24.542px",
     padding: "10px 5px",
+    margin:"0",
   },
   ".chapter.active": {
     color: "#C2E830",
+    backgroundColor:"green"
   },
   ".icons":{
     width: "70px",

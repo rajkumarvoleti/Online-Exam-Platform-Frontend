@@ -20,7 +20,7 @@ const styles:SxProps = {
     display: "flex",
     flexWrap: "wrap",
     margin: "15px 0",
-    gap: "20px",
+    gap: "10px",
     ".input":{
       borderRadius:"5px"
     }

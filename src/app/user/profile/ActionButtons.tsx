@@ -14,10 +14,10 @@ const styles:SxProps = {
   gap: "15px",
   mt:"90px",
   "button":{
-    width: "140px",
-    height: "33px",
+    width: "127px",
+    height: "28px",
     flexShrink: "0",
-    borderRadius: "6px",
+    borderRadius: "5px",
     border: "1px solid #C2E830",
     color: "#969696",
     fontWeight:"500",

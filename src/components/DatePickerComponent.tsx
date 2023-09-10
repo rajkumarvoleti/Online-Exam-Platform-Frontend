@@ -17,9 +17,9 @@ export default function BasicDatePicker({error,handleChange, className, value}:{
   }
 
   return (
-    <Box>
+    <Box className={className + " center"}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DatePicker format='DD-MM-YYYY' value={date} onChange={onChange} className={className} />
+        <DatePicker format='DD-MM-YYYY' value={date} onChange={onChange} />
       </LocalizationProvider>
       <p className='error'>{error}</p>
     </Box>

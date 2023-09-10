@@ -5,7 +5,10 @@ import PublishQuestionIcon from "@/assets/icons/PublishQuestionIcon";
 import AddQuestionIcon from "@/assets/icons/AddQuestionIcon";
 
 const styles:SxProps = {
-  padding: "20px 40px",
+  // padding: "20px 40px",
+  height: "5.5vw",
+  boxShadow: "none",
+  padding: "14px 86px",
   ".MuiStep-root":{
     padding: 0
   },
@@ -17,7 +20,7 @@ const styles:SxProps = {
   },
   ".MuiStepConnector-root.Mui-active":{
     background: "#C2E830",
-  },
+  },  
   ".MuiStepConnector-root.Mui-completed":{
     background: "#C2E830",
   },
@@ -32,12 +35,12 @@ const stepperIconStyles = (active:boolean|undefined) =>{
   const filter = active ? blueFilter : grayFilter;
   const color = active ? "#C2E830" : "#B3B3B3"
   return {
-    border:`10px solid ${color}`,
+    border:`8px solid ${color}`,
     borderRadius: "50%",
     padding: "10px",
     ".icon":{
-      width: "30px",
-      height: "30px",
+      width: "23px",
+      height: "23px",
       filter: filter,
     }
   }

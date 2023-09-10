@@ -12,12 +12,12 @@ const styles:SxProps = {
     display: "flex",
     gap: "10px",
     alignItems: "center",
-    backgroundColor: "#FAFBFB",
-    padding: "10px 40px",
+    backgroundColor: "#e3f7f7",
+    padding: "0px 40px",
     h4: {
-      fontSize: "20px",
+      fontSize: "17px",
       fontWeight: "500",
-      color: "#454545",
+      color: "#000",
       ":last-child":{
         marginLeft: "auto",
       }
@@ -26,28 +26,28 @@ const styles:SxProps = {
   ".publishMain":{
     padding: "10px 40px",
     ".container": {
-      mb: "40px",
+      mb: "20px",
       h5: {
         color: "#000",
-        fontSize: "25px",
+        fontSize: "23px",
         fontWeight: "400",
+        margin:"0px 10px"
       },
       ul :{
-        pl: "10px",
-      },
+        padding:" 0px 0px 0px 10px"      },
       li: {
         display: "flex",
         gap: "40px",
         alignItems: "center",
-        fontSize: "16px",
+        fontSize: "14px",
         listStyle: "none",
         background:`url(${DotIcon.src}) left center no-repeat`,
         pl: "40px",
-        margin: "20px 0",
+        margin: "7px 0",
       },
       "span, p": {
         color: "#000",
-        fontSize: "16px",
+        fontSize: "15px",
       }
     },
     ".container1":{
@@ -62,7 +62,29 @@ const styles:SxProps = {
         background:`url(${HandIcon.src}) left center no-repeat`,
       }
     }
-  }
+  },
+
+  ".footerBtn":{
+    width: "127px",
+    height: "30px",
+    flexShrink: "0",
+    borderRadius: "5px",
+    border: "1px solid #C2E830",
+    color: "#969696",
+    fontWeight:"500",
+    textTransform:"captilize",
+  },
+  ".submitButton":{
+    width: "127px",
+    height: "30px",
+    flexShrink: "0",
+    borderRadius: "5px",
+    border: "1px solid #C2E830",
+    color: "#969696",
+    fontWeight:"500",
+    textTransform:"captilize",
+    color:"#2200A5"
+  },
 }
 
 export default function PublishTestComponent() {
@@ -100,7 +122,7 @@ export default function PublishTestComponent() {
         </Box>
       </Box>
       <Footer>
-        <Button onClick={handleBack} color="success" variant="outlined">Back</Button>
+        <Button className='footerBtn' onClick={handleBack} color="success" variant="outlined">Back</Button>
         <LoadingButton className='submitButton' color="success" disabled={loading} loading={loading} onClick={publishTest} variant="outlined">Publish</LoadingButton>
       </Footer>
     </Box>

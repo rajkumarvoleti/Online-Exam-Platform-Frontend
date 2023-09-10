@@ -19,6 +19,15 @@ const styles:SxProps = {
     display: "flex",
     flexWrap: "wrap",
     gap: "30px",
+    // height:"15px",
+    ".label":{
+      color:"#5B5B5B",
+      fontSize:"15px",
+    },
+    ".input":{
+      borderRadius:"5px",
+      
+    }
   },
   ".subjectName .input":{
     width: "290px",
@@ -35,6 +44,39 @@ const styles:SxProps = {
     padding: "0",
     maxWidth:"200px",
   },
+  ".footerBtn":{
+    width: "127px",
+    height: "30px",
+    flexShrink: "0",
+    borderRadius: "5px",
+    border: "1px solid #C2E830",
+    color: "#969696",
+    fontWeight:"500",
+    textTransform:"captilize",
+  },
+  ".submitButton":{
+    width: "127px",
+    height: "30px",
+    flexShrink: "0",
+    borderRadius: "5px",
+    border: "1px solid #C2E830",
+    color: "#969696",
+    fontWeight:"500",
+    textTransform:"captilize",
+    color:"#2200A5"
+  },
+  ".addBtn":{
+    textTransform:"captilize",
+    width: "70px",
+    textTransform: "captilize",
+    height: "23px",
+    borderRadius: "5px",
+    color: "#5b5b5b",
+
+  },
+  ".customInput":{
+    height:"0px"
+  }
 }
 
 export default function Page() {
@@ -69,13 +111,13 @@ export default function Page() {
                 <Box>
                   <FormTable />
                   {typeof errors.topics === "string" && <p className="error">{errors.topics}</p>}
-                  <Button variant="outlined" onClick={() =>push({description: "",id: Math.random(), name: ""})}>+ Add</Button>
+                  <Button className="addBtn" variant="outlined" onClick={() =>push({description: "",id: Math.random(), name: ""})}>+ Add</Button>
                 </Box>
               )}
             </FieldArray>
             <Footer>
               {/* <Button variant="outlined">Back</Button> */}
-              <Button color="success" onClick={() => resetForm()} variant="outlined">Reset</Button>
+              <Button className="footerBtn" color="success" onClick={() => resetForm()} variant="outlined">Reset</Button>
               {loading ? <LoadingButton variant="contained" loading>Save</LoadingButton> : 
               <Button className="submitButton" color="success" type="submit" variant="outlined">Save</Button>}
             </Footer>

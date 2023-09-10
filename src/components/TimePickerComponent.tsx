@@ -17,12 +17,11 @@ export default function BasicTimePicker({handleChange, className, views, error, 
   }
 
   return (
-    <Box>
+    <Box className={className + " center"}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <TimePicker
           value={time}
           onChange={onChange}
-          className={className}
           views={views}
           viewRenderers={{
             hours: renderTimeViewClock,

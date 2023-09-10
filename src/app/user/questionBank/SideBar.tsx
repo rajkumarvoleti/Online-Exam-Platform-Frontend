@@ -12,25 +12,29 @@ const styles = {
   width: "280px",
   minHeight: "85vh",
   flexShrink: "0",
+  boxShadow: "none",
   padding: "10px 0",
   position: "sticky",
   top: "0px",
   marginBottom: "auto",
+  ".MuiAccordionSummary-content":{
+    margin: "2px 0",
+
+  },
   ".main": {
-    mt: "10px",
+    m: "0px",
     ">*": {
-      borderTop: "0.5px solid #B3B3B3",
+      borderTop: "0.5px solid #e6e4e4",
       ":last-child": {
-        borderBottom: "0.5px solid #B3B3B3",
+        borderBottom: "0.5px solid #e6e4e4",
       },
     },
     ".heading": {
-      textAlign: "center",
-      padding: "20px",
+      padding: "17px 24px",
     },
     h5: {
       color: "#454545",
-      fontSize: "18px",
+      fontSize: "19px",
       fontWeight: "500",
       lineHeight: "24.542px",
       margin: 0,
@@ -86,7 +90,7 @@ export default function SideBar() {
     <Card sx={styles}>
       <SideBarHeader setQuery={setQuery} />
       <Box className="main">
-        <h5 className='heading'>All Subjects</h5>
+        <h5 className='heading'>Total Question Banks : {subjects.length} </h5>
         {subjects && subjects.length === 0 && <p>No subjects to show</p>}
         {subjects && subjects.map((subject: ISubject, i: number) => (
           <SubjectComponent key={i} subject={subject} />

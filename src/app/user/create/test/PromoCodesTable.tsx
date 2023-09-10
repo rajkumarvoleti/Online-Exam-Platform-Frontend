@@ -12,14 +12,15 @@ const styles:SxProps = {
   width: "640px",
   ".MuiTableCell-root":{
     color: "#5B5B5B",
-    fontSize: "16px",
+    fontSize: "14px",
     textAlign: "center",
+    padding:"0px"
   },
   ".headingRow":{
     backgroundColor: "#F5F4F999",
     ".MuiTableCell-root":{
       color: "#5B5B5B",
-      fontSize: "16px",
+      fontSize: "15px",
     },
   },
   ".MuiTableRow-root":{

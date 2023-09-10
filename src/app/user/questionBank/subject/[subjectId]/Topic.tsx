@@ -35,9 +35,10 @@ export default function Topic({topic}:{topic:ITopic}) {
     <Box className="topicCard">
       <Box onClick={() => handleClick(topic)} className="details">
         <h5>{topic.name}</h5>
-        <p className="questionCount">Questions: {topic.questionsCount}</p>
-      </Box>
       <EditDeleteOptionsMenu handleEdit={handleOpenEditModal} handleDelete={handleOpenDeleteModal} />
+
+      </Box>
+      <p className="questionCount">Questions: {topic.questionsCount}</p>
       <ModalComponent open={openEditModal}>
         <EditTopicModal topic={topic} handleClose={handleCloseEditModal} />
       </ModalComponent>

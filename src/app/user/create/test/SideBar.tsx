@@ -4,20 +4,29 @@ import { Box, Card, SxProps } from "@mui/material";
 const styles:SxProps = {
   width: "220px",
   flexShrink: "0",
+  boxShadow:"none",
   cursor: "pointer",
+  borderRadius :"0px 0px  ",
+  fontSize:"12px",
+
+
+
   ".option":{
     width: "100%",
     textAlign: "left",
-    height: "60px",
-    borderBottom: "0.3px solid #C0C0C0",
+    height: "50px",
+    borderBottom: "0.3px solid #f5ecec",
     background: "#FFF",
     justifyContent: "flex-start",
     pl: "20px",
   },
   ".active":{
-    background: "#F4F5F9 !important",
+    // background: "#F4F5F9 !important",
+    border:"2px solid #C2E830",
     ".details":{
       color: "#2200A5",
+      fontSize:"15px",
+      fontWeight:"530"
     },
   },
   ".error .details": {
