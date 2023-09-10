@@ -38,18 +38,15 @@ const styles:SxProps = {
 export default function Page(){
 
   const [tabValue, setTabValue] = useState<number>(0);
-  const {data, error, isLoading} = useQuery(["exams"],async () => await getAllExamsRequest())
+  const {data, error, isLoading} = useQuery(["exams"],async () => await getAllExamsRequest());
 
   const tabs = ["Start Now","Completed" ,"Coming Soon"];
 
-  if(error)
+  if(error || !data.exams)
     return <Box sx={styles}>error</Box>
   
   if(isLoading)
     return <Box className="center" sx={styles}><CircularProgress /></Box>
-  
-  if(!data.exams)
-    return <></>
 
   const isLive = ({start, end}:{start:string,end:string}) => {
     if(start === "always")

@@ -1,27 +1,48 @@
-import SearchBar from "@mkyy/mui-search-bar";
-import { SxProps } from "@mui/material";
-import { Box } from "@mui/system";
+import React, { useState } from 'react';
+import { Box, InputAdornment, TextField } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
-const styles:SxProps = {
-  ".search":{
-    borderRadius: "7px",
-    border: "1.152px solid #A6BED1",
-  },
-  "svg":{
-    fill: "#1B1464",
-  }
+interface SearchBarProps {
+  onSearch: (searchTerm: string) => void;
+  className: string
 }
 
-export default function SearchBarComp({width, height, className, setQuery}: {width?:string, height?:string, className?:string, setQuery?:(query:string) => void}) {
+const SearchBar: React.FC<SearchBarProps> = ({ onSearch, className }) => {
+  const [searchTerm, setSearchTerm] = useState<string>('');
 
-  const handleSearch = (value:string) => {
-    if(setQuery)
-      setQuery(value);
-  }
+  const handleSearch = () => {
+    onSearch(searchTerm);
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
 
   return (
-    <Box sx={styles} className={className}>
-      {/* <SearchBar onSearch={() => {}} onChange={handleSearch} width={width} height={height} className="search" /> */}
+    <Box className={className}>
+      <TextField
+        variant="outlined"
+        fullWidth
+        placeholder="Search..."
+        value={searchTerm}
+        onChange={handleChange}
+        onKeyPress={handleKeyPress}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <SearchIcon onClick={handleSearch} style={{ cursor: 'pointer' }} />
+            </InputAdornment>
+          ),
+        }}
+      />
     </Box>
-  )
-}
+  );
+};
+
+export default SearchBar;
