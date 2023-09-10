@@ -34,7 +34,7 @@ export default function Header({totalExams}:{totalExams:number}) {
         <Button size="small" variant="outlined">+ Create Test</Button>
       </Box>
       <Box className="container container2">
-        <SearchBarComp />
+        <SearchBarComp onSearch={() => {}} />
         <FilterButton/>
         <OptionsMenu/>
       </Box>

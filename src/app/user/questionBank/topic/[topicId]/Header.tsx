@@ -46,7 +46,7 @@ export default function Header({topic}:{topic:ITopic}) {
           + New
         </Button>
         <QuestionNumberInput setQuestionNumber={setQuestionNumber} />
-        <SearchBarComp width="200px" height="35px" setQuery={setQuery} />
+        <SearchBarComp onSearch={() => {}} />
         <FilterMenu />
         {/* <OptionsMenu /> */}
       </Box>

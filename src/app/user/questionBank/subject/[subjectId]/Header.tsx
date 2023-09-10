@@ -63,7 +63,7 @@ export default function Header({subject, setQuery}:{subject:ISubject, setQuery:(
         <Button onClick={handleOpenCreateTopicModal} className='newButton' variant='outlined'>
           + Add 
         </Button>
-        <SearchBarComp setQuery={setQuery} width="200px" height="35px" />
+        <SearchBarComp  onSearch={() => {}} />
         <FilterButton variant="outlined" className="filter" />
         <OptionsMenu />
       </Box>
