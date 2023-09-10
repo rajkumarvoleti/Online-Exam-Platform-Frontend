@@ -159,15 +159,15 @@ function FormikForm() {
         </FieldArray>
         <Box className="details">
           <p className="text">Questions Available For Each Selected Question Bank</p>
-          <Box className="complexityDetails">
+          <Box className="complexityDetails center">
             <CircleIcon className="icon hard" />
             <p className="text hard">Hard</p>
           </Box>
-          <Box className="complexityDetails">
+          <Box className="complexityDetails center">
             <CircleIcon className="icon medium" />
             <p className="text medium">Medium</p>
           </Box>
-          <Box className="complexityDetails">
+          <Box className="complexityDetails center">
             <CircleIcon className="icon easy" />
             <p className="text easy">Easy</p>
           </Box>

@@ -6,13 +6,21 @@ import { useEffect, useState } from "react";
 import { atom, useRecoilState } from "recoil";
 import { useToast } from "./useToast";
 import { MutateOptions, useMutation, useQueryClient } from "@tanstack/react-query";
-import { createExamRequest } from "@/api/exam";
+import { createExamRequest, deleteExamsRequest } from "@/api/exam";
 import useUser from "./useUser";
+import { useRouter } from "next-nprogress-bar";
 
 
 const useCreateExamMutation = ({ request, options }: { request: ({ testData, userId }: { testData: ICreateTestData, userId: number }) => Promise<any>, options: any }) => {
   return useMutation(
     async ({ testData, userId }: { testData: ICreateTestData, userId: number }) => request({ testData, userId }),
+    options,
+  )
+}
+
+const useDeleteExamMutation = ({ request, options }: { request: (ids:number[]) => Promise<any>, options: any }) => {
+  return useMutation(
+    async (ids:number[]) => request(ids),
     options,
   )
 }
@@ -55,6 +63,7 @@ export default function useCreateTest() {
   const {successToast, errorToast} = useToast();
   const queryClient = useQueryClient();
   const user = useUser();
+  const router = useRouter();
 
   useEffect(() => {
     if(!publishAttempted)
@@ -68,10 +77,21 @@ export default function useCreateTest() {
         errorToast({ msg: data.error });
       else {
         successToast({ msg: "Exam Created Successfully" });
-        // queryClient.setQueryData(["subjects"],(oldData:any) =>{
-        //   console.log(oldData);
-        //   return {...oldData, subjects: [...oldData.subjects, data.subject]};
-        // });
+        router.push("/user/create/test/display");
+        queryClient.invalidateQueries(["exams"], { exact: true });
+      }
+    },
+    onError: (error: any, variables: any) => {
+      errorToast({ msg: "Internal Server Error" });
+    },
+  }
+
+  const deleteMutationOptions: MutateOptions = {
+    onSuccess: async (data: any, variables: any) => {
+      if (data.error)
+        errorToast({ msg: data.error });
+      else {
+        successToast({ msg: "Deleted Successfully" });
         queryClient.invalidateQueries(["exams"], { exact: true });
       }
     },
@@ -81,6 +101,7 @@ export default function useCreateTest() {
   }
   
   const createExamMutationQuery = useCreateExamMutation({ request: createExamRequest, options: mutationOptions });
+  const deleteExamMutationQuery = useDeleteExamMutation({ request: deleteExamsRequest, options: deleteMutationOptions });
 
   useEffect(() => {
     const isLoading = createExamMutationQuery.isLoading;
@@ -130,5 +151,9 @@ export default function useCreateTest() {
     return createExamMutationQuery.data;
   }
 
-  return {handleDetailsForm, handlePricingForm, handleSettingsForm, handleBack, handleNext, index, setIndex, testData, publishAttempted, publishTest, testDataError, validateForms, loading};
+  const handleDelete = (ids:number[]) => {
+    deleteExamMutationQuery.mutate(ids);
+  }
+
+  return {handleDetailsForm, handlePricingForm, handleSettingsForm, handleBack, handleNext, index, setIndex, testData, publishAttempted, publishTest, testDataError, validateForms, loading, handleDelete};
 } 

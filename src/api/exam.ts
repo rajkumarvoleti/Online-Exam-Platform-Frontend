@@ -14,6 +14,10 @@ export const getExamRequest = (id:number) => {
   return request({ url: '/exam/get', method: 'get', params: {examId:id} });
 }
 
+export const deleteExamsRequest = (ids:number[]) => {
+  return request({ url: '/exam/deleteMany', method: 'delete', data: {ids} });
+}
+
 export const getResultRequest = (data:IResultQuery[]) => {
   return request({ url: '/exam/getResult', method: 'get', params: {data} });
 }

@@ -1,7 +1,8 @@
 import { IExam } from "@/interfaces/examInterfaces";
 import { Box, Checkbox, IconButton, SxProps, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
+import useCreateTest from "@/hooks/useCreateTest";
 
 
 const styles:SxProps = {
@@ -28,6 +29,12 @@ const styles:SxProps = {
 export default function TestTable({exams}:{exams:IExam[]}) {
 
   const [selected, setSelected] = useState<(number|undefined)[]>([]);
+  const {handleDelete} = useCreateTest();
+
+  useEffect(() => {
+    setSelected([]);
+  }, [exams])
+  
 
   const handleSelectAll = () => {
     setSelected(prev => exams.map(exam => exam.id));
@@ -52,7 +59,8 @@ export default function TestTable({exams}:{exams:IExam[]}) {
   }
 
   const handleRemove = () => {
-    console.log("removing")
+    const filteredArray: number[] = selected.filter((value): value is number => typeof value === 'number');
+    handleDelete(filteredArray);
   }
 
   return (
