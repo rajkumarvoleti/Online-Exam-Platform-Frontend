@@ -77,7 +77,7 @@ export default function SideBarHeader({setQuery}:{setQuery:(query:string) => voi
 
         {/* <FileDownloadOutlinedIcon className='icon' /> */}
       </Box>
-      <SearchBarComp setQuery={setQuery} className='searchBar' width='100%' />
+      <SearchBarComp onSearch={() => {}} className='searchBar' />
       <ModalComponent open={openSubjectModal}>
         <CreateSubjectModal handleClose={handleCloseSubjectModal} />
       </ModalComponent>
