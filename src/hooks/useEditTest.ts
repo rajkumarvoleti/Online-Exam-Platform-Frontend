@@ -135,6 +135,7 @@ export default function useEditTest() {
         setTestDataError([false, false, false]);
         router.push("/user/create/test/display");
         queryClient.invalidateQueries(["exams"], { exact: true });
+        queryClient.invalidateQueries(["exam",variables.examId]);
       }
     },
     onError: (error: any, variables: any) => {

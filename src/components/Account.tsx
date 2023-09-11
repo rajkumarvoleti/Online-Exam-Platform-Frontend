@@ -9,7 +9,7 @@ import LogoutButton from "./auth/LogoutButton";
 const styles:SxProps = {
   display: "flex",
   alignItems: "center",
-  alignContent: "center",
+  justifyContent: "center",
   ">*":{
     margin: "30px 2px 0px 2px",
     maxWidth: "240px",
@@ -47,7 +47,7 @@ export default function Account(){
           <p className="name">{name}</p>
           <p className="email">{email}</p>
         </Box>
-      <LogoutButton />
+        <LogoutButton />
 
       </Box>
     </>

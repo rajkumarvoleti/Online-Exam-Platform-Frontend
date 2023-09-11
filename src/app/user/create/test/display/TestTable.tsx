@@ -90,7 +90,7 @@ export default function TestTable({exams}:{exams:IExam[]}) {
               <Box className="deleteCell">
                 <p>{selected.length} options selected</p>
                 {selected.length === 1 && <IconButton onClick={handleEdit}>
-                  <EditIcon color="error" />
+                  <EditIcon color="primary" />
                 </IconButton>}
                 <IconButton onClick={handleRemove}>
                   <DeleteIcon color="error" />

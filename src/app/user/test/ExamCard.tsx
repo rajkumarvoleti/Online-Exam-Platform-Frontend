@@ -2,10 +2,10 @@ import { Box, Button, Card, Chip, Divider, SxProps } from "@mui/material";
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 import LanguageIcon from "@/components/icons/LanguageIcon";
-import { useRouter } from "next/navigation";
 import { IExam } from "@/interfaces/examInterfaces";
 import { useQuiz } from "@/hooks/useQuiz";
 import dayjs from "dayjs";
+import { useRouter } from "next-nprogress-bar";
 
 const styles:SxProps = {
   margin: "5px",
