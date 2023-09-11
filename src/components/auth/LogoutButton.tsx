@@ -1,9 +1,10 @@
 import useLogout from "@/hooks/auth/useLogout";
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 
 export default function LogoutButton() {
 
   const {logout} = useLogout();
 
-  return <Button variant="contained" onClick={logout}>Log Out</Button>
+  return <IconButton color="primary" className=""  onClick={logout}><PowerSettingsNewIcon /></IconButton>
 }

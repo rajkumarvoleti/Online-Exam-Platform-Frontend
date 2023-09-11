@@ -14,6 +14,9 @@ const styles:SxProps = {
     display: "flex",
     gap: "5px",
   },
+  ".tableHeading":{
+margin:"10px 0px",
+  },
   ".customInput":{
     '& fieldset': { border: 'none' } ,
     width: "80px",
@@ -31,12 +34,15 @@ const styles:SxProps = {
   },
   ".input":{
     width: "80px !important",
-    padding: "0",
+    padding: "10px",
   },
   ".headingRow":{
     ".MuiTableCell-root":{
       color: "gray",
       textAlign: "center",
+      fontSize:"15px",
+      padding:"10px",
+      // width:"cals(100%8)"
     }
   },
   ".MuiTableCell-root":{
@@ -150,7 +156,7 @@ export default function TestDetailsTable({questionBanks}:{questionBanks:IQuestio
             :
               <>
               <TableCell><Checkbox size="small" checked={selected.length !== 0 && selected.length === values.questionBankTopics.length} onChange={handleAll} /></TableCell>
-              <TableCell className="banks">Selected Question Banks</TableCell>
+              <TableCell className="banks">Selected Q Banks</TableCell>
               <TableCell className="banks">Selected Chapters</TableCell>
               <TableCell>Actual Questions</TableCell>
               <TableCell>Choosed Questions</TableCell>

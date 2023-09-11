@@ -17,7 +17,7 @@ const styles:SxProps = {
     },
     ".input":{
       margin:"0",
-      borderRadius:"5px"
+      borderRadius:"5px",
     }
   }
 }

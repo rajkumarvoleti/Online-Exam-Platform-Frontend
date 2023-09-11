@@ -8,6 +8,7 @@ const styles:SxProps = {
   flexWrap: "wrap",
   padding: "10px 20px",
   alignItems: "center",
+  borderRadius:"none",
   justifyContent: "space-between",
   width: "100%",
   ".options":{
@@ -15,15 +16,22 @@ const styles:SxProps = {
     gap: "10px",
   },
   ".select":{
-    width: "180px",
-    height: "40px",
-    borderRadius: "7px",
-    border: "1px solid #C2E830",
+    width: "234px",
+    height: "34px",
+    borderRadius: "5px",
   },
   ".label":{
-    color: "#000",
-    fontSize: "16px",
+    fontSize: "14px",
+    color:"#575757",
+    margin:"0"
+  },
+  ".heading":{
+    fontSize:"20px",
+    fontWeight:"550",
+    color:"#2200a5",
+
   }
+
 }
 
 export default function Header({type,setType, level}:{type:IQuestionType, setType:(t:IQuestionType) => any, level: IQuestionLevel}) {
@@ -51,7 +59,7 @@ export default function Header({type,setType, level}:{type:IQuestionType, setTyp
 
   return (
     <Card sx={styles}>
-      <h4>Update Question</h4>
+      <span className="heading">Update Question</span>
       <Box className="options">
         <Box className="option">
           <InputLabel className="label">Question Level</InputLabel>

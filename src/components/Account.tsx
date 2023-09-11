@@ -11,7 +11,7 @@ const styles:SxProps = {
   alignItems: "center",
   alignContent: "flex-end",
   ">*":{
-    margin: "10px",
+    margin: "30px 2px 0px 2px",
     maxWidth: "240px",
   },
   ".name,.email":{
@@ -40,13 +40,14 @@ export default function Account(){
 
   return (
     <>
-      <LogoutButton />
       <Box sx={styles}>
         <Image src={userImage.src} width={"40"} height={"40"} alt="user" />
         <Box>
           <p className="name">{name}</p>
           <p className="email">{email}</p>
         </Box>
+      <LogoutButton />
+
       </Box>
     </>
   )

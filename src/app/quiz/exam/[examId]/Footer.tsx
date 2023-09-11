@@ -24,6 +24,7 @@ const styles:SxProps = {
   },
   ".container2":{
     flex: "1",
+    gap:"10px"
   },
   ".removeResponse":{
     border: "1px solid #676767",

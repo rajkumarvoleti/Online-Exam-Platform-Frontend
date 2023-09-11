@@ -36,12 +36,12 @@ const styles:SxProps = {
   },
   ".tagline": {
     flexBasis: "100%",
-    maxWidth:"850px"
+    maxWidth:"831px"
   },
   
   ".bio":{
     flexBasis: "100%",
-    maxWidth:"850px",
+    maxWidth:"831px",
 
     ".desc":{
       fontSize:"15px",
