@@ -76,7 +76,7 @@ const styles:SxProps = {
     color:"#2200A5"
   },
   ".addBtn":{
-    // textTransform:"captilize",
+    textTransform:"captilize",
     width: "75px",
     height: "23px",
     borderRadius: "5px",

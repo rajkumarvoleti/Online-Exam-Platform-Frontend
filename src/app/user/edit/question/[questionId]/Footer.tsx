@@ -11,8 +11,10 @@ const styles:SxProps = {
   gap: "10px",
   width: "100%",
   "button":{
-    width: "150px",
+    width: "134px",
+    height:"30px",
     color: "#969696",
+    textTransform:"capitalize",
     ":last-child":{
       color: "#2200A5",
     }

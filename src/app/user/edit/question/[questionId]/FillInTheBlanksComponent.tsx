@@ -4,7 +4,7 @@ import { Box, InputLabel, OutlinedInput, SxProps } from "@mui/material";
 import { useEffect, useState } from "react";
 
 const styles:SxProps = {
-  padding: "20px",
+  padding: "20px 20px 0px 20px",
   ".inputBox":{
     display: "flex",
     alignItems:"center",
@@ -12,6 +12,7 @@ const styles:SxProps = {
     ".input":{
       maxWidth: "300px",
       height: "43px",
+      borderRadius:"5px",
     },
     ".label":{
       color: "#000",

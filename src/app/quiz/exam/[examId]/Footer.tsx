@@ -22,6 +22,7 @@ const styles:SxProps = {
   },
   ".container2":{
     flex: "1",
+    gap:"10px"
   },
   ".removeResponse":{
     border: "1px solid #676767",
@@ -71,11 +72,12 @@ export default function Footer({examId}:{examId:number}){
             {isMarked ? "Unmark for Review" : "Mark for Review"}
           </p>
         </Button>
-        <Button disabled={isLastQuestion} onClick={goToNextQuestion} className='saveAndNext' variant='outlined'>
-          <p className="buttonText">Save & Next</p>
-        </Button>
+       
       </Box>
       <Box className="container container2 center">
+      <Button disabled={isLastQuestion} onClick={goToNextQuestion} className='saveAndNext' variant='outlined'>
+          <p className="buttonText">Save & Next</p>
+        </Button>
         <Button onClick={onSubmit} className='submit' variant='outlined'>
           <p className="buttonText">Submit</p>
         </Button>

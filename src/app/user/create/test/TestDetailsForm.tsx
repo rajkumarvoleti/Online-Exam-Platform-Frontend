@@ -32,9 +32,15 @@ const styles:SxProps = {
     "> *":{
       margin: "0 10px",
     },
+    ".label":{
+      color:"#575757",
+      margin:"3px 0"
+    },
+
     ".input":{
-      width: "220px",
-      height: "40px",
+      width: "230px",
+      height: "38px",
+      borderRadius:"5px",
     },
     ".desc":{
       margin: "0",
@@ -50,7 +56,6 @@ const styles:SxProps = {
     display: "flex",
     alignItems:"center",
     gap: "30px",
-    m: "20px",
     mb: "0",
     ".icon":{
       width: "15px",
@@ -97,6 +102,16 @@ const styles:SxProps = {
     textTransform:"captilize",
     color:"#2200A5"
   },
+  ".addBtn":{
+    textTransform:"captilize",
+    width: "75px",
+    height: "23px",
+    borderRadius: "5px",
+    color: "#5b5b5b",
+    mt:"20px"
+
+  }
+
 }
 
 function FormikForm() {
@@ -153,7 +168,7 @@ function FormikForm() {
       {({push}:{push: (obj: ISelectedQuestionBankTopic) => void}) => (
         <Box className="tableContainer">
           <TestDetailsTable questionBanks={questionBanks}/>
-          <Button variant="outlined" onClick={() => push({...selectedTopicInitialValues, uuid:Math.random()})}>+ Add</Button>
+          <Button variant="outlined" className="addBtn" onClick={() => push({...selectedTopicInitialValues, uuid:Math.random()})}>+ Add</Button>
         </Box>
         )}
         </FieldArray>

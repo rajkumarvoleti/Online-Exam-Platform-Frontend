@@ -24,10 +24,17 @@ const styles:SxProps = {
     margin: "0 10px",
     "> *":{
       gap: "10px",
+      
     }
   },
   ".addButton":{
     mt: "20px",
+    textTransform:"capitalize",
+
+  },
+   ".removeBtn":{
+    textTransform:"capitalize",
+
   }
 }
 
@@ -66,7 +73,7 @@ export default function MCQComponent({index}:{index:number}) {
             <Box className="head">
               <Box className="center">
                 <InputLabel className="label">Choice {i+1}</InputLabel>
-                <Button size="small" variant="outlined" onClick={() => handleRemoveChoice(i)} color="error" disabled={choices.length < 2}>Remove Choice</Button>
+                <Button size="small" variant="outlined" className="removeBtn" onClick={() => handleRemoveChoice(i)} color="error" disabled={choices.length < 2}>Remove Choice</Button>
               </Box>
               <Box className="center">
                 <p>Correct Answer</p>
