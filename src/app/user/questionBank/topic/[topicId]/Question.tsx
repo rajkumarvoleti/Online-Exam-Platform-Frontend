@@ -8,6 +8,8 @@ import { useRouter } from "next-nprogress-bar";
 const styles:SxProps = {
   ".card":{
     padding: "10px 20px",
+    // border:"1px solid ",
+    // boxShadow:"none",
   },
   ".options":{
     display: "flex",

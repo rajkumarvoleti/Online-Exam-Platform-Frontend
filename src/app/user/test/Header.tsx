@@ -6,7 +6,7 @@ import { Box, Button, Card, SxProps } from "@mui/material";
 const styles:SxProps = {
   display: "flex",
   justifyContent: "space-between",
-  padding:"20px",
+  padding:"0px",
   ".container":{
     display:"flex",
     alignItems:"center",
@@ -19,9 +19,9 @@ const styles:SxProps = {
     margin: 0,
     color: "#272727",
     fontSize: "22px",
-    fontWeight: "500",
+    fontWeight: "550",
     lineHeight: "24.542px",
-    pr: "40px",
+    // pr: "40px",
   },
   ".filterBtn":{
     border:"1px solid #A6BED1",

@@ -10,11 +10,13 @@ import { useQuery } from "@tanstack/react-query";
 import { getTopicRequest } from "@/api/topic";
 import { useState, useEffect } from "react";
 import { ITopic } from "@/interfaces/examInterfaces";
+import OptionsMenu from "@/components/OptionsMenu";
 
 const styles:SxProps = {
   display: "flex",
   alignItems: "center",
-  padding: "10px 20px",
+  padding: "10px 10px",
+  boxShadow:"none",
   justifyContent: "space-between",
   ".options":{
     display: "flex",
@@ -24,9 +26,13 @@ const styles:SxProps = {
   ".newButton":{
     flexShrink: "0",
     borderRadius: "6px",
-    border: "1.152px solid #C2E830",
+    border: "1px solid #A6BED1",
     background: "#FFF",
   },
+  ".header":{
+    fontSize:"20px",
+    fontWeight:"550",
+  }
 }
 
 export default function Header({topic}:{topic:ITopic}) {
@@ -40,15 +46,15 @@ export default function Header({topic}:{topic:ITopic}) {
 
   return (
     <Card sx={styles}>
-      <h4>Questions for {topic.name}</h4>
+      <span className="header"> {topic.name}</span>
       <Box className="options">
         <Button onClick={handleNew} className='newButton' variant='outlined'>
-          + New
+          + Add Question
         </Button>
         <QuestionNumberInput setQuestionNumber={setQuestionNumber} />
         <SearchBarComp width="200px" height="35px" setQuery={setQuery} />
         <FilterMenu />
-        {/* <OptionsMenu /> */}
+        <OptionsMenu />
       </Box>
     </Card>  
   )

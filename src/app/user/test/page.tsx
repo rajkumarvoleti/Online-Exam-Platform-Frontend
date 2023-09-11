@@ -10,28 +10,43 @@ import { IExam } from '@/interfaces/examInterfaces';
 import dayjs from 'dayjs';
 
 const styles:SxProps = {
-  minHeight: "90vh",
+  backgroundColor:"#ffff",
+  ".MuiPaper-root ":{
+    padding:"10px 10px 0 10px",
+    borderRadius:"8px",
+    boxShadow:"none",
+  },
   ".tabs":{
-    margin: "20px",
+    margin: "-9px 0px 10px -4px",
+    fontSize:"10px"
   },
   ".MuiTabs-flexContainer": {
     gap:"50px",
+
   },
   ".tab":{
     color: "#979797",
-    fontSize: "16px",
-    fontWeight: "600",
+    fontSize: "15px",
+    fontWeight: "500",
+    textTransform:"capitalize",
     lineHeight: "24.542px",
+    
+    padding:"0"
   },
   ".active":{
     color: "#2200A5",
   },
   ".cards":{
     display:"flex",
-    width:"75vw",
+    flexDirection:"row",
+    // width:"75vw",
     flexWrap:"wrap",
-    justifyContent: "center",
-    margin: "20px",
+    // justifyContent: "center",
+    margin: "5px",
+    padding:"0"
+  },
+  ".tests":{
+    boxShadow:"0px 0px 0.5px 0.5px rgba(0,0,0,11%) ",
   }
 }
 
@@ -42,7 +57,7 @@ export default function Page(){
 
   const tabs = ["Start Now","Completed" ,"Coming Soon"];
 
-  if(error || !data.exams)
+  if(error || !data?.exams)
     return <Box sx={styles}>error</Box>
   
   if(isLoading)
@@ -78,7 +93,7 @@ export default function Page(){
               )}
         </Tabs>
       </Card>
-      <Box className="center">
+      <Box className="tests">
         {tabValue === 0 && <Box className="cards">
           {liveExams.map((exam:IExam) => (
             <ExamCard exam={exam} key={exam.id}/>
