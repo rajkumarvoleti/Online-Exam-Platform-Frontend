@@ -77,6 +77,12 @@ export default function useCreateTest() {
         errorToast({ msg: data.error });
       else {
         successToast({ msg: "Exam Created Successfully" });
+        setTestData({pricing: testPricingInitialValues,
+          testDetails: testDetailsInitialValues,
+          testSettings: testSettingsInitialValues});
+        setIndex(0);
+        setPublishAttempted(false);
+        setTestDataError([false, false, false]);
         router.push("/user/create/test/display");
         queryClient.invalidateQueries(["exams"], { exact: true });
       }

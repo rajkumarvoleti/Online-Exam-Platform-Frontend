@@ -25,11 +25,11 @@ export default function Page({params}:{params:{examId:string}}) {
   const {ended, started, time} = useRecoilValue(quizAtom);
 
   const { fullScreen, tabFocus } = useProctoring({
-    forceFullScreen: false,
-    preventTabSwitch: false,
-    preventContextMenu: false,
-    preventUserSelection: false,
-    preventCopy: false,
+    forceFullScreen: true,
+    preventTabSwitch: true,
+    preventContextMenu: true,
+    preventUserSelection: true,
+    preventCopy: true,
   })
   
   const examId = parseInt(params.examId);

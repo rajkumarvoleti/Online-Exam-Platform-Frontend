@@ -180,6 +180,12 @@ export const useQuiz = () => {
     openQuestion(activeId+1);
   }
 
+  const goToPrevQuestion = () => {
+    if(activeId === 0)
+      return;
+    openQuestion(activeId-1);
+  }
+
   const handleSubmit = () => {
     setQuizData(prev => ({...prev, ended: true}));
     console.log(questions);
@@ -212,9 +218,11 @@ export const useQuiz = () => {
     handleSubmit,
     isMarked: questions[activeId]?.marked || false,
     isLastQuestion: activeId === questions.length - 1,
+    isFirstQuestion: activeId === 0,
     startExam,
     endExam,
     resetExam,
-    updateTime
+    updateTime,
+    goToPrevQuestion
   }
 }
