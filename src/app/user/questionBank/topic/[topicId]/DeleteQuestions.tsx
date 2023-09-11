@@ -12,10 +12,15 @@ const styles:SxProps = {
   mb: 0,
   pb: 0,
   gap: "5px",
+  pl:"16px",
   h4:{
     margin: 0,
-    fontSize: "18px",
+    fontSize: "16px",
     color: "#f44336",
+  },
+
+  ".selectAllcheckbox":{
+    padding:"0"
   }
 }
 
@@ -42,7 +47,7 @@ export default function DeleteQuestions({topicId}:{topicId:number}) {
 
   return (
     <Box sx={styles}>
-      <Checkbox color="error" checked={checked} size="small" onClick={handleCheckBox} />
+      <Checkbox  className="selectAllcheckbox" color="error" checked={checked} size="small" onClick={handleCheckBox} />
       {checked && <h4>Unselect All</h4>}
       {!checked && <h4>Select All</h4>}
       <IconButton onClick={handleOpenDeleteModal} size="small">

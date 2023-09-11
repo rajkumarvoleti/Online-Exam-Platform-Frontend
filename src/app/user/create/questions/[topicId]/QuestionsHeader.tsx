@@ -5,38 +5,52 @@ import { useFormikContext } from "formik"
 import { useRouter } from "next-nprogress-bar"
 
 const styles:SxProps = {
+  boxShadow:"none",
   display: "flex",
-  alignItems: "center",
-  padding: "10px 20px",
+  flexDirection:"row",
+  justifyContent:"space-between",
+  alignItems: "flex-end",
+  padding: "10px 10px",
   gap : "20px",
   position: "sticky",
   top: "0px",
+  borderRadius:"5px 5px 0px 0px",
   backgroundColor: "#fff",
   zIndex: 4,
+
+  ".headerRight":{
+    display:"flex",
+    flexDirection:"row",
+    alignItems:"center",
+    gap:"20px"
+  },
+
   ".selectBox":{
-    ml: "auto",
+    ml: "0",
     ".select":{
-      width: "228px",
-      height: "42px",
+      width: "245px",
+      height: "34px",
     },
     ".label":{
       color: "#00000099",
+    margin:"3px 0px",
+
     }
   },
   ".navigation":{
     gap: "10px",
-    mt: "25px",
+   
     mr: "30px",
     ".text":{
-      color: "black",
+      color:"#575757",
+      fontSize:"14px"
     },
     ".textField":{
       width: "30px",
     }
   },
   ".addButton":{
-    height: "42px",
-    mt: "25px",
+    height: "32px",
     borderColor: "#B9B9B9",
     color: "black",
   }
@@ -59,21 +73,31 @@ export default function QuestionsHeader({subjectName, topics, topicId}:{subjectN
 
   return (
     <Card sx={styles}>
-      <h4 className="heading">{subjectName}</h4>
-      <Box className="selectBox">
+      <div>
+        <Box className="selectBox">
         <p className="label">Chapter Name</p>
         <Select onChange={handleRoute} className="select" value={JSON.stringify(topicId)}>
           {topics.map(topic => (
             <MenuItem value={JSON.stringify(topic.id)} key={topic.id}>{topic.name}</MenuItem>
             ))}
         </Select>
-      </Box>
+        </Box>
+      </div>
+
+      <div className="headerRight">
+
       <Button className="addButton" onClick={handlePush} variant="outlined">+ Add Question</Button>
       <Box className="center navigation">
         <p className="text">Enter Question No: </p>
         <TextField className="textField" variant="standard" />
         <p className="text"> of {values.questions.length}</p>
       </Box>
+      </div>
+       
+  
+      {/* <h4 className="heading">{subjectName}</h4> */}
+  
+      
     </Card>
   )
 }
