@@ -3,7 +3,7 @@ import Question from "./Question";
 import { IQuestionAndAnswer } from "@/interfaces/examInterfaces";
 
 const styles:SxProps = {
-  padding: "10px 30px",
+  padding: "10px 5px",
   "> *":{
     margin: "30px 0",
   },
@@ -14,6 +14,8 @@ const styles:SxProps = {
     display: "flex",
     alignItems: "center",
     mr: "30px",
+    padding:" 3px 0px",
+
     ".desc":{
       marginLeft: "auto",
       display: "flex",

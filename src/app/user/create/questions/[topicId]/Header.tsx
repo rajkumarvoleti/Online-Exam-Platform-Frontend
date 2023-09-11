@@ -15,7 +15,7 @@ const styles:SxProps = {
   width: "100%",
   mb: "10px",
   h4:{
-    fontSize: "20px",
+    fontSize: "19px",
     fontWeight: "400",
     color: "#000",
     m: 0,
@@ -26,19 +26,21 @@ const styles:SxProps = {
     gap: "10px",
   },
   ".select":{
-    width: "180px",
-    height: "40px",
-    borderRadius: "7px",
-    border: "1px solid #B9B9B9",
+    width: "215px",
+      height: "34px",
+    borderRadius: "5px",
+    // border: "1px solid #B9B9B9",
   },
   ".removeButton":{
-    height: "40px",
-    mt: "33px",
-    borderRadius: "8px",
+    height: "31px",
+    mt: "22px",
+    borderRadius: "5px",
   },
   ".label":{
-    color: "#000",
-    fontSize: "16px",
+    color: "#575757",
+    fontSize: "14px",
+    margin: " 0px"
+
   }
 }
 

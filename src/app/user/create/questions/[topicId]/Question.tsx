@@ -8,9 +8,9 @@ import { IQuestionAndAnswer } from "@/interfaces/examInterfaces";
 
 const styles:SxProps = {
   border: "1px solid #B9B9B9",
-  borderRadius: "8px",
-  margin: "30px",
-  padding: "10px 40px",
+  borderRadius: "5px",
+  margin: "10px",
+  padding: "10px 10px",
   ".error":{
     color: "red",
   }
@@ -31,7 +31,7 @@ export default function Question({index}:{index:number}) {
     <Box id={`question${index}`} sx={styles}>
       <Header index={index} />
       <WordComponent value={values.questions[index].question} handleData={handleData} />
-      <p className="error"> {questionError && questionError.question}</p>
+      <p className="error"> {questionError && questionError.question} </p>
       <AnswerComponent index={index} />
     </Box>
   )

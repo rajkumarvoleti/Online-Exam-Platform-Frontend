@@ -12,7 +12,8 @@ const styles:SxProps = {
   gap: "10px",
   width: "100%",
   "button":{
-    width: "150px",
+    width: "136px",
+    height:"30px",
     color: "#969696",
   }
 }

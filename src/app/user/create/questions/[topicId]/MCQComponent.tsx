@@ -7,12 +7,12 @@ import { useFormikContext } from "formik";
 import { useEffect, useState } from "react";
 
 const styles:SxProps = {
-  padding: "20px",
+  padding: "6px 7px",
   ".inputBox":{
     alignItems:"center",
     gap: "10px",
     ".label":{
-      margin: "20px 0",
+      margin: "20px 0px 15px 0px",
       color: "#000",
       fontSize: "18px",
     }

@@ -14,22 +14,26 @@ const styles: SxProps = {
     background: "#F4F5F9",
     display: "flex",
     alignItems: "center",
-    pl: "20px",
-    mt: "20px"
+    p: " 12px 10px",
+    mt: "10px",
+    fontSize:"20px",
+    fontWeight:"600",
+    color:"#2200a5"
   },
   ".explanation": {
-    margin: "20px",
+    margin: "5px",
     ".label": {
-      margin: "10px 0",
+      margin: "3px 0",
       color: "#000",
-      fontSize: "20px",
+      fontSize: "16px",
       lineHeight: "24.542px", /* 122.711% */
     },
     ".input": {
       display: "flex",
       alignItems: "start",
       width: "100%",
-      height: "200px",
+      height: "140px",
+      borderRadius:"3px"
     },
     ".input input": {
       width: "100%",
@@ -56,7 +60,7 @@ export default function AnswerComponent({ index }: { index:number }) {
   return (
     <Box sx={styles}>
       <Box className="heading">
-        <h4>Correct Answer</h4>
+        <span >Correct Answer</span  >
       </Box>
       {type === "trueOrFalse" && <TrueOrFalseComponent index={index} />}
       {type === "fillInTheBlanks" && <FillInTheBlanksComponent index={index} />}

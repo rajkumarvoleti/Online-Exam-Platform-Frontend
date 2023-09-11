@@ -13,9 +13,15 @@ import { getTopicRequest } from "@/api/topic";
 const styles:SxProps ={
   width: "100%",
   minHeight: "90vh",
-  ".container":{
+  ".container1":{
     minHeight: "74vh",
-    m: "10px 0",
+    boxShadow:"none",
+    borderRadius:"0",
+    // marginLeft:"5px",
+".MuiBox-root ":{
+  margin:"0",
+
+}
   }
 }
 
@@ -50,7 +56,7 @@ export default function Page({params}:{params:{topicId:string}}) {
   return (
     <Box sx={styles}>
       <Header topic={results[1].data.topic} />
-      <Card className="container">
+      <Card className="container1">
         {filteredQuestions.length !== 0 && <DeleteQuestions topicId={topicId}/>}
         <Questions questions={filteredQuestions} />
       </Card>

@@ -17,6 +17,7 @@ const styles:SxProps = {
   alignItems: "center",
   padding: "10px 10px",
   boxShadow:"none",
+  borderRadius:"0",
   justifyContent: "space-between",
   ".options":{
     display: "flex",
@@ -48,11 +49,11 @@ export default function Header({topic}:{topic:ITopic}) {
     <Card sx={styles}>
       <span className="header"> {topic.name}</span>
       <Box className="options">
-        <Button onClick={handleNew} className='newButton' variant='outlined'>
+        <Button onClick={handleNew} className='newButton'>
           + Add Question
         </Button>
         <QuestionNumberInput setQuestionNumber={setQuestionNumber} />
-        <SearchBarComp onSearch={() => {}} />
+        <SearchBarComp className="" onSearch={() => {}} />
         <FilterMenu />
         <OptionsMenu />
       </Box>

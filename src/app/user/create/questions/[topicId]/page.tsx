@@ -26,7 +26,8 @@ const styles:SxProps = {
     overflow: "unset",
   },
   ".questions":{
-    m: "10px 0",
+    boxShadow:"none",
+    borderRadius:"none",
   }
 }
 
