@@ -7,6 +7,7 @@ import { IQuizQuestion, IQuizSubject } from "@/interfaces/quizInterfaces";
 import { Box, Button, CircularProgress, SxProps } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from 'next-nprogress-bar';
+import { useProctoring } from '@/hooks/proctoring/useProctoring';
 
 const styles:SxProps = {
   width: "100vw",
@@ -18,6 +19,14 @@ export default function Page({params}:{params:{examId:string}}) {
   const { startExam, initializeQuestions } = useQuiz();
   const {data, error, isLoading} = useQuery(["exam",examId],async () => await getExamRequest(examId));
   const router = useRouter();
+  const { fullScreen, tabFocus } = useProctoring({
+    forceFullScreen: true,
+    preventTabSwitch: true,
+    preventContextMenu: true,
+    preventUserSelection: true,
+    preventCopy: true,
+  })
+  
 
   useEffect(() => {
     if(!data || !data.exam)
@@ -37,6 +46,7 @@ export default function Page({params}:{params:{examId:string}}) {
     if(!data.exam)
       return;
     console.log(data.exam.testDuration);
+    fullScreen.trigger();
     startExam(data.exam.testDuration);
     router.push(`/quiz/exam/${examId}`);
   }

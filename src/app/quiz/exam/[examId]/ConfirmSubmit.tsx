@@ -15,6 +15,8 @@ export default function ConfirmSubmit({open, handleClose, examId}:{open: boolean
   const onSubmit = () => {
     handleSubmit();
     router.push(`/quiz/result/${examId}`);
+    if(document)
+      document.exitFullscreen();
     handleClose();
   }
 

@@ -161,7 +161,7 @@ export default function useEditTest() {
   const deleteExamMutationQuery = useDeleteExamMutation({ request: deleteExamsRequest, options: deleteMutationOptions });
 
   useEffect(() => {
-    const isLoading = createExamMutationQuery.isLoading;
+    const isLoading = createExamMutationQuery.isLoading || editExamMutationQuery.isLoading;
     setLoading(prev => isLoading);
   }, [createExamMutationQuery.isLoading, editExamMutationQuery.isLoading , deleteExamMutationQuery.isLoading]);
 

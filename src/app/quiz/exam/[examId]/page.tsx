@@ -42,7 +42,6 @@ export default function Page({params}:{params:{examId:string}}) {
     if(ended) 
       router.push(`/quiz/result/${examId}`);
   }, [started, ended])
-  
 
   if (!started || ended)
     return <></>
@@ -56,13 +55,21 @@ export default function Page({params}:{params:{examId:string}}) {
   if(!examId)
     return <></>
 
-  if (fullScreen.status === 'off') return <>Paused</>
-  if (tabFocus.status === false) return <>Paused</>
-
-  return (
-    <>
-      <Exam exam={data.exam} />
-      <Alerts fullScreen={fullScreen} tabFocus={tabFocus} />
-    </>
-  )
+    const getContent = () => {
+      if (fullScreen.status === 'off') return < >Paused</>
+      if (tabFocus.status === false) return < >Paused</>
+  
+      return <Exam exam={data.exam} />
+    }
+  
+    return (
+      <>
+        {/* For debugging purpose */}
+        {/* <pre>{JSON.stringify({ fullScreen, tabFocus }, null, 2)}</pre> */}
+  
+        <div className="test-container">{getContent()}</div>
+        <Alerts fullScreen={fullScreen} tabFocus={tabFocus} />
+      </>
+    )
+  
 }

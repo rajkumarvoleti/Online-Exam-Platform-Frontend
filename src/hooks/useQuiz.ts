@@ -50,6 +50,11 @@ export const useQuiz = () => {
 
   const endExam = () => {
     setQuizData(prev => ({...prev,ended: true}));
+    setQuestions([]);
+    setActiveId(0);
+    setQuizData({time: getTimeFromSeconds(0),
+    started: false,
+    ended: false,})
   }
 
   const resetExam = () => {
