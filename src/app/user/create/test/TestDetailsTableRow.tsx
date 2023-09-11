@@ -162,7 +162,7 @@ export default function TestDetailsTableRow({selected, index, questionBanks, han
 
       </TableCell>
       <TableCell className="questionsCount" size="small">
-        {topic.id !== -1 && <Box className="complexityCount center">
+        {selectedBank && selectedTopic && <Box className="complexityCount center">
           {topic.totalQuestions}
           <p className="hard">({topic.hardQuestionsCount},</p>
           <p className="medium">{topic.mediumQuestionsCount},</p>
@@ -170,7 +170,7 @@ export default function TestDetailsTableRow({selected, index, questionBanks, han
         </Box>}
         </TableCell>
       <TableCell size="small">
-        {topic.id !== -1 && <FormikInput
+        {selectedBank && selectedTopic && <FormikInput
           disabled
           type="number"
           name={`questionBankTopics[${index}].selectedTotalQuestions`}
@@ -179,7 +179,7 @@ export default function TestDetailsTableRow({selected, index, questionBanks, han
         />}
       </TableCell>
       <TableCell align="center" size="small">
-        {topic.id !== -1 && <FormikInput
+        {selectedBank && selectedTopic && <FormikInput
           type="number"
           name={`questionBankTopics[${index}].selectedHardQuestionsCount`}
           placeholder=""
@@ -187,7 +187,7 @@ export default function TestDetailsTableRow({selected, index, questionBanks, han
         />}
       </TableCell>
       <TableCell align="center" size="small">
-        {topic.id !== -1 && <FormikInput
+        {selectedBank && selectedTopic && <FormikInput
           type="number"
           name={`questionBankTopics[${index}].selectedMediumQuestionsCount`}
           placeholder=""
@@ -195,7 +195,7 @@ export default function TestDetailsTableRow({selected, index, questionBanks, han
         />}
       </TableCell >
       <TableCell align="center" size="small">
-        {topic.id !== -1 && <FormikInput
+        {selectedBank && selectedTopic && <FormikInput
           type="number"
           name={`questionBankTopics[${index}].selectedEasyQuestionsCount`}
           placeholder=""
