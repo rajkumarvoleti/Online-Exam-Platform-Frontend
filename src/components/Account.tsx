@@ -9,7 +9,7 @@ import LogoutButton from "./auth/LogoutButton";
 const styles:SxProps = {
   display: "flex",
   alignItems: "center",
-  alignContent: "flex-end",
+  alignContent: "center",
   ">*":{
     margin: "30px 2px 0px 2px",
     maxWidth: "240px",
@@ -20,6 +20,7 @@ const styles:SxProps = {
     whiteSpace: "nowrap",       
     overflow: "hidden",          
     textOverflow: "ellipsis",
+    ml: "2px",
   },
   ".name":{
     fontSize: "14px",
