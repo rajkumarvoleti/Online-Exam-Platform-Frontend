@@ -4,7 +4,7 @@ import SearchIcon from '@mui/icons-material/Search';
 
 interface SearchBarProps {
   onSearch: (searchTerm: string) => void;
-  className: string
+  className?: string
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch, className }) => {

@@ -10,9 +10,9 @@ import { getAllQuestionBanksRequest } from "@/api/subject";
 import { IQuestionBank, IQuestionBankTopic, ISelectedQuestionBankTopic } from "@/interfaces/otherInterfaces";
 import TestDetailsTable from "./TestDetailsTable";
 import CircleIcon from '@mui/icons-material/Circle';
-import useCreateTest from "@/hooks/useCreateTest";
 import { ITestDetailsForm } from "@/interfaces/formikInterfaces";
 import { useEffect } from "react";
+import useEditTest from "@/hooks/useEditTest";
 
 const styles:SxProps = {
   width: "100%",
@@ -102,7 +102,7 @@ const styles:SxProps = {
 function FormikForm() {
 
   const { data, isLoading, error } = useQuery(["questionBanks"], getAllQuestionBanksRequest);
-  const {handleDetailsForm, publishAttempted, validateForms, handleNext} = useCreateTest();
+  const {handleDetailsForm, publishAttempted, validateForms, handleNext} = useEditTest();
   const {values, resetForm, submitForm, isValid, setFieldValue} = useFormikContext<ITestDetailsForm>();
 
   useEffect(() => {
@@ -187,14 +187,15 @@ function FormikForm() {
   )
 } 
 
-export default function TestDetailsForm() {
+export default function TestDetailsForm({initialValues}:{initialValues:ITestDetailsForm}) {
 
-  const { testData} = useCreateTest();
-
+  const { testData} = useEditTest();
+  console.log(initialValues);
   return (
     <Box sx={styles}>
       <Formik
-        initialValues={testData.testDetails}
+        
+        initialValues={initialValues}
         validationSchema={testDetailsValidationSchema}
         onSubmit={() => {}}
       >

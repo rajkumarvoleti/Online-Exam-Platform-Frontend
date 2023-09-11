@@ -115,11 +115,6 @@ export default function TestDetailsTableRow({selected, index, questionBanks, han
   const chapterTouched = touched.questionBankTopics && touched.questionBankTopics[index]?.id;
   const chapterError = chapterTouched && values.questionBankTopics[index].id === -1;
 
-  useEffect(() => {
-    console.log({selectedBank,selectedTopic});
-  }, [selectedBank,selectedTopic])
-  
-
   return (
     <TableRow sx={styles} key={index}>
       <TableCell><Checkbox size="small" onChange={handleCheckBox(topic.uuid)} checked={selected.includes(topic.uuid)} /></TableCell>
