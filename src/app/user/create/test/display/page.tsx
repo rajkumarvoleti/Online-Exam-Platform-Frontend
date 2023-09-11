@@ -11,7 +11,7 @@ const styles:SxProps = {
   backgroundColor: "white",
   margin: "10px",
   minHeight: "90vh",
-  padding: "30px",
+  padding: "10px",
 }
 
 export default function Page() {

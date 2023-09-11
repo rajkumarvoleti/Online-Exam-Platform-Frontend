@@ -6,7 +6,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { useRouter } from "next-nprogress-bar";
 
 const styles:SxProps = {
-  pb: "40px",
+  pb: "20px",
   display: "flex",
   alignItems: "center",
   gap :"20px",
