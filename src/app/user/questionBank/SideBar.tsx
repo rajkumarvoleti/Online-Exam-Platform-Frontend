@@ -64,7 +64,7 @@ export default function SideBar() {
 
   useEffect(() => {
     console.log(pathName);
-    if(pathName === "/user/questionBank" && subjects[0]){
+    if(pathName === "/user/questionBank" && subjects && subjects[0]){
       const id = subjects[0].id;
       router.push(`/user/questionBank/subject/${id}`);
     }

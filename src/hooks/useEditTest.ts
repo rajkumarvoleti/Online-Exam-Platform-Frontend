@@ -127,8 +127,15 @@ export default function useEditTest() {
         errorToast({ msg: data.error });
       else {
         successToast({ msg: "Exam Updated Successfully" });
+        setTestData({pricing: testPricingInitialValues,
+          testDetails: testDetailsInitialValues,
+          testSettings: testSettingsInitialValues});
+        setIndex(0);
+        setPublishAttempted(false);
+        setTestDataError([false, false, false]);
         router.push("/user/create/test/display");
         queryClient.invalidateQueries(["exams"], { exact: true });
+        queryClient.invalidateQueries(["exam",variables.examId]);
       }
     },
     onError: (error: any, variables: any) => {
@@ -155,7 +162,7 @@ export default function useEditTest() {
   const deleteExamMutationQuery = useDeleteExamMutation({ request: deleteExamsRequest, options: deleteMutationOptions });
 
   useEffect(() => {
-    const isLoading = createExamMutationQuery.isLoading;
+    const isLoading = createExamMutationQuery.isLoading || editExamMutationQuery.isLoading;
     setLoading(prev => isLoading);
   }, [createExamMutationQuery.isLoading, editExamMutationQuery.isLoading , deleteExamMutationQuery.isLoading]);
 

@@ -2,6 +2,8 @@ import ModalComponent from '@/components/ModalComponent';
 import { useQuiz } from '@/hooks/useQuiz';
 import {Box, Button, Card, SxProps} from '@mui/material';
 import { useRouter } from 'next-nprogress-bar';
+import { useState } from 'react';
+import ConfirmSubmit from './ConfirmSubmit';
 
 const styles:SxProps = {
   display: "flex",
@@ -36,11 +38,20 @@ const styles:SxProps = {
       color: "#C782FF",
     },
   },
-  ".saveAndNext":{
+  ".prev":{
+    border: "1px solid #C2E830",
     marginLeft: "auto",
+  },
+  ".next":{
     border: "1px solid #C2E830",
     ".buttonText": {
       color: "#969696",
+    },
+  },
+  ".disabled":{
+    border: "0.5px solid #E9E9E9",
+    ".buttonText": {
+      color: "#E9E9E9",
     },
   },
   ".submit":{
@@ -53,13 +64,17 @@ const styles:SxProps = {
 
 export default function Footer({examId}:{examId:number}){
 
-  const {attemptQuestion,reviewQuestion,goToNextQuestion, isLastQuestion, isMarked, handleSubmit} = useQuiz();
-  const router = useRouter();
+  const {attemptQuestion,reviewQuestion,goToNextQuestion, goToPrevQuestion, isLastQuestion, isMarked, isFirstQuestion} = useQuiz();
 
-  const onSubmit = () => {
-    handleSubmit();
-    router.push(`/quiz/result/${examId}`);
-  }
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <Card sx={styles}>
@@ -72,17 +87,19 @@ export default function Footer({examId}:{examId:number}){
             {isMarked ? "Unmark for Review" : "Mark for Review"}
           </p>
         </Button>
-       
+        <Button disabled={isFirstQuestion} onClick={goToPrevQuestion} className={isFirstQuestion ? "prev disabled" : "prev"} variant='outlined'>
+          <p className="buttonText">Prev</p>
+        </Button>
+        <Button disabled={isLastQuestion} onClick={goToNextQuestion} className={isLastQuestion ? " next disabled" : "next"} variant='outlined'>
+          <p className="buttonText">Next</p>
+        </Button>
       </Box>
       <Box className="container container2 center">
-      <Button disabled={isLastQuestion} onClick={goToNextQuestion} className='saveAndNext' variant='outlined'>
-          <p className="buttonText">Save & Next</p>
-        </Button>
-        <Button onClick={onSubmit} className='submit' variant='outlined'>
+        <Button onClick={handleOpen} className='submit' variant='outlined'>
           <p className="buttonText">Submit</p>
         </Button>
       </Box>
-
+      <ConfirmSubmit examId={examId} handleClose={handleClose} open={open} />
     </Card>
   )
 }
