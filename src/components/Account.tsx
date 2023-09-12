@@ -26,9 +26,6 @@ const styles:SxProps = {
     fontSize: "14px",
     fontWeight: "600"
   },
-  ".logoutButton":{
-    pt: '20px',
-  }
 }
 
 export default function Account(){
