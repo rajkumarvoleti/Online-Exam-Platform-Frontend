@@ -11,6 +11,9 @@ import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 const styles:SxProps = {
+  ".MuiBox-root":{
+    backgroundColor:"white"
+  }
 }
 
 export default function Page({params}:{params:{subjectId:string}}) {
@@ -52,8 +55,11 @@ export default function Page({params}:{params:{subjectId:string}}) {
 
   return (
     <Box sx={styles}>
+      <div className="body">
       <Header setQuery={setQuery} subject={subject} />
       <Topics topics={topics} />
+      </div>
+      
     </Box>
   )
 }

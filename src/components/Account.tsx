@@ -11,7 +11,7 @@ const styles:SxProps = {
   alignItems: "center",
   alignContent: "flex-end",
   ">*":{
-    margin: "30px 2px 0px 2px",
+    margin: "30px 0px 0px 2px",
     maxWidth: "240px",
   },
   ".name,.email":{
@@ -24,6 +24,9 @@ const styles:SxProps = {
   ".name":{
     fontSize: "14px",
     fontWeight: "600"
+  },
+  ".MuiButtonBase-root":{
+    marginTop:"32px"
   }
 }
 

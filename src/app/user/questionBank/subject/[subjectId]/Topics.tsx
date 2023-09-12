@@ -4,6 +4,8 @@ import Topic from "./Topic";
 
 const styles:SxProps = {
 borderRadius:"0px",
+// height: "545px",
+
   // minHeight: "80vh",
   display: "flex",
   flexDirection:"row",

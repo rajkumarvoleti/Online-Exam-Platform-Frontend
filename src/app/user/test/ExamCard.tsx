@@ -9,7 +9,8 @@ import dayjs from "dayjs";
 
 const styles:SxProps = {
   margin: "5px",
-  // padding:"10px 10px 0 10px",
+  
+  // height:"700px",
 
   border:"1px solid rgba(0,0,0,10%)",
   // boxShadow:"0 0 5px 5px ",

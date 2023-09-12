@@ -28,7 +28,7 @@ const styles:SxProps = {
     textTransform:"capitalize",
   },
   h4:{
-    fontSize: "21px",
+    fontSize: "19px",
     maxWidth: "500px",
     color: "#000000",
     

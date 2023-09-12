@@ -10,6 +10,7 @@ import { IExam } from '@/interfaces/examInterfaces';
 import dayjs from 'dayjs';
 
 const styles:SxProps = {
+
   backgroundColor:"#ffff",
   ".MuiPaper-root ":{
     padding:"10px 10px 0 10px",
@@ -39,15 +40,14 @@ const styles:SxProps = {
   ".cards":{
     display:"flex",
     flexDirection:"row",
-    // width:"75vw",
     flexWrap:"wrap",
-    // justifyContent: "center",
     margin: "5px",
     padding:"0"
   },
   ".tests":{
     boxShadow:"0px 0px 0.5px 0.5px rgba(0,0,0,11%) ",
-  }
+  height: "76vh",
+}
 }
 
 export default function Page(){
