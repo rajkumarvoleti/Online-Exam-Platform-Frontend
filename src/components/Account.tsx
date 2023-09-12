@@ -25,6 +25,9 @@ const styles:SxProps = {
   ".name":{
     fontSize: "14px",
     fontWeight: "600"
+  },
+  ".logoutButton":{
+    pt: '20px',
   }
 }
 
@@ -48,7 +51,6 @@ export default function Account(){
           <p className="email">{email}</p>
         </Box>
         <LogoutButton />
-
       </Box>
     </>
   )

@@ -6,5 +6,5 @@ export default function LogoutButton() {
 
   const {logout} = useLogout();
 
-  return <IconButton color="primary" className=""  onClick={logout}><PowerSettingsNewIcon /></IconButton>
+  return <IconButton color="primary" className="logoutButton"  onClick={logout}><PowerSettingsNewIcon /></IconButton>
 }

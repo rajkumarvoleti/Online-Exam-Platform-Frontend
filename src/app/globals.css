@@ -130,5 +130,9 @@ p.phead {
 
 .MuiButton-root {
   border-radius: 5px;
-  text-transform: capitalize;
+  text-transform: capitalize !important;
+}
+
+button {
+  text-transform: capitalize !important;
 }
