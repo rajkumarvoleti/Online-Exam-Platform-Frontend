@@ -10,8 +10,9 @@ const styles:SxProps = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  margin: "30px 2px 0px 2px",
+  gap: "5px",
   ">*":{
-    margin: "30px 2px 0px 2px",
     maxWidth: "240px",
   },
   ".name,.email":{
